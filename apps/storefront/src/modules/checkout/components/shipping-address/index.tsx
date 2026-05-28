@@ -13,6 +13,7 @@ import { mapKeys } from 'lodash'
 
 import AddressSelect from '../address-select'
 import CountrySelect from '../country-select'
+import ProvinceSelect from '../province-select'
 import SelectedAddress from './selected-address'
 
 const ShippingAddress = ({
@@ -210,13 +211,19 @@ const ShippingAddress = ({
           error={errors?.shipping_address?.country_code}
           data-testid="shipping-country-select"
         />
-        <Input
-          label="State / Province (optional)"
+        <ProvinceSelect
+          label="State / Province"
           name="shipping_address.province"
-          autoComplete="address-level1"
+          countryCode={values.shipping_address.country_code}
           value={values.shipping_address.province}
-          onChange={handleChange}
-          data-testid="shipping-province-input"
+          onChange={
+            handleChange as unknown as ChangeEventHandler<HTMLSelectElement>
+          }
+          error={
+            (errors?.shipping_address as Record<string, string> | undefined)
+              ?.province
+          }
+          data-testid="shipping-province-select"
         />
         <Input
           label="Email"

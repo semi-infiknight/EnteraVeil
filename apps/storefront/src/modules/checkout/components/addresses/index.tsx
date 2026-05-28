@@ -161,6 +161,10 @@ const Addresses = ({
       {isOpen ? (
         <form onSubmit={handleSubmit}>
           <Box>
+            <Box className="mb-4 rounded-md border border-action-primary-hover/40 bg-action-primary-hover/10 p-3 text-sm text-basic-primary">
+              Currently shipping to <strong>Bangalore</strong> and{' '}
+              <strong>Raipur</strong> only. We'll open more cities as we grow.
+            </Box>
             <ShippingAddress
               customer={customer}
               cart={cart}
