@@ -1,10 +1,7 @@
 {
   "name": "enteraveil-store",
   "private": true,
-  "packageManager": "pnpm@10.0.0",
-  "workspaces": [
-    "apps/*"
-  ],
+  "packageManager": "pnpm@10.34.1",
   "scripts": {
     "dev": "pnpm -r --parallel dev",
     "build": "pnpm -r build",
