@@ -10,7 +10,7 @@ import { ExploreBlog } from '@modules/home/components/explore-blog'
 export const metadata: Metadata = {
   title: 'About Us',
   description:
-    'At Solace, we deliver innovative products designed to meet your needs with quality and care.',
+    'At EnteraVeil, we craft anime-inspired streetwear that lets you carry a piece of the veil into the everyday.',
 }
 
 export default async function AboutUsPage() {

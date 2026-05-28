@@ -1,6 +1,14 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-const fontFamily = { sans: ['Inter', ...defaultTheme.fontFamily.sans] }
+const fontFamily = {
+  sans: ['var(--font-body)', 'Inter', ...defaultTheme.fontFamily.sans],
+  body: ['var(--font-body)', 'Inter', ...defaultTheme.fontFamily.sans],
+  heading: [
+    'var(--font-heading)',
+    'Space Grotesk',
+    ...defaultTheme.fontFamily.sans,
+  ],
+}
 
 const fontSize = {
   sm: ['0.75rem', { lineHeight: '1.25rem' }],

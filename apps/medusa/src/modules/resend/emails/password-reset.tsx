@@ -89,7 +89,7 @@ export const passwordResetEmail = (props: PasswordResetEmailProps) => (
 // Mock data for preview/development
 const mockPasswordReset: PasswordResetEmailProps = {
   reset_url: "https://your-app.com/reset-password?token=sample-reset-token-123",
-  email: "jakub.bogucki@rigbyjs.com"
+  email: "preview@enteraveil.local"
 }
 
 export default () => <PasswordResetEmailComponent {...mockPasswordReset} />

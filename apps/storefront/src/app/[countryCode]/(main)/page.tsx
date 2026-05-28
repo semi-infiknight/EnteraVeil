@@ -18,9 +18,9 @@ import { ProductCarousel } from '@modules/products/components/product-carousel'
 import SkeletonProductsCarousel from '@modules/skeletons/templates/skeleton-products-carousel'
 
 export const metadata: Metadata = {
-  title: 'Solace Medusa Starter Template',
+  title: 'EnteraVeil — anime streetwear from beyond the veil',
   description:
-    'A performant frontend ecommerce starter template with Next.js 14 and Medusa 2.0.',
+    'Anime-inspired streetwear. Limited drops, graphic tees, ships from Bangalore across India.',
 }
 
 export default async function Home(props: {
