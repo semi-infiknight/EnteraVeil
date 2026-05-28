@@ -215,6 +215,42 @@ export default function ProductActions({
           </Text>
         )}
       </div>
+
+      {/* Mobile sticky CTA — appears once the user scrolls past the inline
+          add-to-cart. Hidden on large screens where the panel is sticky. */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-3 large:hidden">
+        <div className="pointer-events-auto flex w-full max-w-[600px] items-center gap-3 rounded-full border border-action-primary/30 bg-primary/95 px-3 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur">
+          <div className="ml-2 flex min-w-0 flex-col">
+            <span className="line-clamp-1 text-sm text-basic-primary">
+              {product.title}
+            </span>
+            {selectedVariant && (
+              <span className="text-xs text-action-primary">
+                Tap to add — {selectedVariant.title}
+              </span>
+            )}
+          </div>
+          <Button
+            onClick={handleAddToCart}
+            disabled={
+              !inStock ||
+              !selectedVariant ||
+              !!disabled ||
+              isAdding ||
+              maxQuantity === 0
+            }
+            className="ml-auto !h-10 !px-5"
+            isLoading={isAdding}
+            data-testid="add-product-button-mobile"
+          >
+            {!selectedVariant
+              ? 'Select'
+              : !inStock
+                ? 'Out of stock'
+                : 'Add to cart'}
+          </Button>
+        </div>
+      </div>
     </>
   )
 }

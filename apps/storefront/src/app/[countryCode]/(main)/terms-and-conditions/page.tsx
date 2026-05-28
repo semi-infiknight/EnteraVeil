@@ -5,6 +5,10 @@ import { serializeMdx } from '@lib/util/serializeMdx'
 import { Box } from '@modules/common/components/box'
 import { Container } from '@modules/common/components/container'
 import { Heading } from '@modules/common/components/heading'
+import {
+  PolicyFallback,
+  TERMS_FALLBACK,
+} from '@modules/content/components/policy-fallback'
 import SidebarBookmarks from '@modules/content/components/sidebar-bookmarks'
 import { MDXRemote } from '@modules/mdx/MDXRemote'
 import StoreBreadcrumbs from '@modules/store/templates/breadcrumbs'
@@ -21,6 +25,36 @@ export default async function TermsAndConditionsPage() {
     'terms-and-conditions'
   ).catch(() => ({ data: null }))
   const PageContent = (res?.data as any)?.PageContent ?? ''
+
+  if (!PageContent) {
+    return (
+      <Container className="min-h-screen max-w-full bg-secondary !p-0">
+        <Container className="!py-8">
+          <StoreBreadcrumbs breadcrumb="Terms & Conditions" />
+          <Box className="mt-6 grid grid-cols-12 medium:mt-12">
+            <Box className="col-span-12 mb-10 medium:col-span-3 medium:mb-0">
+              <SidebarBookmarks
+                data={TERMS_FALLBACK.map((s) => ({ id: s.id, label: s.title }))}
+              />
+            </Box>
+            <Box className="col-span-12 medium:col-span-8 medium:col-start-5">
+              <PolicyFallback
+                eyebrow="Last updated 2026"
+                title={
+                  <>
+                    Terms &
+                    <br />
+                    <span className="text-action-primary">conditions.</span>
+                  </>
+                }
+                sections={TERMS_FALLBACK}
+              />
+            </Box>
+          </Box>
+        </Container>
+      </Container>
+    )
+  }
 
   const mdxSource = await serializeMdx(PageContent)
 
@@ -43,13 +77,7 @@ export default async function TermsAndConditionsPage() {
             <SidebarBookmarks data={bookmarks} />
           </Box>
           <Box className="col-span-12 space-y-10 medium:col-span-8 medium:col-start-5">
-            {PageContent ? (
-              <MDXRemote source={mdxSource} />
-            ) : (
-              <p className="text-secondary">
-                Content unavailable in this preview.
-              </p>
-            )}
+            <MDXRemote source={mdxSource} />
           </Box>
         </Box>
       </Container>

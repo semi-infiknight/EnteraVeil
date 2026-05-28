@@ -13,17 +13,27 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <Container className="flex flex-col items-center justify-center gap-6">
-      <Text className="text-5xl font-semibold small:text-4xl">404</Text>
-      <Heading className="text-5xl small:text-4xl" as="h1">
-        Page not found
+    <Container className="flex min-h-[60vh] flex-col items-center justify-center gap-6 text-center">
+      <span className="ev-eyebrow text-action-primary">
+        Beyond the veil · error 404
+      </span>
+      <Heading as="h1" className="ev-display text-6xl text-basic-primary small:text-8xl medium:text-9xl">
+        Lost in
+        <br />
+        <span className="text-action-primary">the void.</span>
       </Heading>
-      <Text className="text-secondary" size="md">
-        Sorry, we couldn’t find the page you’re looking for.
+      <Text className="max-w-[480px] text-secondary" size="lg">
+        This page doesn&apos;t exist — yet. Try the shop, the lookbook, or head
+        back home.
       </Text>
-      <Button asChild>
-        <LocalizedClientLink href="/">Go to homepage</LocalizedClientLink>
-      </Button>
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <Button asChild className="!h-12 !px-6 text-base">
+          <LocalizedClientLink href="/">Back home →</LocalizedClientLink>
+        </Button>
+        <Button asChild variant="tonal" className="!h-12 !px-6 text-base">
+          <LocalizedClientLink href="/shop">Shop the drop</LocalizedClientLink>
+        </Button>
+      </div>
     </Container>
   )
 }

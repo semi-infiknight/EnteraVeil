@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 import { getAboutUs, getExploreBlogData } from '@lib/data/fetch'
+import AboutFallback from '@modules/content/components/about-fallback'
 import { Banner } from '@modules/content/components/banner'
 import { BasicContentSection } from '@modules/content/components/basic-content-section'
 import { FramedTextSection } from '@modules/content/components/framed-text-section'
@@ -15,16 +16,17 @@ export const metadata: Metadata = {
 
 export default async function AboutUsPage() {
   const aboutRes = await getAboutUs().catch(() => ({ data: null }))
-  const {
-    Banner: bannerData,
-    OurStory,
-    WhyUs,
-    OurCraftsmanship,
-    Numbers,
-  } = (aboutRes?.data as any) ?? {}
+  const data = (aboutRes?.data as any) ?? null
 
   const blogRes = await getExploreBlogData().catch(() => ({ data: null }))
   const posts = blogRes?.data
+
+  // When Strapi is unreachable, render the curated fallback story.
+  if (!data) {
+    return <AboutFallback />
+  }
+
+  const { Banner: bannerData, OurStory, WhyUs, OurCraftsmanship, Numbers } = data
 
   return (
     <>

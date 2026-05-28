@@ -46,16 +46,13 @@ export default async function BlogTemplate({
 
   const orderBy = sortBy === 'asc' ? 'createdAt:asc' : 'createdAt:desc'
 
-  const {
-    data: posts,
-    meta: {
-      pagination: { total: count },
-    },
-  } = await getBlogPosts({
+  const blogRes = await getBlogPosts({
     sortBy: orderBy,
     query,
     category: currentCategory,
-  })
+  }).catch(() => ({ data: [], meta: { pagination: { total: 0 } } }))
+  const posts = blogRes?.data ?? []
+  const count = blogRes?.meta?.pagination?.total ?? 0
 
   const totalPages = Math.ceil(count / POSTS_LIMIT)
   const pageNumber = page ? parseInt(page) : 1

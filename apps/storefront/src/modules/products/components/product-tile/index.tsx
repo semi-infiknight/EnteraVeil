@@ -36,23 +36,28 @@ export function ProductTile({
 
   return (
     <Box
-      className="group flex h-full flex-col"
+      className="group flex h-full flex-col ev-card-lift"
       data-testid={formatNameForTestId(`${product.title}-product-tile`)}
     >
-      <Box className="relative h-[290px] small:h-[504px]">
+      <Box className="relative h-[290px] overflow-hidden small:h-[504px]">
         {isNew && (
           <Box className="absolute left-3 top-3 z-10 small:left-5 small:top-5">
-            <Badge label="New product" variant="brand" />
+            <Badge label="New drop" variant="brand" />
           </Box>
         )}
-        <LocalizedClientLink href={`/products/${product.handle}`}>
+        <LocalizedClientLink href={`/products/${product.handle}`} aria-label={`View ${product.title}`}>
           <LoadingImage
             src={product.thumbnail}
             alt={product.title}
             loading="lazy"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
           />
         </LocalizedClientLink>
+        {/* Editorial overlay: shows on hover; complements quick-add button. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        />
         <ProductActions productHandle={product.handle} regionId={regionId} />
       </Box>
       <ProductInfo
