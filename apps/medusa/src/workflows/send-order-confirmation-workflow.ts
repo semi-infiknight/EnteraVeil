@@ -6,6 +6,13 @@ type WorkflowInput = {
   id: string;
 };
 
+// Fires on `order.placed`. Sends:
+//   1. Customer-facing branded confirmation to `order.email`
+//   2. Internal alert to `ADMIN_EMAIL` (if set)
+// Razorpay-paid AND COD orders both raise `order.placed`, so this covers both
+// flows without branching. Idempotency: Medusa's notification module is the
+// canonical store — re-firing produces a new notification row, which the
+// admin can dedupe by `(resource_id, template)` query if needed.
 export const sendOrderConfirmationWorkflow = createWorkflow(
   'send-order-confirmation',
   ({ id }: WorkflowInput) => {
@@ -22,6 +29,7 @@ export const sendOrderConfirmationWorkflow = createWorkflow(
         'billing_address.*',
         'shipping_methods.*',
         'customer.*',
+        'payment_collections.payment_sessions.*',
         'total',
         'subtotal',
         'discount_total',
@@ -39,12 +47,27 @@ export const sendOrderConfirmationWorkflow = createWorkflow(
       }
     });
 
-    const notification = when({ orders }, (data) => !!data.orders[0].email).then(() => {
+    const adminEmail = process.env.ADMIN_EMAIL ?? '';
+
+    const customerNotification = when({ orders }, (data) => !!data.orders[0].email).then(() => {
       return sendNotificationStep([
         {
           to: orders[0].email!,
           channel: 'email',
-          template: 'order-placed',
+          template: 'order-placed-customer',
+          data: {
+            order: orders[0]
+          }
+        }
+      ]);
+    });
+
+    const adminNotification = when({ orders }, () => !!adminEmail).then(() => {
+      return sendNotificationStep([
+        {
+          to: adminEmail,
+          channel: 'email',
+          template: 'order-placed-admin',
           data: {
             order: orders[0]
           }
@@ -53,7 +76,8 @@ export const sendOrderConfirmationWorkflow = createWorkflow(
     });
 
     return new WorkflowResponse({
-      notification
+      customerNotification,
+      adminNotification
     });
   }
 );

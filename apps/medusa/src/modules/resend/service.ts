@@ -12,17 +12,23 @@ import {
   Resend
 } from "resend";
 import { orderPlacedEmail } from "./emails/order-placed";
+import { orderPlacedCustomerEmail } from "./emails/order-placed-customer";
+import { orderPlacedAdminEmail } from "./emails/order-placed-admin";
 import { userInvitedEmail } from "./emails/user-invited";
 import { passwordResetEmail } from "./emails/password-reset";
 
 enum Templates {
   ORDER_PLACED = "order-placed",
+  ORDER_PLACED_CUSTOMER = "order-placed-customer",
+  ORDER_PLACED_ADMIN = "order-placed-admin",
   USER_INVITED = "user-invited",
   PASSWORD_RESET = "password-reset",
 }
 
 const templates: {[key in Templates]?: (props: unknown) => React.ReactNode} = {
   [Templates.ORDER_PLACED]: orderPlacedEmail,
+  [Templates.ORDER_PLACED_CUSTOMER]: orderPlacedCustomerEmail as any,
+  [Templates.ORDER_PLACED_ADMIN]: orderPlacedAdminEmail as any,
   [Templates.USER_INVITED]: userInvitedEmail,
   [Templates.PASSWORD_RESET]: passwordResetEmail
 }
@@ -91,11 +97,14 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     }
     switch(template) {
       case Templates.ORDER_PLACED:
-        return "Order Confirmation"
+      case Templates.ORDER_PLACED_CUSTOMER:
+        return "Your EnteraVeil order is confirmed"
+      case Templates.ORDER_PLACED_ADMIN:
+        return "New EnteraVeil order"
       case Templates.USER_INVITED:
-        return "You're Invited!"
+        return "You're invited to the EnteraVeil admin"
       case Templates.PASSWORD_RESET:
-        return "Reset Your Password"
+        return "Reset your EnteraVeil password"
       default:
         return "New Email"
     }
