@@ -313,6 +313,64 @@ export default async function setupIndia({ container }: ExecArgs) {
     logger.info('All shipping options already exist — nothing to create.')
   }
 
+  // ---------------------------------------------------------------------
+  // Patch a couple of seeder-default quirks that block cart/checkout:
+  //   1. tax_region rows can be inserted with provider_id NULL by the
+  //      starter seed, which makes /store/carts/.../line-items 500 with
+  //      "Unable to retrieve the tax provider with id: null".
+  //   2. The starter sometimes leaves enabled_in_store rule values double-
+  //      encoded as JSON (e.g. `"\"true\""`), which the rule engine never
+  //      matches, so /store/shipping-options returns [].
+  //   3. New products inserted via seed sometimes don't have a row in
+  //      product_shipping_profile, which also yields 0 shipping options.
+  // Both are env-local data fixes; safe to run on every seed pass.
+  try {
+    const pgConn: any = container.resolve('__pg_connection__')
+    if (pgConn) {
+      await pgConn('tax_region')
+        .whereNull('provider_id')
+        .orWhere('provider_id', '')
+        .update({ provider_id: 'tp_system' })
+      // Fix double-encoded boolean rule values.
+      await pgConn('shipping_option_rule')
+        .where('attribute', 'enabled_in_store')
+        .where('value', '"\\"true\\""')
+        .update({ value: '"true"' })
+      // Ensure every product is linked to the default shipping profile.
+      const profile: any = (
+        await pgConn('shipping_profile').where('type', 'default').limit(1)
+      )[0]
+      if (profile?.id) {
+        const products: any[] = await pgConn('product')
+          .select('id')
+          .whereNull('deleted_at')
+        const existing: any[] = await pgConn('product_shipping_profile').select(
+          'product_id'
+        )
+        const have = new Set(existing.map((r: any) => r.product_id))
+        const missing = products.filter((p: any) => !have.has(p.id))
+        if (missing.length > 0) {
+          await pgConn('product_shipping_profile').insert(
+            missing.map((p: any) => ({
+              id: `psp_${Math.random().toString(36).slice(2, 22)}`,
+              product_id: p.id,
+              shipping_profile_id: profile.id,
+              created_at: new Date(),
+              updated_at: new Date(),
+            }))
+          )
+          logger.info(
+            `Linked ${missing.length} product(s) to default shipping profile`
+          )
+        }
+      }
+    }
+  } catch (e: any) {
+    logger.warn(
+      `Post-seed checkout fixes skipped (${e?.message ?? 'unknown error'})`
+    )
+  }
+
   logger.info('=== India region setup complete ===')
   if (ENABLE_COD) {
     logger.info(
