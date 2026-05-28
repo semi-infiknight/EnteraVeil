@@ -94,3 +94,14 @@ Every non-trivial decision deviating from PLAN.md is recorded here with a one-li
 - **`.env.prod.template` enumerates every env var, organized by purpose** with comments on where to fetch each. Mirrors what's already strewn across `apps/medusa/.env`, `apps/strapi/.env`, and `apps/storefront/.env.local`. Single source of truth for the prod values that a deployer fills in.
 - **Backup script uses `pg_dumpall` not `pg_dump`** so both databases (medusa-store + strapi) AND any roles are captured in one file. 7-day rolling retention via `find -mtime +7 -delete`. Logs to `/var/log/enteraveil-backup.log` via cron.
 - **Deferred: actual `docker compose -f docker-compose.prod.yml build` and `config` validation**. The Windows host has no Docker daemon; YAML structure is validated via js-yaml (6 services, valid). Dockerfile syntax was not validated by `docker buildx --check`. Phase 8's first build on the VPS will surface any Dockerfile typos.
+
+## Phase 8 — Production deploy (DEFERRED)
+
+- **Phase 8 cannot be executed without live infrastructure**: no domain purchased, no DigitalOcean droplet provisioned, no Cloudflare DNS, no real Razorpay/Resend keys. Every step in the plan's Phase 8 requires user action that this autonomous run cannot perform. The infrastructure-side artifacts (Dockerfiles, docker-compose.prod.yml, Caddyfile, deploy.sh, .env.prod.template, backup script, DEPLOY.md runbook) are all in place from Phase 7. Re-running this loop once the user provides VPS_HOST + VPS_USER + a populated `.env.prod` on the droplet should complete the deploy end-to-end.
+- **No Phase 8 tag created** since nothing was actually deployed. Tag will be applied when the deploy succeeds.
+
+## Phase 9 — Handoff docs
+
+- **`docs/admin-guide.md`** written for the non-technical operator. Covers Medusa admin (login, products with variants, collections, order fulfillment, refunds, COD), Strapi admin (About, blog, lookbook, homepage sections, legal pages), and an explicit "Don't touch list" calling out the settings that silently break checkout if modified.
+- **`docs/troubleshooting.md`** written for the developer covering all the failure modes the plan listed (OOM, Razorpay webhook failures, Resend rate limits / domain, Strapi crashes, Postgres refused, SSL renewal, rollback) plus a few extras (storefront stale content, disk full, swap setup) discovered while writing the runbook. Quick-reference compose alias and command cheatsheet at the bottom.
+- **Phase 9's 🛑 (final acceptance test) is also deferred**: it requires a live deployment to execute the four-step smoke test (real Razorpay purchase, COD test, Strapi → storefront propagation, admin-guide readability). Will run after Phase 8.
