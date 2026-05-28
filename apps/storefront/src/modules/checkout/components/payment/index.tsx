@@ -1,29 +1,19 @@
 'use client'
 
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { RadioGroup } from '@headlessui/react'
-import { isStripe as isStripeFunc, paymentInfoMap } from '@lib/constants'
+import { paymentInfoMap } from '@lib/constants'
 import { initiatePaymentSession } from '@lib/data/cart'
 import { cn } from '@lib/util/cn'
 import ErrorMessage from '@modules/checkout/components/error-message'
 import PaymentContainer from '@modules/checkout/components/payment-container'
-import { StripeContext } from '@modules/checkout/components/payment-wrapper'
 import { Box } from '@modules/common/components/box'
 import { Button } from '@modules/common/components/button'
 import { Heading } from '@modules/common/components/heading'
 import { Stepper } from '@modules/common/components/stepper'
 import { Text } from '@modules/common/components/text'
-import { StripeIcon } from '@modules/common/icons'
-import { CardElement } from '@stripe/react-stripe-js'
-import { StripeCardElementOptions } from '@stripe/stripe-js'
 
 const Payment = ({
   cart,
@@ -38,8 +28,6 @@ const Payment = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [cardBrand, setCardBrand] = useState<string | null>(null)
-  const [cardComplete, setCardComplete] = useState(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
     activeSession?.provider_id ?? ''
   )
@@ -50,31 +38,11 @@ const Payment = ({
 
   const isOpen = searchParams.get('step') === 'payment'
 
-  const isStripe = isStripeFunc(activeSession?.provider_id)
-  const stripeReady = useContext(StripeContext)
-
   const paidByGiftcard =
     cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
 
   const paymentReady =
     (activeSession && cart?.shipping_methods.length !== 0) || paidByGiftcard
-
-  const useOptions: StripeCardElementOptions = useMemo(() => {
-    return {
-      style: {
-        base: {
-          fontFamily: 'Inter, sans-serif',
-          color: '#424270',
-          '::placeholder': {
-            color: 'rgb(107 114 128)',
-          },
-        },
-      },
-      classes: {
-        base: 'pt-3 pb-1 block w-full h-11 px-4 mt-0 bg-ui-bg-field border rounded-md appearance-none focus:outline-none focus:ring-0 focus:shadow-borders-interactive-with-active border-ui-border-base hover:bg-ui-bg-field-hover transition-all duration-300 ease-in-out',
-      },
-    }
-  }, [])
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -162,45 +130,25 @@ const Payment = ({
       <Box>
         <Box className={isOpen ? 'block' : 'hidden'}>
           {!paidByGiftcard && availablePaymentMethods?.length && (
-            <>
-              <RadioGroup
-                value={selectedPaymentMethod}
-                onChange={handlePaymentMethodChange}
-              >
-                {availablePaymentMethods
-                  .sort((a, b) => {
-                    return a.provider_id > b.provider_id ? 1 : -1
-                  })
-                  .map((paymentMethod) => {
-                    return (
-                      <PaymentContainer
-                        paymentInfoMap={paymentInfoMap}
-                        paymentProviderId={paymentMethod.id}
-                        key={paymentMethod.id}
-                        selectedPaymentOptionId={selectedPaymentMethod}
-                      />
-                    )
-                  })}
-              </RadioGroup>
-              {isStripe && stripeReady && (
-                <div className="mt-5 transition-all duration-150 ease-in-out">
-                  <Text className="mb-3 text-md text-basic-primary">
-                    Enter your card details:
-                  </Text>
-                  <CardElement
-                    options={useOptions}
-                    onChange={(e) => {
-                      setCardBrand(
-                        e.brand &&
-                          e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
-                      )
-                      setError(e.error?.message || null)
-                      setCardComplete(e.complete)
-                    }}
-                  />
-                </div>
-              )}
-            </>
+            <RadioGroup
+              value={selectedPaymentMethod}
+              onChange={handlePaymentMethodChange}
+            >
+              {availablePaymentMethods
+                .sort((a, b) => {
+                  return a.provider_id > b.provider_id ? 1 : -1
+                })
+                .map((paymentMethod) => {
+                  return (
+                    <PaymentContainer
+                      paymentInfoMap={paymentInfoMap}
+                      paymentProviderId={paymentMethod.id}
+                      key={paymentMethod.id}
+                      selectedPaymentOptionId={selectedPaymentMethod}
+                    />
+                  )
+                })}
+            </RadioGroup>
           )}
 
           {paidByGiftcard && (
@@ -221,21 +169,6 @@ const Payment = ({
             error={error}
             data-testid="payment-method-error-message"
           />
-
-          {!activeSession && isStripeFunc(selectedPaymentMethod) && (
-            <Button
-              className="mt-6"
-              onClick={() => handleSubmit(selectedPaymentMethod)}
-              isLoading={isLoading}
-              disabled={
-                (isStripe && !cardComplete) ||
-                (!selectedPaymentMethod && !paidByGiftcard)
-              }
-              data-testid="submit-payment-button"
-            >
-              Enter card details
-            </Button>
-          )}
         </Box>
 
         <Box className={isOpen ? 'hidden' : 'block'}>
@@ -252,26 +185,6 @@ const Payment = ({
                   {paymentInfoMap[selectedPaymentMethod]?.title ||
                     selectedPaymentMethod}
                 </Text>
-              </Box>
-              <Box className="flex w-full flex-col p-4">
-                <Text size="lg" className="font-normal text-basic-primary">
-                  Payment details
-                </Text>
-                <div
-                  className="flex items-center gap-2 text-md text-basic-primary"
-                  data-testid="payment-details-summary"
-                >
-                  <Box className="flex h-7 w-fit items-center p-2">
-                    {paymentInfoMap[selectedPaymentMethod]?.icon || (
-                      <StripeIcon />
-                    )}
-                  </Box>
-                  <Text className="font-normal text-secondary">
-                    {isStripeFunc(selectedPaymentMethod) && cardBrand
-                      ? cardBrand
-                      : 'Another step will appear'}
-                  </Text>
-                </div>
               </Box>
             </Box>
           ) : paidByGiftcard ? (

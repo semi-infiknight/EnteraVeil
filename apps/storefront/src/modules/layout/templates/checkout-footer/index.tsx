@@ -8,12 +8,8 @@ import { NavigationItem } from '@modules/common/components/navigation-item'
 import { Text } from '@modules/common/components/text'
 import {
   HeadphonesIcon,
-  KlarnaIcon,
   MaestroIcon,
   MastercardIcon,
-  PayPalIcon,
-  ShopPayIcon,
-  StripeIcon,
   VisaIcon,
 } from '@modules/common/icons'
 
@@ -53,10 +49,6 @@ export default function CheckoutFooter() {
             <VisaIcon />
             <MastercardIcon />
             <MaestroIcon />
-            <StripeIcon />
-            <PayPalIcon />
-            <ShopPayIcon />
-            <KlarnaIcon />
           </Box>
         </Box>
       </Container>

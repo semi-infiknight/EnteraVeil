@@ -2,14 +2,6 @@ import React from 'react'
 
 import { CreditCard } from '@medusajs/icons'
 import { StoreCollection, StoreProductCategory } from '@medusajs/types'
-import {
-  BancontactIcon,
-  BlikIcon,
-  IdealIcon,
-  PayPalIcon,
-  Przelewy24Icon,
-  StripeIcon,
-} from '@modules/common/icons'
 
 // Product filters
 export const FILTER_KEYS = {
@@ -63,43 +55,18 @@ export const paymentInfoMap: Record<
   string,
   { title: string; icon: React.JSX.Element }
 > = {
-  pp_stripe_stripe: {
-    title: 'Credit card',
-    icon: <StripeIcon />,
-  },
-  'pp_stripe-blik_stripe': {
-    title: 'BLIK',
-    icon: <BlikIcon size={26} />,
-  },
-  'pp_stripe-przelewy24_stripe': {
-    title: 'Przelewy24',
-    icon: <Przelewy24Icon size={34} />,
-  },
-  'pp_stripe-ideal_stripe': {
-    title: 'iDeal',
-    icon: <IdealIcon />,
-  },
-  'pp_stripe-bancontact_stripe': {
-    title: 'Bancontact',
-    icon: <BancontactIcon />,
-  },
-  pp_paypal_paypal: {
-    title: 'PayPal',
-    icon: <PayPalIcon />,
-  },
-  pp_system_default: {
-    title: 'Manual Payment',
+  pp_razorpay_razorpay: {
+    title: 'Razorpay (UPI / Cards / NetBanking)',
     icon: <CreditCard />,
   },
-  // Add more payment providers here
+  pp_system_default: {
+    title: 'Cash on Delivery',
+    icon: <CreditCard />,
+  },
 }
 
-// This only checks if it is native stripe for card payments, it ignores the other stripe-based providers
-export const isStripe = (providerId?: string) => {
-  return providerId?.startsWith('pp_stripe_')
-}
-export const isPaypal = (providerId?: string) => {
-  return providerId?.startsWith('pp_paypal')
+export const isRazorpay = (providerId?: string) => {
+  return providerId?.startsWith('pp_razorpay')
 }
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith('pp_system_default')
