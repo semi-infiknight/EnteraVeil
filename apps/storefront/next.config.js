@@ -7,6 +7,9 @@ checkEnvVariables()
  */
 const nextConfig = {
   reactStrictMode: true,
+  // Emit a standalone server bundle for Docker prod image
+  output: 'standalone',
+  outputFileTracingRoot: require('path').join(__dirname, '../..'),
   images: {
     // TO DO: Fix this in the future
     unoptimized: true,

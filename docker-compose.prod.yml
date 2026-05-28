@@ -1,0 +1,96 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_MULTIPLE_DATABASES: ${POSTGRES_DB},strapi
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/postgres-init.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis-data:/data
+
+  medusa:
+    build:
+      context: .
+      dockerfile: apps/medusa/Dockerfile
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    env_file: .env.prod
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379
+      STORE_CORS: https://${BRAND_DOMAIN}
+      ADMIN_CORS: https://api.${BRAND_DOMAIN}
+      AUTH_CORS: https://${BRAND_DOMAIN},https://api.${BRAND_DOMAIN}
+      MEDUSA_BACKEND_URL: https://api.${BRAND_DOMAIN}
+      NODE_ENV: production
+
+  storefront:
+    build:
+      context: .
+      dockerfile: apps/storefront/Dockerfile
+    restart: always
+    depends_on:
+      - medusa
+    env_file: .env.prod
+    environment:
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: https://api.${BRAND_DOMAIN}
+      NEXT_PUBLIC_STRAPI_URL: https://cms.${BRAND_DOMAIN}
+      NODE_ENV: production
+
+  strapi:
+    build:
+      context: .
+      dockerfile: apps/strapi/Dockerfile
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env.prod
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/strapi
+      STOREFRONT_REVALIDATION_URL: https://${BRAND_DOMAIN}/api/strapi-revalidate
+      NODE_ENV: production
+    volumes:
+      - strapi-uploads:/app/public/uploads
+
+  caddy:
+    image: caddy:2
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      BRAND_DOMAIN: ${BRAND_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - medusa
+      - storefront
+      - strapi
+
+volumes:
+  postgres-data:
+  redis-data:
+  strapi-uploads:
+  caddy-data:
+  caddy-config:

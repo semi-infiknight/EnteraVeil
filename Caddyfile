@@ -1,0 +1,24 @@
+# Caddy reverse-proxy config for EnteraVeil production.
+# {$BRAND_DOMAIN} is substituted from environment at container start.
+# Caddy auto-provisions TLS via Let's Encrypt on first hit.
+
+{$BRAND_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy storefront:8000
+}
+
+api.{$BRAND_DOMAIN} {
+	encode zstd gzip
+	# Razorpay webhooks POST here — Cloudflare proxy MUST be off
+	# (gray cloud / DNS-only) on this subdomain or signature verification breaks.
+	reverse_proxy medusa:9000
+}
+
+cms.{$BRAND_DOMAIN} {
+	encode zstd gzip
+	# Strapi admin + REST API. Increase upload limits for media.
+	request_body {
+		max_size 50MB
+	}
+	reverse_proxy strapi:1337
+}
