@@ -10,25 +10,40 @@ import {
   VariantColorData,
 } from 'types/strapi'
 
+// Legacy Solace Strapi client. Wrapped to degrade gracefully when Strapi is
+// down, the legacy content types don't exist, or the token is missing.
+// Callers either get a 2xx Response or a fake Response with `data: null`.
 export const fetchStrapiClient = async (
   endpoint: string,
   params?: RequestInit
-) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}${endpoint}`,
-    {
+): Promise<Response> => {
+  const url = process.env.NEXT_PUBLIC_STRAPI_URL
+  if (!url) {
+    return new Response(JSON.stringify({ data: null }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    })
+  }
+  try {
+    const response = await fetch(`${url}${endpoint}`, {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_READ_TOKEN}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_READ_TOKEN ?? ''}`,
       },
       ...params,
+    })
+    if (!response.ok) {
+      return new Response(JSON.stringify({ data: null }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      })
     }
-  )
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
+    return response
+  } catch {
+    return new Response(JSON.stringify({ data: null }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    })
   }
-
-  return response
 }
 
 // Homepage data

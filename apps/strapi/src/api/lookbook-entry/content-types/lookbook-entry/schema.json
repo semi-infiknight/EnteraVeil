@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lookbook_entries",
+  "info": {
+    "singularName": "lookbook-entry",
+    "pluralName": "lookbook-entries",
+    "displayName": "Lookbook entry",
+    "description": "Visual stories tied to product SKUs."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "linked_product_skus": {
+      "type": "json",
+      "default": []
+    }
+  }
+}
