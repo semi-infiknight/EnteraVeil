@@ -7,6 +7,57 @@
     @apply bg-primary;
     scroll-behavior: smooth;
   }
+
+  /* Editorial display heading utility — only used opt-in via .ev-display */
+  .ev-display {
+    font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+
+  .ev-eyebrow {
+    font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+}
+
+@layer utilities {
+  /* Marquee — used by the top ticker strip in the layout. */
+  @keyframes ev-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: ev-marquee 28s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: ev-marquee 60s linear infinite;
+  }
+
+  /* Subtle hover lift for editorial cards */
+  .ev-card-lift {
+    transition: transform 320ms ease, box-shadow 320ms ease;
+  }
+  .ev-card-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Gold accent rule */
+  .ev-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(var(--bg-action-primary) / 0.6) 12%,
+      rgb(var(--bg-action-primary) / 0.8) 50%,
+      rgb(var(--bg-action-primary) / 0.6) 88%,
+      transparent 100%
+    );
+  }
 }
 
 @layer utilities {

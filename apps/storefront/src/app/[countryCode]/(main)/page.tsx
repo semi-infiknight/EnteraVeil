@@ -10,6 +10,7 @@ import {
 } from '@lib/data/fetch'
 import { getProductsList } from '@lib/data/products'
 import { getRegion } from '@lib/data/regions'
+import { Marquee } from '@modules/common/components/marquee'
 import { Banner } from '@modules/home/components/banner'
 import BrandBanner from '@modules/home/components/brand-banner'
 import Collections from '@modules/home/components/collections'
@@ -82,6 +83,21 @@ export default async function Home(props: {
   return (
     <>
       {HeroBanner ? <Hero data={HeroBanner} /> : <HeroFallback />}
+
+      {/* Inline ticker between hero and collections — editorial flourish */}
+      <Marquee
+        speed="slow"
+        items={[
+          '★ Drop 001 ★',
+          'EnteraVeil',
+          'beyond the veil',
+          'anime streetwear',
+          'made in Bangalore',
+          'numbered runs',
+          'small batch',
+        ]}
+      />
+
       {strapiCollections?.data ? (
         <Collections
           cmsCollections={strapiCollections}
@@ -96,7 +112,7 @@ export default async function Home(props: {
           testId="our-bestsellers-section"
           products={products}
           regionId={region.id}
-          title="Our bestsellers"
+          title="Best of the drop"
           viewAll={{
             link: '/shop',
             text: 'View all',

@@ -3,68 +3,83 @@ import Image from 'next/image'
 import { Box } from '@modules/common/components/box'
 import { Button } from '@modules/common/components/button'
 import { Container } from '@modules/common/components/container'
-import { Heading } from '@modules/common/components/heading'
 import LocalizedClientLink from '@modules/common/components/localized-client-link'
+import { SectionHeading } from '@modules/common/components/section-heading'
 
-// Until real collections are seeded in Medusa, route the "drop" tiles to the
-// closest category page so the click doesn't 500.
+// Asymmetric editorial collection grid. Tile 0 spans 2 rows on desktop.
 const COLLECTIONS = [
   {
     title: 'Abyss',
+    tagline: 'Inked black, heavyweight cotton.',
     href: '/categories/shirts',
-    blurb: 'Inked-black drops, heavyweight cotton.',
     image:
-      'https://images.unsplash.com/photo-1542060748-10c28b62716f?auto=format&fit=crop&w=1200&q=70',
+      'https://images.unsplash.com/photo-1542060748-10c28b62716f?auto=format&fit=crop&w=1400&q=70',
+    badge: 'Drop 001',
   },
   {
     title: 'Mirage',
+    tagline: 'Pastel haze, glitch graphics.',
     href: '/categories/sweatshirts',
-    blurb: 'Pastel haze, glitch graphics.',
     image:
-      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=70',
+      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1400&q=70',
+    badge: 'Sweats',
   },
   {
     title: 'Genesis',
+    tagline: 'Day-one classics. Numbered.',
     href: '/categories/pants',
-    blurb: 'Day-one classics from the founding drop.',
     image:
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=70',
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1400&q=70',
+    badge: 'Bottoms',
   },
 ]
 
 const FeaturedCollections = () => (
-  <Container className="flex flex-col gap-6 small:gap-10">
-    <Box className="flex flex-col gap-2 small:flex-row small:items-end small:justify-between">
-      <Heading className="text-3xl text-basic-primary small:text-4xl">
-        Featured collections
-      </Heading>
-      <Button asChild variant="tonal" className="w-max">
-        <LocalizedClientLink href="/shop">View all</LocalizedClientLink>
-      </Button>
-    </Box>
-    <Box className="grid grid-cols-1 gap-3 small:grid-cols-3 small:gap-5">
-      {COLLECTIONS.map((c) => (
+  <Container className="flex flex-col gap-8 small:gap-12">
+    <SectionHeading
+      eyebrow="Collections"
+      title="Born from the veil."
+      description="Three capsules, one universe. Pick your faction — bigger silhouettes, heavier weights, weirder graphics."
+      action={
+        <Button asChild variant="tonal" className="w-max">
+          <LocalizedClientLink href="/shop">All drops →</LocalizedClientLink>
+        </Button>
+      }
+    />
+    <Box className="grid grid-cols-1 gap-3 small:grid-cols-2 small:grid-rows-2 small:gap-5 large:h-[720px]">
+      {COLLECTIONS.map((c, i) => (
         <LocalizedClientLink
           key={c.title}
           href={c.href}
-          className="group relative block aspect-[3/4] overflow-hidden"
+          className={
+            'group relative block overflow-hidden ev-card-lift ' +
+            (i === 0
+              ? 'aspect-[4/5] small:row-span-2 small:aspect-auto'
+              : 'aspect-[16/9] small:aspect-auto')
+          }
         >
           <Image
             src={c.image}
-            alt={`${c.title} collection`}
+            alt={`${c.title} — ${c.tagline}`}
             fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <Box className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          <span className="absolute left-4 top-4 z-10 inline-flex h-7 items-center rounded-full bg-static/95 px-3 text-xs font-medium uppercase tracking-[0.18em] text-primary">
+            {c.badge}
+          </span>
           <Box className="absolute bottom-5 left-5 right-5 flex flex-col gap-1">
-            <Heading
-              as="h3"
-              className="text-2xl text-static small:text-3xl"
-            >
+            <h3 className="ev-display text-3xl text-static small:text-4xl medium:text-5xl">
               {c.title}
-            </Heading>
-            <span className="text-sm text-static/80">{c.blurb}</span>
+            </h3>
+            <span className="text-sm text-static/80">{c.tagline}</span>
+            <span className="mt-3 inline-flex items-center gap-2 text-sm text-action-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              Discover{' '}
+              <span aria-hidden className="-translate-x-1 transition-transform duration-300 group-hover:translate-x-0">
+                →
+              </span>
+            </span>
           </Box>
         </LocalizedClientLink>
       ))}
