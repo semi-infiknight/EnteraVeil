@@ -14,11 +14,17 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutUsPage() {
+  const aboutRes = await getAboutUs().catch(() => ({ data: null }))
   const {
-    data: { Banner: bannerData, OurStory, WhyUs, OurCraftsmanship, Numbers },
-  } = await getAboutUs()
+    Banner: bannerData,
+    OurStory,
+    WhyUs,
+    OurCraftsmanship,
+    Numbers,
+  } = (aboutRes?.data as any) ?? {}
 
-  const { data: posts } = await getExploreBlogData()
+  const blogRes = await getExploreBlogData().catch(() => ({ data: null }))
+  const posts = blogRes?.data
 
   return (
     <>
@@ -27,7 +33,7 @@ export default async function AboutUsPage() {
       {WhyUs && <FramedTextSection data={WhyUs} />}
       {OurCraftsmanship && <BasicContentSection data={OurCraftsmanship} />}
       {Numbers && <NumericalSection data={Numbers} />}
-      <ExploreBlog posts={posts} />
+      {posts && <ExploreBlog posts={posts} />}
     </>
   )
 }

@@ -42,6 +42,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_SPACE_ENDPOINT,
       },
+      // Placeholder content sources (until Strapi is up)
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'plus.unsplash.com' },
     ],
   },
 }

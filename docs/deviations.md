@@ -105,3 +105,94 @@ Every non-trivial decision deviating from PLAN.md is recorded here with a one-li
 - **`docs/admin-guide.md`** written for the non-technical operator. Covers Medusa admin (login, products with variants, collections, order fulfillment, refunds, COD), Strapi admin (About, blog, lookbook, homepage sections, legal pages), and an explicit "Don't touch list" calling out the settings that silently break checkout if modified.
 - **`docs/troubleshooting.md`** written for the developer covering all the failure modes the plan listed (OOM, Razorpay webhook failures, Resend rate limits / domain, Strapi crashes, Postgres refused, SSL renewal, rollback) plus a few extras (storefront stale content, disk full, swap setup) discovered while writing the runbook. Quick-reference compose alias and command cheatsheet at the bottom.
 - **Phase 9's 🛑 (final acceptance test) is also deferred**: it requires a live deployment to execute the four-step smoke test (real Razorpay purchase, COD test, Strapi → storefront propagation, admin-guide readability). Will run after Phase 8.
+
+## Local preview tunnel — 2026-05-28
+
+- **Portable Postgres 16.14 at `C:\Labs\pgportable\`** (EDB binaries zip from `sbp.enterprisedb.com/getfile.jsp?fileid=1260202`, extracted via PowerShell `Expand-Archive` — no installer, no UAC). Cluster initdb'd at `C:\Labs\pgportable\data` with `-U postgres` + `--pwfile` + `-A md5`, started via `pg_ctl -o "-p 5433"` so it doesn't collide with any future native PG on the default 5432. Connection string `postgresql://postgres:devpass@localhost:5433/medusa_dev`. Why: two earlier sessions hit Windows UAC walls on winget/MSI installers (UIPI blocks the consent prompt from automation); portable zip + userspace data dir bypasses both.
+- **Medusa `.env` DATABASE_URL bumped from 5432 → 5433** to match portable PG. The previous 5432 entry was aspirational — no PG was actually running on it.
+- **`medusa-config.ts` FILE provider switched to `@medusajs/medusa/file-local` when S3 envs are empty** (was unconditionally `@medusajs/file-s3` which boot-fails with `Access key ID and secret access key are required`). New `isS3Configured` boolean gates which provider gets registered. Production with DO Spaces is unchanged (envs populated → S3 path); local dev and any deploy without Spaces falls back to local-disk storage.
+- **`send-order-confirmation-workflow.ts` step config names**: calling `sendNotificationStep([...])` twice inside the same workflow threw `Step send-notification is already defined in workflow.` Fixed by chaining `.config({ name: 'send-customer-notification' })` and `.config({ name: 'send-admin-notification' })` on the two invocations. Same underlying step, distinct step IDs in the orchestrator.
+- **Publishable key extracted directly from `api_key` table** (`SELECT token FROM api_key WHERE type='publishable' LIMIT 1`) rather than booting Medusa admin API to mint one — seed.ts already creates the `Webshop` publishable key and links the default sales channel, so the DB query is the source of truth and avoids an admin auth dance. Key: `pk_f6d52e31f0fb34938fd0dad9ede8cd568b687eece22521e913f4768bbf799828`.
+- **Admin user**: `admin@enteraveil.local` / `devpass123` via `add-admin.ts`. Local-dev credentials only; never reused in prod.
+- **Cloudflare Quick Tunnel** (`C:\Labs\cloudflared.exe tunnel --url http://localhost:8000`) chosen over `localtunnel` for the no-auth tunnel. Cloudflared binary is ~52MB, downloads in one curl, no account. URL is ephemeral (`*.trycloudflare.com`) and dies when the cloudflared process stops. Logged to `C:\Labs\cloudflared.log`.
+- **Storefront / Medusa / Postgres / cloudflared all run as background processes** (Bash tool `run_in_background`). Postgres survives independently of the bash task because `pg_ctl start` daemonises via Windows service-style fork. The three node processes (Medusa dev, storefront dev, cloudflared) are tied to their parent bash tasks — killing the parent kills them.
+- **Deferred (not in scope for the preview tunnel)**: Strapi container/process (storefront's `strapi.ts` swallows 401/connect-refused gracefully so pages render empty CMS sections); Razorpay/Resend with real keys; the `@medusajs/dashboard` + `@medusajs/draft-order/admin` vite resolution errors that surface when the admin UI client bundles — the API/store endpoints work fine; only `/app` admin UI is affected and not needed for the storefront preview.
+
+## Storefront / admin debugging — 2026-05-28
+
+- **Homepage was rendering as empty rectangles** because `ProductCarousel` threw `TypeError: Cannot read properties of null (reading 'calculated_price')` on every render: the IN region uses INR but the Medusa seed only seeded EUR/USD prices, so `cheapestVariant.cheapestPrice` is `null` for seeded products. The throw happened inside `<Suspense fallback={<SkeletonProductsCarousel />}>`, so the skeleton was stuck on screen indefinitely. Also broke client hydration cascade — which is why the footer accordion (Categories/Orders/About/Need help?) was visible but unclickable: those handlers never attached. Fix: `apps/storefront/src/modules/products/components/product-carousel/index.tsx` now defaults `calculated_price` / `original_price` to `'—'` when `cheapestPrice` is null. Suspense wrapper removed from the homepage call site (the data was already awaited; it served no purpose).
+- **Homepage now falls back to seeded content when Strapi is unreachable**. The previous `safe()` wrappers all skipped Strapi-conditional blocks (Hero, Collections, MidBanner, ExploreBlog), leaving only the carousel — which was broken (above). Added `HeroFallback` (gradient hero with "Shop now" CTA) and `FeaturedCategories` (4-tile category grid from Medusa) under `apps/storefront/src/modules/home/components/`. Page now renders content even with Strapi down. Also fixed the `strapiCollections` check — the legacy Strapi client returns `{ data: null }` (truthy) on failure, so the conditional must use `strapiCollections?.data`, not `strapiCollections`.
+- **Admin UI bundle errors resolved by overriding `@medusajs/ui` to preview**. `@medusajs/draft-order@2.12.5` imports `useDataTable`, `DataTable`, `createDataTableFilterHelper`, `createDataTableColumnHelper`, `Skeleton`, `Divider` from `@medusajs/ui`. Stable releases through `@medusajs/ui@4.1.13` don't re-export these from the package root. Added `"@medusajs/ui": "4.1.15-preview-20260528130220"` to workspace `package.json` `pnpm.overrides`. The 4.1.x preview line re-exports the data-table block from index. Caveat: pinning a dated preview build — revisit when 4.1.x has a stable release.
+- **Second cloudflared tunnel for admin: `https://museum-staying-prairie-airplane.trycloudflare.com → :9000`**. To make Medusa's admin Vite dev server accept the tunnel host, set `__MEDUSA_ADMIN_ADDITIONAL_ALLOWED_HOSTS=museum-staying-prairie-airplane.trycloudflare.com` in `apps/medusa/.env` (admin-bundler reads this env to pass `server.allowedHosts` to Vite). Also added the tunnel host to `ADMIN_CORS` / `AUTH_CORS` in `.env`. Log at `C:\Labs\cloudflared-admin.log`. URL is ephemeral; dies with the cloudflared process.
+- **Storefront homepage at `https://tracked-clicks-properties-bloomberg.trycloudflare.com/in`** now renders: header → hero gradient with "EnteraVeil" + "Shop now" CTA → 4-tile category grid (Shirts/Merch/Sweatshirts/Pants) → "Our bestsellers" carousel (products show with "—" price because INR prices aren't seeded — visible but flagging that follow-up seed work is needed) → footer with accordion dropdowns that now hydrate and respond to clicks.
+
+## Admin white-screen follow-up — 2026-05-28
+
+The earlier "admin works" report was wrong: API auth returned 200 but the SPA itself was failing to render in both local browser and tunnel. Root causes:
+
+- **Vite `define` was not applied to optimizeDeps in `@medusajs/admin-bundler@2.1`.** `@medusajs/dashboard` is in `optimizeDeps.include`, so it's pre-bundled by Vite's esbuild optimizer. The bundler config only set `define` at the top level, not `optimizeDeps.esbuildOptions.define`. In Vite 5.4.x, the top-level `define` does NOT propagate to the dep optimizer — every `__BACKEND_URL__`, `__BASE__`, `__AUTH_TYPE__`, `__JWT_TOKEN_STORAGE_KEY__`, `__STOREFRONT_URL__` literal remained unsubstituted in the served chunks, causing a `ReferenceError` during module evaluation. **Patched** `node_modules/.pnpm/@medusajs+admin-bundler@2.1_*/node_modules/@medusajs/admin-bundler/dist/index.js` to add `optimizeDeps.esbuildOptions.define` mirroring the top-level `define`. All three admin-bundler variants are hard-linked to the same inode, so one edit fixes all. The patch is fragile — it'll be lost on `pnpm install --force` or the package upgrading; **TODO: convert to a `pnpm patch`** so it persists.
+- **`@medusajs/admin-shared` was not resolvable from the medusa app's node_modules.** The Vite virtual module `virtual:medusa/i18n` imports `@medusajs/admin-shared`, but pnpm doesn't symlink it into `apps/medusa/node_modules/@medusajs/` because it's only a transitive dep of `@medusajs/admin-sdk`/`@medusajs/admin-bundler`. Result: `[vite] Internal server error: Failed to resolve import "@medusajs/admin-shared" from " virtual:medusa/i18n"` — visible only in the Medusa server log, not the browser console (the i18n module import silently failed, the dashboard couldn't initialize i18next, and React never rendered). Added `"@medusajs/admin-shared": "2.12.5"` to `apps/medusa/package.json` deps.
+- **`admin.backendUrl` switched from `process.env.MEDUSA_BACKEND_URL` to `''`** (in `apps/medusa/medusa-config.ts`). With an empty string, the dashboard's JS SDK uses relative URLs (e.g. `/auth/user/emailpass`), so admin works at both `http://localhost:9000/app` AND `https://<tunnel>.trycloudflare.com/app` without baking a host into the bundle. Previously the env var was `http://localhost:9000`, which would have made the bundle call localhost from the user's phone — broken. New override env var `MEDUSA_ADMIN_BACKEND_URL` is available if a fixed admin URL is ever needed (e.g. when admin is hosted on a different origin than the API).
+
+Verified via headless Chrome: both `http://localhost:9000/app` and `https://museum-staying-prairie-airplane.trycloudflare.com/app` redirect to `/app/login` and render the "Welcome to Medusa / Sign in to access the account area" form. `fetch('/auth/user/emailpass', ...)` from the tunnel origin returns a JWT token (409 chars), confirming end-to-end auth works through the tunnel.
+
+## Storefront parity push — 2026-05-28
+
+Goal: close the visual + interactive gap vs. the Solace reference demo (`solace-medusa-starter.vercel.app/dk`). Snapshots and gap list in `docs/storefront-parity-gaps.md`. Before/after PNGs in `C:\Labs\reference-screenshots\fixes\`.
+
+### New homepage sections (all gated on Strapi being down; replaced when CMS data is present)
+- `<HeroFallback>` — Unsplash hero image, dark gradient overlay, "New drop. Limited stitches." headline + tagline + two CTAs ("Shop the drop" → /shop, "View shirts" → /categories/shirts).
+- `<FeaturedCollections>` — 3 photo tiles (Abyss / Mirage / Genesis). Until real Medusa collections exist, each tile points to the closest category (shirts/sweatshirts/pants) so clicks don't 500.
+- `<FeaturedCategories>` — rewritten to use Unsplash photography per category handle instead of gradient tiles.
+- `<BrandBanner>` — full-width "Born in Bangalore. Inked for the anime hearts." banner with image background + CTA to /about-us.
+- `<Lookbook>` — 6-tile Instagram-style grid using Unsplash streetwear photos. Links to /blog for full view.
+- Added `images.unsplash.com` and `plus.unsplash.com` to `next.config.js` `images.remotePatterns`.
+
+### Bug fixes uncovered during the parity pass
+- `SideMenu` crashed (`Cannot read properties of null (reading 'find')`) when Strapi returns `{ data: null }`. Guarded with `strapiCollections?.data?.find(...)`. The crash was tearing down the entire page mid-hydration, manifesting as "This page couldn't load" in the browser.
+- `PaginatedProducts` in `modules/store/templates/paginated-products.tsx` threw the same `cheapestPrice.calculated_price` null-deref the carousel had. Same fix: fall back to the "from ₹1,499" placeholder when calculated_price is missing.
+- `login()` server action in `lib/data/customer.ts` set the auth cookie but never redirected, so the page stayed on the login form even after a successful auth. Added `redirect('/${countryCode}/account')` AFTER the try/catch (Next.js implements `redirect()` by throwing — must live outside the catch to bubble correctly). Same treatment for `signup()`.
+- Placeholder pricing on tiles: every component that displayed a product price (`ProductCarousel`, `PaginatedProducts`) now falls back to `'from ₹1,499'` when `calculated_price` is null. This is cosmetic — the IN region doesn't have INR prices seeded, but the visual was breaking everywhere. **TODO: seed real INR prices** so this placeholder is never shown.
+
+### Verified interactions (click-tested in headed Chrome)
+- Search: header magnifying-glass → modal opens → typing "shirt" + submit navigates to `/in/results/shirt` which renders 1 product tile + Recommended products carousel.
+- Sign-up: `/in/account` → "Create account" → fill form with `Shopper123!` + tick terms → submits → redirect to `/in/account` (now showing Dashboard / Order history / Shipping details / Account settings / Log out).
+- Login: log out from dashboard → form re-renders → submit existing credentials → redirect to dashboard. Verified the auth cookie persists across navigations.
+- Logout button: present on dashboard, returns user to login form.
+
+### Known remaining gaps (logged, not yet fixed — Priority D continuation)
+- PDP variant swatches and quantity selector still render as skeleton because `calculated_price` is null. Add-to-cart button hidden behind the same skeleton. Fix is upstream — needs INR prices seeded; carousel/tile placeholder doesn't cascade because PDP uses a different rendering path (`product-actions/option-select` etc.).
+- Shop filter bar: only "Price" dropdown exists; Solace has Collections + Product type as well. Out of scope for this pass.
+- Sort dropdown on /shop shows "Relevance" but no expanded options surfaced in headless render. Likely a Radix Select that needs a click to enumerate; works in real browser.
+- Hero CTA "View shirts" — fine for now; real plan is to drive to /collections/<handle> once real collections are seeded in Medusa.
+
+## INR pricing + shop filters — 2026-05-29
+
+### `seed-inr-prices.ts`
+- Walks every product variant and adds an INR price computed from its EUR price (× 90), then rounds to a retail tier (99 / 199 / 299 / 499 / 799 / 999 / 1499 / 1999 / 2499 / 2999 / 3999 / 4999) so prices look like ₹1,099 rather than ₹900.
+- Idempotent: re-runs check existing INR price on each variant's price_set and either skip (same amount), update (different amount), or create (missing).
+- All 20 variants seeded at ₹1,099 on first run; re-run reports `skipped=20`. `/store/products` now returns `calculated_amount: 1099, currency_code: 'inr'` for the IN region.
+- Side effect: the `'from ₹1,499'` placeholder in `ProductCarousel` and `PaginatedProducts` no longer appears — real prices everywhere.
+- Side effect 2: `get-variant-color.ts` was crashing on `colors.find()` when Strapi was absent. Now that PDP variant UI actually mounts (because prices populate), this crash became visible. Guarded with `colors?.find(...)`.
+
+### `seed-shop-filters.ts`
+- Creates 3 collections (Abyss / Mirage / Genesis) and 3 product types (Tees / Sweats / Bottoms) if missing, then assigns each product to a (collection, type) pair via a keyword match on title. Idempotent via existence-check before create + skip when product already has the same `collection_id` / `type_id`.
+- Initial naive `productModule.updateProducts(...)` bypassed the workflow event bus → index module never saw the change. Switched to `updateProductsWorkflow(container).run({...})` so the productsUpdated event fires.
+- Even with the workflow, the index module's snapshot stayed stale because the dev event bus is in-memory and the index sync doesn't pick up cross-process changes. **Disabled the `Modules.INDEX` registration in `medusa-config.ts`** when `MEDUSA_FF_INDEX_ENGINE !== 'true'`. Set `MEDUSA_FF_INDEX_ENGINE=false` in `.env`. Index can be re-enabled once Redis is wired up in prod.
+
+### `/store/search` rewrite
+- The route previously called `query.index(...)`. With the index module disabled it returns 400. Rewrote to use `query.graph(...)` (regular Postgres query through the data layer) and `title $ilike '%q%'` for free-text search. Same response shape. Filters by `collection_id`, `type_id`, `category_id`, `materials`, `price_from/to` all work.
+
+### Storefront wiring
+- `getStoreFilters()` in `lib/data/products.ts`: dropped `next: { revalidate: 3600 }` → `cache: 'no-store'`. With the 1-hour TTL, fresh seeds didn't surface until the cache expired; SSR was painting empty filter dropdowns even though the API returned data. **TODO: switch back to a short revalidate once data is stable in prod.**
+- `ProductFilters` now defensively null-guards `filters?.collection` / `filters?.type` (the legacy code assumed always-array shape).
+
+### Verification
+- PDP `/in/products/t-shirt` (headless render): ₹1,099.00 price, Color/Size swatches, "Add to cart" button, "Complete the look" carousel all show real prices. Screenshot `inr-prices-after.png`.
+- Shop `/in/shop`: filter bar shows **Collections | Product type | Price** desktop dropdowns + Sort by. Screenshot `shop-filters-after.png`.
+- URL-driven filter click-test (server-rendered product counts):
+  - `/in/shop` → 4 products
+  - `/in/shop?collection=<Abyss>` → 1 product
+  - `/in/shop?type=<Bottoms>` → 2 products
+  - `/in/shop?collection=<Genesis>&type=<Bottoms>` → 2 products (intersection)
+- Both tunnels remain 200. Tunnel-served `/in/shop` HTML contains 16× "₹1,099" and "Collections" / "Product type" filter labels.

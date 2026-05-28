@@ -10,3 +10,11 @@ reference/
 .turbo/
 .DS_Store
 *.log
+
+# Local dev artifacts
+.pnpm-store/
+.medusa/
+.vite/
+*.tsbuildinfo
+
+# Local screenshots + tunnel binaries (kept outside repo at C:\Labs\)

@@ -74,10 +74,11 @@ export async function signup(_currentState: unknown, formData: FormData) {
     await setAuthToken(loginToken as string)
 
     revalidateTag('customer', 'max')
-    return createdCustomer
   } catch (error: any) {
     return error.toString()
   }
+  const countryCode = (formData.get('country_code') as string) || 'in'
+  redirect(`/${countryCode}/account`)
 }
 
 export async function forgotPassword(
@@ -135,6 +136,7 @@ export async function resetPassword(
 export async function login(_currentState: unknown, formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
+  const countryCode = (formData.get('country_code') as string) || 'in'
 
   try {
     const token = await sdk.auth.login('customer', 'emailpass', {
@@ -146,6 +148,9 @@ export async function login(_currentState: unknown, formData: FormData) {
   } catch (error: any) {
     return error.toString()
   }
+  // Redirect outside the try/catch — Next.js implements redirect by throwing
+  // a special signal that would otherwise be swallowed by the catch.
+  redirect(`/${countryCode}/account`)
 }
 
 export async function signout(countryCode: string) {

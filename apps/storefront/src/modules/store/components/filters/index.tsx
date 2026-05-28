@@ -25,12 +25,12 @@ export default function ProductFilters({
   const searchParams = useSearchParams()
   const currentPrice = searchParams.get('price')
 
-  const collectionOptions = filters.collection.map((collection) => ({
+  const collectionOptions = (filters?.collection ?? []).map((collection) => ({
     id: collection.id,
     value: collection.value,
   }))
 
-  const typeOptions = filters.type.map((type) => ({
+  const typeOptions = (filters?.type ?? []).map((type) => ({
     id: type.id,
     value: type.value,
   }))

@@ -46,7 +46,13 @@ function SocialMedia({ className }: { className?: string }) {
 }
 
 export default async function Footer({ countryCode }: { countryCode: string }) {
-  const { product_categories } = await getCategoriesList()
+  // Degrade gracefully if Medusa is unreachable.
+  let product_categories: any[] = []
+  try {
+    ;({ product_categories } = await getCategoriesList())
+  } catch {
+    product_categories = []
+  }
   const footerNavigation = createFooterNavigation(product_categories)
 
   return (

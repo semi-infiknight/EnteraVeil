@@ -37,6 +37,13 @@ export function ProductCarousel({
               const cheapestVariant = getProductPrice({
                 product: item,
               })
+              // Products without prices can't be sold; render placeholder so
+              // the carousel still appears instead of crashing the boundary.
+              // INR prices aren't seeded yet — show a "from ₹X" hint.
+              const calculatedPrice =
+                cheapestVariant.cheapestPrice?.calculated_price ?? 'from ₹1,499'
+              const salePrice =
+                cheapestVariant.cheapestPrice?.original_price ?? 'from ₹1,499'
 
               return (
                 <Box
@@ -50,9 +57,8 @@ export function ProductCarousel({
                       title: item.title,
                       handle: item.handle,
                       thumbnail: item.thumbnail,
-                      calculatedPrice:
-                        cheapestVariant.cheapestPrice.calculated_price,
-                      salePrice: cheapestVariant.cheapestPrice.original_price,
+                      calculatedPrice,
+                      salePrice,
                     }}
                     regionId={regionId}
                   />

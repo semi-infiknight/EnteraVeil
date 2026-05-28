@@ -1,6 +1,6 @@
-import { Suspense } from 'react'
 import { Metadata } from 'next'
 
+import { getCategoriesList } from '@lib/data/categories'
 import { getCollectionsList } from '@lib/data/collections'
 import {
   getCollectionsData,
@@ -11,11 +11,15 @@ import {
 import { getProductsList } from '@lib/data/products'
 import { getRegion } from '@lib/data/regions'
 import { Banner } from '@modules/home/components/banner'
+import BrandBanner from '@modules/home/components/brand-banner'
 import Collections from '@modules/home/components/collections'
 import { ExploreBlog } from '@modules/home/components/explore-blog'
+import FeaturedCategories from '@modules/home/components/featured-categories'
+import FeaturedCollections from '@modules/home/components/featured-collections'
 import Hero from '@modules/home/components/hero'
+import HeroFallback from '@modules/home/components/hero-fallback'
+import Lookbook from '@modules/home/components/lookbook'
 import { ProductCarousel } from '@modules/products/components/product-carousel'
-import SkeletonProductsCarousel from '@modules/skeletons/templates/skeleton-products-carousel'
 
 export const metadata: Metadata = {
   title: 'EnteraVeil — anime streetwear from beyond the veil',
@@ -30,48 +34,64 @@ export default async function Home(props: {
 
   const { countryCode } = params
 
-  const [{ collections: collectionsList }, { products }] = await Promise.all([
-    getCollectionsList(),
-    getProductsList({
-      pageParam: 0,
-      queryParams: { limit: 9 },
-      countryCode: countryCode,
-    }).then(({ response }) => response),
-  ])
-
-  const region = await getRegion(countryCode)
-
-  if (!products || !collectionsList || !region) {
-    return null
+  // Degrade gracefully if Medusa or Strapi is unreachable.
+  const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
+    try {
+      return await fn()
+    } catch {
+      return fallback
+    }
   }
+
+  const [{ collections: collectionsList }, { products }, { product_categories }] =
+    await Promise.all([
+      safe(() => getCollectionsList(), { collections: [], count: 0 } as any),
+      safe(
+        () =>
+          getProductsList({
+            pageParam: 0,
+            queryParams: { limit: 9 },
+            countryCode: countryCode,
+          }).then(({ response }) => response),
+        { products: [], count: 0 } as any
+      ),
+      safe(
+        () => getCategoriesList(0, 100),
+        { product_categories: [], count: 0 } as any
+      ),
+    ])
+
+  const region = await safe(() => getRegion(countryCode), null as any)
 
   // CMS data
   const [
     strapiCollections,
-    {
-      data: { HeroBanner },
-    },
-    {
-      data: { MidBanner },
-    },
-    { data: posts },
+    heroRes,
+    midRes,
+    postsRes,
   ] = await Promise.all([
-    getCollectionsData(),
-    getHeroBannerData(),
-    getMidBannerData(),
-    getExploreBlogData(),
+    safe(() => getCollectionsData(), { data: null } as any),
+    safe(() => getHeroBannerData(), { data: { HeroBanner: null } } as any),
+    safe(() => getMidBannerData(), { data: { MidBanner: null } } as any),
+    safe(() => getExploreBlogData(), { data: null } as any),
   ])
+  const HeroBanner = heroRes?.data?.HeroBanner
+  const MidBanner = midRes?.data?.MidBanner
+  const posts = postsRes?.data
 
   return (
     <>
-      {HeroBanner && <Hero data={HeroBanner} />}
-      {strapiCollections && (
+      {HeroBanner ? <Hero data={HeroBanner} /> : <HeroFallback />}
+      {strapiCollections?.data ? (
         <Collections
           cmsCollections={strapiCollections}
           medusaCollections={collectionsList}
         />
+      ) : (
+        <FeaturedCollections />
       )}
-      <Suspense fallback={<SkeletonProductsCarousel />}>
+      <FeaturedCategories categories={product_categories ?? []} />
+      {region && products?.length > 0 && (
         <ProductCarousel
           testId="our-bestsellers-section"
           products={products}
@@ -82,8 +102,9 @@ export default async function Home(props: {
             text: 'View all',
           }}
         />
-      </Suspense>
-      {MidBanner && <Banner data={MidBanner} />}
+      )}
+      {MidBanner ? <Banner data={MidBanner} /> : <BrandBanner />}
+      <Lookbook />
       {posts && posts.length > 0 && <ExploreBlog posts={posts} />}
     </>
   )

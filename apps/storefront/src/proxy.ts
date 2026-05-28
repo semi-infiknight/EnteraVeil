@@ -5,7 +5,7 @@ import { HttpTypes } from '@medusajs/types'
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
 const PUBLISHABLE_API_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
-const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || 'us'
+const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || 'in'
 
 const regionMapCache = {
   regionMap: new Map<string, HttpTypes.StoreRegion>(),
@@ -40,7 +40,17 @@ async function getRegionMap() {
 
       regionMapCache.regionMapUpdated = Date.now()
     } catch (error) {
-      throw new Error('Error fetching regions', error)
+      // Medusa unreachable (e.g. local preview without backend). Fall back to
+      // a stub region map so the storefront still renders rather than 500ing.
+      console.warn(
+        '[proxy] Region fetch failed, using stub region map for default',
+        DEFAULT_REGION
+      )
+      regionMapCache.regionMap.set(
+        DEFAULT_REGION,
+        {} as HttpTypes.StoreRegion
+      )
+      regionMapCache.regionMapUpdated = Date.now()
     }
   }
 

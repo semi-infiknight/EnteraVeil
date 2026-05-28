@@ -164,9 +164,9 @@ export const getStoreFilters = async function () {
       headers: {
         'x-publishable-api-key': PUBLISHABLE_API_KEY!,
       },
-      next: {
-        revalidate: 3600,
-      },
+      // Don't cache during dev — collection/type seeds should reflect on the
+      // very next request without bouncing the dev server.
+      cache: 'no-store',
     }
   ).then((res) => res.json())
 

@@ -59,7 +59,7 @@ export const sendOrderConfirmationWorkflow = createWorkflow(
             order: orders[0]
           }
         }
-      ]);
+      ]).config({ name: 'send-customer-notification' });
     });
 
     const adminNotification = when({ orders }, () => !!adminEmail).then(() => {
@@ -72,7 +72,7 @@ export const sendOrderConfirmationWorkflow = createWorkflow(
             order: orders[0]
           }
         }
-      ]);
+      ]).config({ name: 'send-admin-notification' });
     });
 
     return new WorkflowResponse({

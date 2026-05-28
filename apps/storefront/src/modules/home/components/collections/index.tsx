@@ -82,7 +82,7 @@ const Collections = ({
   medusaCollections: StoreCollection[]
 }) => {
   const validCollections = useMemo(() => {
-    if (!cmsCollections.data.length || !medusaCollections.length) return null
+    if (!cmsCollections?.data?.length || !medusaCollections?.length) return null
     const collections = cmsCollections.data.filter((cmsCollection) =>
       medusaCollections.some(
         (medusaCollection) => medusaCollection.handle === cmsCollection.Handle

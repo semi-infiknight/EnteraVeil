@@ -16,13 +16,15 @@ export const metadata: Metadata = {
 }
 
 export default async function TermsAndConditionsPage() {
-  const {
-    data: { PageContent },
-  } = await getContentPage('terms-and-condition', 'terms-and-conditions')
+  const res = await getContentPage(
+    'terms-and-condition',
+    'terms-and-conditions'
+  ).catch(() => ({ data: null }))
+  const PageContent = (res?.data as any)?.PageContent ?? ''
 
   const mdxSource = await serializeMdx(PageContent)
 
-  const bookmarks = mdxSource.frontmatter.headings.map((heading) => {
+  const bookmarks = (mdxSource?.frontmatter?.headings ?? []).map((heading) => {
     return {
       id: heading.id,
       label: heading.title,
@@ -41,7 +43,13 @@ export default async function TermsAndConditionsPage() {
             <SidebarBookmarks data={bookmarks} />
           </Box>
           <Box className="col-span-12 space-y-10 medium:col-span-8 medium:col-start-5">
-            <MDXRemote source={mdxSource} />
+            {PageContent ? (
+              <MDXRemote source={mdxSource} />
+            ) : (
+              <p className="text-secondary">
+                Content unavailable in this preview.
+              </p>
+            )}
           </Box>
         </Box>
       </Container>

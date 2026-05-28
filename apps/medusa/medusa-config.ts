@@ -56,23 +56,34 @@ if (paymentProviders.length > 0) {
   };
 }
 
+const isS3Configured =
+  Boolean(process.env.DO_SPACE_ACCESS_KEY) &&
+  Boolean(process.env.DO_SPACE_SECRET_KEY) &&
+  Boolean(process.env.DO_SPACE_BUCKET);
+
 const modules = {
   [Modules.FILE]: {
     resolve: '@medusajs/medusa/file',
     options: {
       providers: [
-        {
-          resolve: '@medusajs/file-s3',
-          id: 's3',
-          options: {
-            file_url: process.env.DO_SPACE_URL,
-            access_key_id: process.env.DO_SPACE_ACCESS_KEY,
-            secret_access_key: process.env.DO_SPACE_SECRET_KEY,
-            region: process.env.DO_SPACE_REGION,
-            bucket: process.env.DO_SPACE_BUCKET,
-            endpoint: process.env.DO_SPACE_ENDPOINT,
-          },
-        },
+        isS3Configured
+          ? {
+              resolve: '@medusajs/file-s3',
+              id: 's3',
+              options: {
+                file_url: process.env.DO_SPACE_URL,
+                access_key_id: process.env.DO_SPACE_ACCESS_KEY,
+                secret_access_key: process.env.DO_SPACE_SECRET_KEY,
+                region: process.env.DO_SPACE_REGION,
+                bucket: process.env.DO_SPACE_BUCKET,
+                endpoint: process.env.DO_SPACE_ENDPOINT,
+              },
+            }
+          : {
+              resolve: '@medusajs/medusa/file-local',
+              id: 'local',
+              options: {},
+            },
       ],
     },
   },
@@ -92,15 +103,25 @@ const modules = {
       ],
     },
   },
-  [Modules.INDEX]: {
-    resolve: '@medusajs/index',
-  },
 };
+
+// Index engine requires Redis-backed event bus to reliably re-index when
+// products are updated via workflows. In single-process dev with the in-memory
+// event bus, index updates from scripts don't reach the index module, so
+// /store/products?collection_id=... returns stale empty results. Disable until
+// Redis is wired up.
+if (process.env.MEDUSA_FF_INDEX_ENGINE === 'true') {
+  // @ts-expect-error narrowing
+  modules[Modules.INDEX] = { resolve: '@medusajs/index' };
+}
 
 module.exports = defineConfig({
   plugins: ['medusa-plugin-razorpay-v2'],
   admin: {
-    backendUrl: process.env.MEDUSA_BACKEND_URL,
+    // Empty string → admin bundle uses relative URLs ("/auth/...") so it works
+    // through both the local origin and the public cloudflared tunnel without
+    // baking a host into the JS.
+    backendUrl: process.env.MEDUSA_ADMIN_BACKEND_URL ?? '',
     disable: process.env.DISABLE_MEDUSA_ADMIN === 'true',
   },
   projectConfig: {

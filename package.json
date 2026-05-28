@@ -7,5 +7,12 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint"
+  },
+  "pnpm": {
+    "overrides": {
+      "@medusajs/utils": "2.12.5",
+      "@medusajs/types": "2.12.5",
+      "@medusajs/ui": "4.1.15-preview-20260528130220"
+    }
   }
 }

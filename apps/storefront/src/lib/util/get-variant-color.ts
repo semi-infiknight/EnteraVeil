@@ -2,9 +2,9 @@ import { VariantColor } from 'types/strapi'
 
 export const getVariantColor = (
   variantName: string,
-  colors: VariantColor[]
+  colors: VariantColor[] | null | undefined
 ) => {
-  const color = colors.find((c) => c.Name === variantName)
+  const color = colors?.find((c) => c.Name === variantName)
 
   return color?.Type?.[0]
 }

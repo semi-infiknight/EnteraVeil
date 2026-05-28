@@ -18,7 +18,7 @@ type SidebarBookmarksProps = {
 
 const SidebarBookmarks = ({ data }: SidebarBookmarksProps) => {
   const [isOpen, setIsOpen] = useState(true)
-  const [activeSection, setActiveSection] = useState(data[0].id)
+  const [activeSection, setActiveSection] = useState(data?.[0]?.id ?? '')
 
   useEffect(() => {
     const handleScroll = () => {

@@ -8,16 +8,28 @@ import NavActions from './nav-actions'
 import NavContent from './nav-content'
 
 export default async function NavWrapper(props: any) {
+  // Degrade gracefully when Medusa is unreachable so the brand chrome still renders.
+  const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
+    try {
+      return await fn()
+    } catch {
+      return fallback
+    }
+  }
   const [productCategories, { collections }, strapiCollections, { products }] =
     await Promise.all([
-      listCategories(),
-      getCollectionsList(),
-      getCollectionsData(),
-      getProductsList({
-        pageParam: 0,
-        queryParams: { limit: 4 },
-        countryCode: props.countryCode,
-      }).then(({ response }) => response),
+      safe(() => listCategories(), [] as any),
+      safe(() => getCollectionsList(), { collections: [], count: 0 } as any),
+      safe(() => getCollectionsData(), { data: null } as any),
+      safe(
+        () =>
+          getProductsList({
+            pageParam: 0,
+            queryParams: { limit: 4 },
+            countryCode: props.countryCode,
+          }).then(({ response }) => response),
+        { products: [], count: 0 } as any
+      ),
     ])
 
   return (

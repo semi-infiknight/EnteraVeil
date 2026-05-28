@@ -15,9 +15,8 @@ export const metadata: Metadata = {
 }
 
 export default async function FAQPage() {
-  const {
-    data: { FAQSection },
-  } = await getFAQ()
+  const faqRes = await getFAQ().catch(() => ({ data: null }))
+  const FAQSection = (faqRes?.data as any)?.FAQSection ?? []
 
   const bookmarks = FAQSection.map((section) => {
     return {

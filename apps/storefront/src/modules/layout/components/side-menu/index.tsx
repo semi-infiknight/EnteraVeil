@@ -85,7 +85,7 @@ const SideMenu = ({
         (cat) => cat.type === 'parent_category'
       )
 
-      const strapiCollection = strapiCollections.data.find(
+      const strapiCollection = strapiCollections?.data?.find(
         (cmsCollection) => cmsCollection.Handle === item.handle_id
       )
 
