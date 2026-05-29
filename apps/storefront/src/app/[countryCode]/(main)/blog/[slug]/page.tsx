@@ -6,18 +6,19 @@ import { StoreRegion } from '@medusajs/types'
 import BlogPostTemplate from '@modules/blog/templates/blogPostTemplate'
 
 export async function generateStaticParams() {
-  const slugs = await getAllBlogSlugs()
+  // Strapi may be offline — treat any failure as "no slugs".
+  const slugs = await getAllBlogSlugs().catch(() => [] as string[])
+  if (!slugs?.length) return []
 
-  if (!slugs) {
-    return []
-  }
-
-  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
-    regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
-  )
+  const countryCodes = await listRegions()
+    .then((regions: StoreRegion[]) =>
+      regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
+    )
+    .catch(() => [] as string[])
+  if (!countryCodes?.length) return []
 
   return slugs.flatMap((slug) =>
-    countryCodes.map((countryCode) => ({
+    (countryCodes as string[]).filter(Boolean).map((countryCode) => ({
       slug,
       countryCode,
     }))

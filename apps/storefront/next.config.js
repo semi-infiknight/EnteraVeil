@@ -1,50 +1,11 @@
-const checkEnvVariables = require('./check-env-variables')
-
-checkEnvVariables()
-
-/**
- * @type {import('next').NextConfig}
- */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // Emit a standalone server bundle for Docker prod image
-  output: 'standalone',
-  outputFileTracingRoot: require('path').join(__dirname, '../..'),
   images: {
-    // TO DO: Fix this in the future
-    unoptimized: true,
     remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-public-images.s3.eu-west-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.us-east-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_SPACE_DOMAIN,
-      },
-      {
-        protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_CDN_SPACE_DOMAIN,
-      },
-      {
-        protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_SPACE_ENDPOINT,
-      },
-      // Placeholder content sources (until Strapi is up)
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'plus.unsplash.com' },
+      { protocol: 'https', hostname: 'medusa-public-images.s3.eu-west-1.amazonaws.com' },
+      { protocol: 'https', hostname: '*.amazonaws.com' },
     ],
   },
 }
