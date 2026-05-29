@@ -123,6 +123,13 @@ module.exports = defineConfig({
     // baking a host into the JS.
     backendUrl: process.env.MEDUSA_ADMIN_BACKEND_URL ?? '',
     disable: process.env.DISABLE_MEDUSA_ADMIN === 'true',
+    // Vite dev server rejects unknown hosts; allow cloudflared trycloudflare.com
+    // subdomains so the admin loads through the public tunnel.
+    vite: () => ({
+      server: {
+        allowedHosts: ['.trycloudflare.com', '.localhost', 'localhost'],
+      },
+    }),
   },
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
