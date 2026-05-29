@@ -90,20 +90,30 @@ const CartDropdown = ({
         <Transition
           show={isOpenCartDropdown}
           as={Fragment}
-          enter="transition ease-out duration-200"
-          enterFrom="opacity-0 translate-y-1"
-          enterTo="opacity-100 translate-y-0"
-          leave="transition ease-in duration-150"
-          leaveFrom="opacity-100 translate-y-0"
-          leaveTo="opacity-0 translate-y-1"
+          enter="transition ease-out duration-[260ms]"
+          enterFrom="opacity-0 translate-x-2 -translate-y-1"
+          enterTo="opacity-100 translate-x-0 translate-y-0"
+          leave="transition ease-in duration-200"
+          leaveFrom="opacity-100 translate-x-0 translate-y-0"
+          leaveTo="opacity-0 translate-x-2 -translate-y-1"
         >
           <Popover.Panel
             static
-            className="absolute right-0 top-[calc(100%+8px)] hidden w-[460px] border border-action-primary bg-primary text-ui-fg-base small:block"
+            className="absolute right-0 top-[calc(100%+8px)] hidden w-[460px] border border-action-primary/40 bg-ev-elevated text-ui-fg-base shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur small:block"
             data-testid="nav-cart-dropdown"
           >
-            <Box className="flex items-center border-b-[0.5px] border-basic-primary p-5">
-              <Text className="text-2xl">Shopping Cart</Text>
+            <Box className="flex items-center justify-between gap-3 border-b border-action-primary/25 p-5">
+              <div className="flex flex-col">
+                <span className="ev-eyebrow text-action-primary">Your cart</span>
+                <Text className="ev-display-soft mt-1 text-2xl text-basic-primary">
+                  {totalItems > 0 ? `${totalItems} item${totalItems > 1 ? 's' : ''}` : 'Empty for now'}
+                </Text>
+              </div>
+              {totalItems > 0 && (
+                <span className="ev-mono shrink-0 rounded-full border border-action-primary/40 px-2.5 py-1 text-action-primary">
+                  Drop 001
+                </span>
+              )}
             </Box>
             {cartState && cartState.items?.length ? (
               <>
@@ -206,21 +216,39 @@ const CartDropdown = ({
                 </Box>
               </>
             ) : (
-              <Box className="my-6 flex flex-col items-center justify-center gap-y-6 px-10 py-5">
-                <BagIcon className="h-14 w-14" />
+              <Box className="my-2 flex flex-col items-center justify-center gap-y-5 px-8 py-8 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-action-primary/30 bg-primary/40 text-action-primary">
+                  <BagIcon className="h-7 w-7" />
+                </div>
                 <Box className="flex flex-col items-center justify-center gap-y-2">
-                  <Heading as="h4" className="text-2xl">
-                    Your shopping cart is empty.
+                  <Heading
+                    as="h4"
+                    className="ev-display-soft text-2xl text-basic-primary"
+                  >
+                    Nothing in the void yet.
                   </Heading>
-                  <Text className="text-secondary">
-                    Are you looking for inspiration?
+                  <Text className="max-w-[280px] text-secondary">
+                    Hand-printed tees and heavyweight sweats are waiting on the
+                    drop page.
                   </Text>
                 </Box>
-                <Button onClick={closeCartDropdown} asChild className="w-full">
-                  <LocalizedClientLink href="/">
-                    Explore Home page
-                  </LocalizedClientLink>
-                </Button>
+                <div className="flex w-full flex-col gap-2">
+                  <Button onClick={closeCartDropdown} asChild className="w-full">
+                    <LocalizedClientLink href="/shop">
+                      Shop the drop →
+                    </LocalizedClientLink>
+                  </Button>
+                  <Button
+                    onClick={closeCartDropdown}
+                    asChild
+                    variant="tonal"
+                    className="w-full"
+                  >
+                    <LocalizedClientLink href="/lookbook">
+                      View the lookbook
+                    </LocalizedClientLink>
+                  </Button>
+                </div>
               </Box>
             )}
           </Popover.Panel>
