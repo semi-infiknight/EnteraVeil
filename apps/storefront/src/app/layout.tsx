@@ -1,5 +1,10 @@
 import { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import {
+  Bricolage_Grotesque,
+  Inter,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from 'next/font/google'
 
 import { getBaseURL } from '@lib/util/env'
 import { ProgressBar } from '@modules/common/components/progress-bar'
@@ -20,6 +25,23 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 })
 
+// Editorial display face — tight, condensed, made for poster-scale type.
+// Used for hero headlines, drop callouts, and lookbook captions.
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['400', '600', '700', '800'],
+})
+
+// Monospace for metadata strips ("DROP 01 / SS26 / BLR").
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+  weight: ['400', '500'],
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
   title: {
@@ -34,7 +56,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${bricolage.variable} ${jetbrains.variable}`}
     >
       <body className="font-body text-basic-primary">
         <ThemeProvider

@@ -6,22 +6,48 @@
   body {
     @apply bg-primary;
     scroll-behavior: smooth;
+    /* Loosen body line-height for editorial reading rhythm */
+    line-height: 1.6;
   }
 
-  /* Editorial display heading utility — only used opt-in via .ev-display */
+  /* Editorial display — Bricolage Grotesque, very tight, poster-scale. */
   .ev-display {
-    font-family: var(--font-heading), 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 0.9;
+    font-family: var(--font-display), var(--font-heading), 'Space Grotesk',
+      sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.86;
+    font-feature-settings: 'ss01' 1, 'ss02' 1;
   }
 
+  /* Slightly relaxed display — for section titles where 0.86 is too tight. */
+  .ev-display-soft {
+    font-family: var(--font-display), var(--font-heading), 'Space Grotesk',
+      sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.96;
+  }
+
+  /* Wide-tracked uppercase eyebrow */
   .ev-eyebrow {
-    font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+    font-family: var(--font-mono), var(--font-heading), 'Space Grotesk',
+      monospace;
     font-size: 11px;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     line-height: 1;
+    font-weight: 500;
+  }
+
+  /* Monospace metadata — vertical strips, dropbar callouts */
+  .ev-mono {
+    font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    font-weight: 500;
   }
 }
 
