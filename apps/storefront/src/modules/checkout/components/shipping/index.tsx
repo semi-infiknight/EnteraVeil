@@ -106,43 +106,60 @@ const Shipping: React.FC<ShippingProps> = ({
       {isOpen ? (
         <Box data-testid="delivery-options-container">
           <RadioGroup value={selectedShippingMethod?.id || ''} onChange={set}>
-            {availableShippingMethods?.map((option) => {
-              return (
-                <RadioGroup.Option
-                  key={option.id}
-                  value={option.id}
-                  data-testid="delivery-option-radio"
-                  className={cn(
-                    'flex cursor-pointer flex-row items-center justify-between gap-1 border p-2 !pr-4 text-basic-primary transition-all duration-200',
-                    {
-                      'border-action-primary':
-                        option.id === selectedShippingMethod?.id,
-                    }
-                  )}
-                >
-                  <Box className="flex w-full items-center gap-x-2">
-                    <RadioGroupRoot className="m-3">
+            <div className="flex flex-col gap-2">
+              {availableShippingMethods?.map((option, idx) => {
+                const isSelected = option.id === selectedShippingMethod?.id
+                return (
+                  <RadioGroup.Option
+                    key={option.id}
+                    value={option.id}
+                    data-testid="delivery-option-radio"
+                    className={cn(
+                      'group relative flex cursor-pointer flex-row items-center gap-3 border-2 px-4 py-4 text-basic-primary transition-all duration-200',
+                      isSelected
+                        ? 'border-action-primary bg-ev-elevated shadow-[0_0_0_2px_rgb(var(--bg-action-primary)/0.15)]'
+                        : 'border-basic-primary/15 hover:border-action-primary/50 bg-transparent'
+                    )}
+                  >
+                    <RadioGroupRoot>
                       <RadioGroupItem
                         id={option.id}
                         value={option.id}
-                        checked={option.id === selectedShippingMethod?.id}
+                        checked={isSelected}
                       >
                         <RadioGroupIndicator />
                       </RadioGroupItem>
                     </RadioGroupRoot>
-                    <Box className="flex w-full flex-col gap-1 small:flex-row small:items-center small:justify-between">
-                      <span className="text-lg">{option.name}</span>
-                      <span className="justify-self-end text-md">
-                        {convertToLocale({
-                          amount: option.amount,
-                          currency_code: cart?.currency_code,
-                        })}
+                    <Box className="flex w-full flex-col gap-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="ev-mono text-action-primary/80">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-base text-basic-primary">
+                          {option.name}
+                        </span>
+                      </div>
+                      <span className="text-sm text-secondary">
+                        Hand-packed in Bangalore · COD available
                       </span>
                     </Box>
-                  </Box>
-                </RadioGroup.Option>
-              )
-            })}
+                    <span
+                      className={cn(
+                        'ev-display-soft shrink-0 text-xl transition-colors',
+                        isSelected
+                          ? 'text-action-primary'
+                          : 'text-basic-primary'
+                      )}
+                    >
+                      {convertToLocale({
+                        amount: option.amount,
+                        currency_code: cart?.currency_code,
+                      })}
+                    </span>
+                  </RadioGroup.Option>
+                )
+              })}
+            </div>
           </RadioGroup>
           <ErrorMessage
             error={error}
