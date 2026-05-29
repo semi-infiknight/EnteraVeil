@@ -56,17 +56,26 @@ export const SearchDialog = ({
       <DialogPortal>
         <DialogOverlay />
         <DialogContent
-          className="!max-h-full !max-w-full !rounded-none"
+          className="!max-h-full !max-w-full !rounded-none bg-primary"
           aria-describedby={undefined}
         >
-          <DialogHeader className="flex items-center gap-4 !border-b-0 !p-4 text-xl text-basic-primary small:text-2xl">
+          {/* Editorial top strip */}
+          <div className="flex items-center justify-between border-b border-action-primary/15 px-4 py-3 small:px-6">
+            <span className="ev-eyebrow text-action-primary">
+              Search the drop
+            </span>
             <Button
               withIcon
               variant="text"
               onClick={() => handleOpenDialogChange(false)}
+              aria-label="Close search"
+              data-testid="search-close"
             >
               <ArrowLeftIcon />
             </Button>
+          </div>
+
+          <DialogHeader className="flex items-center gap-3 !border-b-0 !px-4 !py-5 text-xl text-basic-primary small:!px-6 small:text-2xl">
             <ControlledSearchBox
               countryCode={countryCode}
               open={isOpen}
@@ -78,16 +87,16 @@ export const SearchDialog = ({
           </VisuallyHidden.Root>
           <DialogBody className="overflow-y-auto">
             <Tabs defaultValue="tab1">
-              <TabsList className="flex shrink-0 rounded-t-md bg-primary">
+              <TabsList className="flex shrink-0 gap-2 border-b border-action-primary/15 bg-primary px-4 small:px-6">
                 <TabsTrigger
                   value="tab1"
-                  className="border-b border-basic-primary text-basic-primary data-[state=active]:border-action-primary"
+                  className="ev-mono px-2 py-3 text-secondary data-[state=active]:text-action-primary border-b-2 border-transparent data-[state=active]:border-action-primary -mb-px"
                 >
-                  Search results
+                  Results
                 </TabsTrigger>
                 <TabsTrigger
                   value="tab2"
-                  className="border-b border-basic-primary text-basic-primary data-[state=active]:border-action-primary"
+                  className="ev-mono px-2 py-3 text-secondary data-[state=active]:text-action-primary border-b-2 border-transparent data-[state=active]:border-action-primary -mb-px"
                 >
                   Recommended
                 </TabsTrigger>
