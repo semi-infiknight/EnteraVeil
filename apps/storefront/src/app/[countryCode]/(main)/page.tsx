@@ -10,7 +10,9 @@ import {
 } from '@lib/data/fetch'
 import { getProductsList } from '@lib/data/products'
 import { getRegion } from '@lib/data/regions'
+import { Container } from '@modules/common/components/container'
 import { Marquee } from '@modules/common/components/marquee'
+import { SectionDivider } from '@modules/common/components/section-heading'
 import { Banner } from '@modules/home/components/banner'
 import BrandBanner from '@modules/home/components/brand-banner'
 import Collections from '@modules/home/components/collections'
@@ -98,6 +100,9 @@ export default async function Home(props: {
         ]}
       />
 
+      <Container className="!py-0">
+        <SectionDivider index="01" label="Collections" />
+      </Container>
       {strapiCollections?.data ? (
         <Collections
           cmsCollections={strapiCollections}
@@ -106,22 +111,60 @@ export default async function Home(props: {
       ) : (
         <FeaturedCollections />
       )}
+
+      <Container className="!py-0">
+        <SectionDivider index="02" label="Categories" />
+      </Container>
       <FeaturedCategories categories={product_categories ?? []} />
+
       {region && products?.length > 0 && (
-        <ProductCarousel
-          testId="our-bestsellers-section"
-          products={products}
-          regionId={region.id}
-          title="Best of the drop"
-          viewAll={{
-            link: '/shop',
-            text: 'View all',
-          }}
-        />
+        <>
+          <Container className="!py-0">
+            <SectionDivider index="03" label="Best of the drop" />
+          </Container>
+          <ProductCarousel
+            testId="our-bestsellers-section"
+            products={products}
+            regionId={region.id}
+            title="Best of the drop"
+            viewAll={{
+              link: '/shop',
+              text: 'View all',
+            }}
+          />
+        </>
       )}
+
+      {/* Mid-page ticker — heavier graphic statements */}
+      <Marquee
+        items={[
+          'Hand-printed',
+          'Numbered',
+          'Small batch',
+          'Anime DNA',
+          'Shipped from BLR',
+          'Made for the void',
+        ]}
+      />
+
+      <Container className="!py-0">
+        <SectionDivider index="04" label="Brand notes" />
+      </Container>
       {MidBanner ? <Banner data={MidBanner} /> : <BrandBanner />}
+
+      <Container className="!py-0">
+        <SectionDivider index="05" label="Lookbook" />
+      </Container>
       <Lookbook />
-      {posts && posts.length > 0 && <ExploreBlog posts={posts} />}
+
+      {posts && posts.length > 0 && (
+        <>
+          <Container className="!py-0">
+            <SectionDivider index="06" label="Journal" />
+          </Container>
+          <ExploreBlog posts={posts} />
+        </>
+      )}
     </>
   )
 }
