@@ -7,10 +7,11 @@
 // This sets up:
 //   - INR currency on the store + India region (default)
 //   - Bangalore stock location with manual fulfillment provider
-//   - Three shipping options:
-//       * Bangalore Standard (5000 paise = ₹50)
-//       * Raipur Standard    (8000 paise = ₹80)
-//       * Free Shipping      (when subtotal ≥ 150000 paise = ₹1500)
+//   - Three shipping options (Medusa stores INR as whole rupees in this
+//     project — variants are seeded with `amount: 1099` meaning ₹1,099):
+//       * Bangalore Standard (₹50)
+//       * Raipur Standard    (₹80)
+//       * Free Shipping      (when subtotal ≥ ₹1,500)
 //   - Payment providers: Razorpay (online) + system_default (COD)
 
 import {
@@ -29,10 +30,10 @@ import {
 } from '@medusajs/framework/utils'
 
 // Read rates from env if provided, else fall back to PROJECT_CONFIG defaults.
-const BLR_RATE = Number(process.env.BANGALORE_SHIPPING_RATE_PAISE ?? 5000)
-const RPR_RATE = Number(process.env.RAIPUR_SHIPPING_RATE_PAISE ?? 8000)
+const BLR_RATE = Number(process.env.BANGALORE_SHIPPING_RATE ?? 50)
+const RPR_RATE = Number(process.env.RAIPUR_SHIPPING_RATE ?? 80)
 const FREE_THRESHOLD = Number(
-  process.env.FREE_SHIPPING_THRESHOLD_PAISE ?? 150000
+  process.env.FREE_SHIPPING_THRESHOLD ?? 1500
 )
 const ENABLE_COD =
   (process.env.ENABLE_COD ?? 'true').toLowerCase() !== 'false'
@@ -48,7 +49,7 @@ export default async function setupIndia({ container }: ExecArgs) {
 
   logger.info('=== EnteraVeil India region setup ===')
   logger.info(
-    `Rates (paise): Bangalore=${BLR_RATE}, Raipur=${RPR_RATE}, FreeAt=${FREE_THRESHOLD}, COD=${ENABLE_COD}`
+    `Rates (₹): Bangalore=${BLR_RATE}, Raipur=${RPR_RATE}, FreeAt=${FREE_THRESHOLD}, COD=${ENABLE_COD}`
   )
 
   const paymentProviders = ['pp_system_default']
@@ -222,8 +223,9 @@ export default async function setupIndia({ container }: ExecArgs) {
   }
 
   // --- Shipping options ---------------------------------------------------
-  // Medusa stores amounts in the smallest unit for the currency; for INR
-  // that's paise. So 5000 paise = ₹50.
+  // Note: variants in this project are seeded with `amount: 1099` meaning
+  // ₹1,099 (whole rupees, not paise). Shipping rates follow the same scale,
+  // so 50 = ₹50 here.
   const existingOptions = await fulfillmentModule.listShippingOptions({
     service_zone: { id: serviceZoneId },
   } as any)

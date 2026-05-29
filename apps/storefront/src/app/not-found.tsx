@@ -1,28 +1,42 @@
 import { Metadata } from 'next'
 
 import { Button } from '@modules/common/components/button'
+import { Container } from '@modules/common/components/container'
 import { Heading } from '@modules/common/components/heading'
 import LocalizedClientLink from '@modules/common/components/localized-client-link'
 import { Text } from '@modules/common/components/text'
 
 export const metadata: Metadata = {
-  title: '404',
-  description: 'Something went wrong',
+  title: '404 — Lost in the void',
+  description: 'This page does not exist on the EnteraVeil drop.',
 }
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center gap-6">
-      <Text className="text-5xl font-semibold small:text-4xl">404</Text>
-      <Heading className="text-5xl small:text-4xl" as="h1">
-        Page not found
+    <Container className="flex min-h-[80vh] flex-col items-center justify-center gap-6 py-24 text-center">
+      <span className="ev-eyebrow text-action-primary">
+        Beyond the veil · error 404
+      </span>
+      <Heading
+        as="h1"
+        className="ev-display text-6xl text-basic-primary small:text-8xl medium:text-9xl"
+      >
+        Lost in
+        <br />
+        <span className="text-action-primary">the void.</span>
       </Heading>
-      <Text className="text-secondary" size="md">
-        Sorry, we couldn’t find the page you’re looking for.
+      <Text className="max-w-[480px] text-secondary" size="lg">
+        This page doesn&apos;t exist — yet. Try the shop, the lookbook, or head
+        back home.
       </Text>
-      <Button asChild>
-        <LocalizedClientLink href="/">Go to homepage</LocalizedClientLink>
-      </Button>
-    </div>
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <Button asChild className="!h-12 !px-6 text-base">
+          <LocalizedClientLink href="/">Back home →</LocalizedClientLink>
+        </Button>
+        <Button asChild variant="tonal" className="!h-12 !px-6 text-base">
+          <LocalizedClientLink href="/shop">Shop the drop</LocalizedClientLink>
+        </Button>
+      </div>
+    </Container>
   )
 }
