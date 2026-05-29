@@ -114,7 +114,7 @@ const Lookbook = () => (
     {/* End-of-issue CTA card — bigger statement that closes the lookbook */}
     <LocalizedClientLink
       href="/lookbook"
-      className="ev-card-lift group relative flex flex-col items-start justify-between gap-6 overflow-hidden border border-action-primary/25 bg-secondary px-8 py-10 small:flex-row small:items-end small:px-12 small:py-14"
+      className="ev-card-lift ev-grain group relative flex flex-col items-start justify-between gap-6 overflow-hidden border border-action-primary/25 bg-ev-elevated px-8 py-10 small:flex-row small:items-end small:px-12 small:py-14"
     >
       <div className="flex max-w-[640px] flex-col gap-3">
         <span className="ev-eyebrow text-action-primary">The full issue</span>

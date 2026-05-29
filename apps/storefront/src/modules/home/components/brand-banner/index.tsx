@@ -27,7 +27,7 @@ const BrandBanner = () => (
         />
         <div className="absolute inset-0 bg-black/35 large:bg-black/20" />
       </Box>
-      <Box className="relative flex flex-col justify-center gap-6 bg-secondary px-6 py-12 small:px-14 small:py-16 large:px-20 large:py-24 2xl:px-24">
+      <Box className="ev-grain relative flex flex-col justify-center gap-6 overflow-hidden bg-ev-elevated px-6 py-12 small:px-14 small:py-16 large:px-20 large:py-24 2xl:px-24">
         <span className="ev-eyebrow flex items-center gap-3 text-action-primary">
           <span aria-hidden className="inline-block h-px w-10 bg-action-primary" />
           From beyond the veil

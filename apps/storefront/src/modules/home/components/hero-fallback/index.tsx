@@ -106,7 +106,7 @@ const HeroFallback = () => (
       </Box>
 
       {/* IMAGE COLUMN */}
-      <Box className="relative h-[52vh] min-h-[420px] w-full large:col-span-5 large:h-auto large:min-h-full">
+      <Box className="ev-vignette relative h-[52vh] min-h-[420px] w-full large:col-span-5 large:h-auto large:min-h-full">
         <Image
           src={HERO_IMAGE}
           alt="EnteraVeil drop — anime streetwear from beyond the veil"
