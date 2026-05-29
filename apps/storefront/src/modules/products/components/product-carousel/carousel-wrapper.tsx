@@ -54,12 +54,21 @@ export default function CarouselWrapper({
 
   return (
     <>
-      <Box className="flex justify-between">
-        <Heading as="h2" className="text-2xl text-basic-primary small:text-3xl">
-          {title}
-        </Heading>
+      <Box className="flex items-end justify-between gap-6">
+        <div className="flex flex-col gap-2">
+          <span className="ev-eyebrow flex items-center gap-3 text-action-primary">
+            <span aria-hidden className="inline-block h-px w-10 bg-action-primary/70" />
+            More from the drop
+          </span>
+          <Heading
+            as="h2"
+            className="ev-display-soft text-3xl text-basic-primary small:text-4xl medium:text-5xl"
+          >
+            {title}
+          </Heading>
+        </div>
         <Box
-          className={cn('mb-4 hidden justify-end gap-2 small:flex', {
+          className={cn('mb-2 hidden shrink-0 items-center gap-2 small:flex', {
             'xl:hidden': isLessThanFourProducts,
             'medium:hidden': isLessThanThreeProducts,
             'small:hidden': isLessThanTwoProducts,
@@ -68,7 +77,8 @@ export default function CarouselWrapper({
           <Button
             withIcon
             variant="icon"
-            className="bg-fg-secondary text-action-primary hover:bg-fg-secondary-hover hover:text-action-primary-hover active:bg-fg-secondary-pressed active:text-action-primary-pressed"
+            aria-label="Previous"
+            className="h-11 w-11 border border-action-primary/30 bg-transparent text-action-primary hover:bg-action-primary/10 disabled:opacity-30"
             onClick={scrollPrev}
             disabled={!canScrollPrev}
           >
@@ -77,7 +87,8 @@ export default function CarouselWrapper({
           <Button
             withIcon
             variant="icon"
-            className="bg-fg-secondary text-action-primary hover:bg-fg-secondary-hover hover:text-action-primary-hover active:bg-fg-secondary-pressed active:text-action-primary-pressed"
+            aria-label="Next"
+            className="h-11 w-11 border border-action-primary/30 bg-transparent text-action-primary hover:bg-action-primary/10 disabled:opacity-30"
             onClick={scrollNext}
             disabled={!canScrollNext}
           >
@@ -85,7 +96,7 @@ export default function CarouselWrapper({
           </Button>
         </Box>
       </Box>
-      <div ref={emblaRef}>{children}</div>
+      <div ref={emblaRef} className="mt-6 small:mt-8">{children}</div>
     </>
   )
 }
