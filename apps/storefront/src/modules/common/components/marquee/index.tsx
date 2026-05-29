@@ -12,14 +12,14 @@ export function Marquee({ items, className, speed = 'normal' }: MarqueeProps) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden border-y border-action-primary/30 bg-static py-2 text-static',
+        'ev-marquee-mask relative overflow-hidden border-y border-action-primary/30 bg-static py-2 text-static',
         className
       )}
       aria-hidden="true"
     >
       <div
         className={cn(
-          'flex w-max whitespace-nowrap',
+          'flex w-max whitespace-nowrap will-change-transform',
           speed === 'slow' ? 'animate-marquee-slow' : 'animate-marquee'
         )}
       >
