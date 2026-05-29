@@ -62,15 +62,32 @@ const ImageCarousel = ({ images, openDialog }: ImageCarouselProps) => {
       </div>
 
       {!isOnlyOneImage && (
-        <div className="absolute bottom-3 left-3 right-3 h-1 bg-primary/30 medium:hidden">
-          <div
-            className="absolute h-full bg-primary transition-all duration-200 ease-out"
-            style={{
-              width: `${slideWidth}%`,
-              left: `${currentIndex * slideWidth}%`,
-            }}
-          />
-        </div>
+        <>
+          {/* Editorial counter — "01 / 04" above the dots */}
+          <div className="absolute top-3 right-3 medium:hidden">
+            <span className="ev-mono inline-flex items-center gap-1.5 rounded-full border border-action-primary/30 bg-primary/70 px-2.5 py-1 text-static backdrop-blur">
+              <span className="h-1 w-1 rounded-full bg-action-primary" />
+              {String(currentIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+            </span>
+          </div>
+
+          {/* Dot indicators centered below the carousel — tappable */}
+          <div className="mt-3 flex items-center justify-center gap-2 medium:hidden">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Go to image ${i + 1}`}
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === currentIndex
+                    ? 'w-6 bg-action-primary'
+                    : 'w-1.5 bg-basic-primary/30 hover:bg-basic-primary/50'
+                }`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </>
   )

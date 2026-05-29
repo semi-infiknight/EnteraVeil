@@ -32,7 +32,7 @@ const ImageGallery = ({ images, title }: ImageGalleryProps) => {
           .map((image, index) => (
             <div
               className={cn(
-                'relative w-full shrink-0',
+                'group relative w-full shrink-0 overflow-hidden bg-ev-elevated',
                 index === 0
                   ? 'col-span-2 aspect-[29/20] max-h-[540px]'
                   : 'col-span-1 aspect-[29/34] max-h-[440px]'
@@ -43,10 +43,16 @@ const ImageGallery = ({ images, title }: ImageGalleryProps) => {
                 src={image.url}
                 alt={`${title} - product image`}
                 sizes="(max-width: 768px) 100vw, (max-width: 992px) 780px"
-                className="cursor-pointer object-cover"
+                className="cursor-pointer object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 loading={index === 0 ? 'eager' : 'lazy'}
                 onClick={() => handleImageClick(index)}
               />
+              {/* Click affordance — appears on hover */}
+              <div className="pointer-events-none absolute right-3 top-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="ev-mono inline-flex items-center gap-1.5 rounded-full border border-action-primary/40 bg-primary/80 px-2.5 py-1 text-static backdrop-blur">
+                  Tap to zoom
+                </span>
+              </div>
             </div>
           ))}
       </div>
