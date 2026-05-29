@@ -58,30 +58,35 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <AccordionItem
               key={id}
               value={`item-${id}`}
-              className="border-basic-primary"
+              className="border-b border-basic-primary/20 last:border-b-0"
               data-testid="product-tab"
             >
-              <AccordionTrigger className="!rounded-none !py-2 transition-all duration-200 ease-in-out [&[data-state=closed]>#minusIconSvg]:hidden [&[data-state=open]>#plusIconSvg]:hidden">
-                <Heading
-                  className="text-lg font-medium text-basic-primary"
-                  as="h3"
-                >
-                  {tab.label}
-                </Heading>
+              <AccordionTrigger className="group !rounded-none !py-4 transition-all duration-200 ease-out [&[data-state=closed]>#minusIconSvg]:hidden [&[data-state=open]>#plusIconSvg]:hidden">
+                <div className="flex items-center gap-4">
+                  <span className="ev-num text-action-primary text-base">
+                    {String(id + 1).padStart(2, '0')}
+                  </span>
+                  <Heading
+                    className="ev-display-soft text-lg text-basic-primary transition-colors duration-200 group-hover:text-action-primary group-data-[state=open]:text-action-primary"
+                    as="h3"
+                  >
+                    {tab.label}
+                  </Heading>
+                </div>
                 <div
                   id="plusIconSvg"
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-action-primary hover:text-action-primary-hover active:text-action-primary-pressed"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-action-primary transition-transform duration-300 group-hover:rotate-90"
                 >
                   <PlusIcon />
                 </div>
                 <div
                   id="minusIconSvg"
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-action-primary hover:text-action-primary-hover active:text-action-primary-pressed"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-action-primary"
                 >
                   <MinusThinIcon />
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-3 !pb-4">
+              <AccordionContent className="flex flex-col gap-3 pl-10 !pb-5">
                 {tab.component}
               </AccordionContent>
             </AccordionItem>
@@ -144,18 +149,25 @@ const ProductDesignTab = ({ design }: { design: Record<string, unknown> }) => {
 
 const ShippingInfoTab = () => {
   return (
-    <ul className="list-disc pl-4 text-md text-secondary 2xl:pl-5">
-      <li>
-        Free standard shipping on all orders within the continental U.S.
-        Expedited shipping options are available at an additional cost. Orders
-        typically ship within 3-5 business days.
-      </li>
-      <li>
-        We offer a 30-day return policy. If you are not completely satisfied
-        with your purchase, you can return the chair for a full refund or
-        exchange, provided it is in its original condition and packaging.
-      </li>
-    </ul>
+    <div className="flex flex-col gap-4 text-md text-secondary">
+      <div>
+        <span className="ev-eyebrow text-action-primary">Shipping</span>
+        <p className="mt-1">
+          Hand-packed in Bangalore. Standard delivery across India: 3–5
+          business days from Bangalore, 4–7 days to the rest of the country.
+          Free shipping on orders over ₹1,500. COD available everywhere.
+        </p>
+      </div>
+      <div>
+        <span className="ev-eyebrow text-action-primary">Returns</span>
+        <p className="mt-1">
+          7-day no-questions returns on unworn pieces with original tags. We
+          cover the reverse-pickup. Print or screen-printed graphics are
+          inherently small-batch — minor variations are intentional, not
+          defects.
+        </p>
+      </div>
+    </div>
   )
 }
 
