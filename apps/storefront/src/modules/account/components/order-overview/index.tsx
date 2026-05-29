@@ -1,6 +1,8 @@
 import { HttpTypes } from '@medusajs/types'
 import { Box } from '@modules/common/components/box'
+import { Button } from '@modules/common/components/button'
 import { Heading } from '@modules/common/components/heading'
+import LocalizedClientLink from '@modules/common/components/localized-client-link'
 import { Text } from '@modules/common/components/text'
 import { BoxIcon } from '@modules/common/icons'
 import { Pagination } from '@modules/store/components/pagination'
@@ -47,19 +49,37 @@ const OrderOverview = ({
 export function NoOrders() {
   return (
     <Box
-      className="flex w-full flex-col items-center gap-6"
+      className="ev-grain relative flex w-full flex-col items-center gap-6 overflow-hidden border border-action-primary/15 bg-ev-elevated px-6 py-14 text-center small:px-12 small:py-20"
       data-testid="no-orders-container"
     >
-      <BoxIcon />
-      <Box className="flex flex-col items-center gap-2">
-        <Heading as="h2" className="text-xl text-basic-primary small:text-2xl">
-          No order updates
+      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-action-primary/30 bg-primary/40 text-action-primary">
+        <BoxIcon className="h-7 w-7" />
+      </div>
+      <Box className="flex flex-col items-center gap-3">
+        <span className="ev-eyebrow text-action-primary">
+          Your wardrobe is patient
+        </span>
+        <Heading
+          as="h2"
+          className="ev-display-soft max-w-[16ch] text-3xl text-basic-primary small:text-4xl"
+        >
+          Nothing in your closet yet.
         </Heading>
-        <Text className="max-w-[438px] text-center text-md text-secondary">
-          No latest updates on your orders. Start shopping to see your latest
-          order activity here.
+        <Text className="max-w-[460px] text-center text-md text-secondary">
+          Your past orders, tracking numbers and delivery updates will live
+          here. Until then — the drop is calling.
         </Text>
       </Box>
+      <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <Button asChild className="!h-11 !px-6">
+          <LocalizedClientLink href="/shop">Shop the drop →</LocalizedClientLink>
+        </Button>
+        <Button asChild variant="tonal" className="!h-11 !px-5">
+          <LocalizedClientLink href="/lookbook">
+            View the lookbook
+          </LocalizedClientLink>
+        </Button>
+      </div>
     </Box>
   )
 }
