@@ -196,6 +196,8 @@ const SideMenu = ({
           variant="icon"
           withIcon
           className="flex h-auto !p-2 xsmall:!p-3.5 large:hidden"
+          aria-label="Open navigation menu"
+          data-testid="mobile-menu"
         >
           <BarsIcon />
         </Button>

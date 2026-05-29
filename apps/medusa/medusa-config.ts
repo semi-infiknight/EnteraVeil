@@ -111,8 +111,9 @@ const modules = {
 // /store/products?collection_id=... returns stale empty results. Disable until
 // Redis is wired up.
 if (process.env.MEDUSA_FF_INDEX_ENGINE === 'true') {
-  // @ts-expect-error narrowing
-  modules[Modules.INDEX] = { resolve: '@medusajs/index' };
+  (modules as Record<string, any>)[Modules.INDEX] = {
+    resolve: '@medusajs/index',
+  };
 }
 
 module.exports = defineConfig({
