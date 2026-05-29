@@ -6,7 +6,7 @@ import useToggleState from '@lib/hooks/use-toggle-state'
 import { cn } from '@lib/util/cn'
 import { HttpTypes } from '@medusajs/types'
 import { Button } from '@modules/common/components/button'
-import { PlusIcon } from '@modules/common/icons'
+import { MapPinIcon, PlusIcon } from '@modules/common/icons'
 
 import AddressList from '../address-list'
 import AddressModalForm from '../address-modal-form'
@@ -69,21 +69,29 @@ const AddressBook: React.FC<AddressBookProps> = ({ customer, region }) => {
           </Button>
         </div>
         {hasNoAddresses ? (
-          <div className="mx-auto py-6 text-center medium:max-w-[450px]">
-            <p className="text-xl text-basic-primary">
-              No saved shipping addresses
-            </p>
-            <p className="mt-2 text-md text-secondary">
-              You currently have no saved shipping addresses. Add an address to
-              make your checkout process quicker and easier.
-            </p>
+          <div className="ev-grain relative mx-auto flex w-full flex-col items-center gap-5 overflow-hidden border border-action-primary/15 bg-ev-elevated px-6 py-12 text-center medium:py-16">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-action-primary/30 bg-primary/40 text-action-primary">
+              <MapPinIcon className="h-6 w-6" />
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <span className="ev-eyebrow text-action-primary">
+                Speed up checkout
+              </span>
+              <h2 className="ev-display-soft max-w-[18ch] text-2xl text-basic-primary small:text-3xl">
+                No addresses saved yet.
+              </h2>
+              <p className="max-w-[420px] text-md text-secondary">
+                Save your ship-to addresses here and checkout will skip the
+                form on every future drop.
+              </p>
+            </div>
             <Button
-              variant="tonal"
               size="sm"
-              className="mt-6 w-full"
+              className="!h-11 !px-6"
               onClick={handleAddNewAddress}
+              data-testid="add-first-address-button"
             >
-              Add address
+              <PlusIcon /> Add your first address
             </Button>
           </div>
         ) : (
