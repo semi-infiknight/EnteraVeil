@@ -514,3 +514,173 @@ mobile overflow is patched, and six more cosmetic passes are landed
 without functional regression.
 
 ---
+
+---
+
+# Extended cosmetic push (2026-05-30 IST · passes O → T)
+
+After P1/P2 priority fixes landed and the prior cosmetic batch
+(I → N) was committed, user explicitly asked to continue. Six more
+passes landed on top, all CSS / markup work, no functional regressions.
+
+`pnpm typecheck` clean after every pass. Final production build + tap
+verification on the tunnel confirms all three interactive surfaces
+(hamburger, footer accordion, search panel) still toggle state.
+
+## O — 404 cinematic · `03f3f4d`
+
+Lost-in-the-void page is now an editorial cover spread, not a centered
+text stack:
+- Full-bleed dim hero photo (40% opacity) with a three-stop top fade
+  to primary + horizontal vignette.
+- CSS noise overlay at ~6% mix-blend-overlay.
+- Rotated vertical 'ERROR · 404 · LOST IN THE VEIL · TRY AGAIN' strip
+  down the right edge (desktop).
+- Headline scales via `clamp(3rem, 11vw, 11rem)` — reads as the
+  centerpiece on mobile too (was capped at 6xl).
+- Sequential `.ev-rise` animations on headline → sub-copy → CTA cluster.
+- Third 'View lookbook' CTA added.
+- Bottom metadata band (sm+) — three paired mono-label / display-soft
+  value cells: Error code 404 · Reason Not found · Try The drop ↗.
+- Gold `.ev-rule` closes the bottom edge.
+
+## P — Footer overhaul · `1fda877`
+
+Footer is three distinct planes:
+
+1. **Newsletter band** (top, border-bottom static/10) — `'The dispatch'`
+   eyebrow + `ev-display-soft` headline `'First word on every / drop.'`
+   (gold), tagline + form (mock POST to `#`). Pill input with gold
+   focus ring; sm+ side-by-side, mobile stacks.
+2. **Main nav** (12-col grid on large) — brand column (4/12) with
+   wordmark + tagline + 40×40 outlined social icons that gain a gold
+   border on hover. 3 nav columns (8/12) with `ev-eyebrow` headers and
+   `.ev-link` sweep underline on each link. Mobile collapses into the
+   existing accordion (all 4 testid hooks preserved).
+3. **Legal strip** — copyright + Privacy/Terms `.ev-link`. Right side:
+   two ev-mono chips ('India · INR' with pulse dot, 'Drop 001 · SS26').
+
+Verified: tap-verify still passes after rewrite.
+
+## Q — PDP variant pills + tabs · `c8a0afd`
+
+**OptionSelect:**
+- Colour swatches bumped from 48×48 borderless to `rounded-full`
+  bordered with 2px gold ring + 0.5α glow + scale-1.02 on selection.
+- Text options (sizes/fits — previously rendered as empty squares
+  when no image/hex was set) now render as `ev-mono` pills,
+  min-width 48px, h-12. Selected gets gold/15 fill + gold ring +
+  scale.
+- Adds `aria-pressed` + per-value `aria-label`.
+- Title row: `'Title:'` greyed-out + black value → `ev-eyebrow` gold
+  label + value.
+
+**ProductTabs:**
+- Trigger row mirrors the home SectionDivider:
+  `01 Description [+]`, `02 Dimensions [+]`, `03 Shipping & Returns [+]`.
+  Numbers use `.ev-num` gold, title uses `.ev-display-soft` and turns
+  gold on hover / when open. Plus icon rotates 90° on hover.
+- Expanded content indented (`pl-10`) to align with title.
+- **Shipping & Returns copy rewritten** — prior placeholder was for a
+  US chair brand ("continental U.S.", "return the chair"). Now reflects
+  EnteraVeil reality: Bangalore packing, 3–5 day India delivery, ₹1,500
+  free-ship threshold, COD, 7-day no-questions returns. Split into
+  eyebrow-led blocks.
+
+## R — Shipping options card-style · `ff60992`
+
+Delivery step replaces thin 1px-border radio rows with proper card
+options:
+- 2px border, gold/15 background fill + 2px gold glow shadow on
+  selection; transparent + faint border otherwise. Hover lifts border
+  to `action-primary/50`.
+- Layout: radio dot · numbered eyebrow + name + 'Hand-packed in
+  Bangalore · COD available' subtitle on the left, `.ev-display-soft`
+  price on the right (gold when selected).
+- 2px gap so cards read as discrete tiles.
+- `data-testid='delivery-option-radio'` preserved.
+
+## S — Order card + no-addresses empty · `253b500`
+
+**OrderCard** rewritten as a single `bg-ev-elevated` card with
+`.ev-card-lift` hover lift and a gold/40 border lift. Three columns on
+large:
+- Meta (200–220px): status pill (gold/red/grey via `statusToneClass`)
+  + order # in mono, 'Placed' + date, 'Total' + `ev-display-soft` 2xl
+  total.
+- Thumbnail strip (flex-1): keeps existing 2-up/5-up xl logic with
+  '+N more' overflow.
+- Action: 'View order →' tonal on the right.
+
+`statusToneClass` tones:
+- gold for in-flight (pending/placed/shipped/processing/paid)
+- secondary for delivered/completed
+- negative red for cancelled/failed
+
+Date formatter switched from `en-US` to `en-IN`.
+
+**Address book empty state** gets the same `bg-ev-elevated` + `.ev-grain`
+treatment used in NoOrders / cart empty / 404 — gold-ringed
+`MapPinIcon` disc, eyebrow + display-soft headline, copy, primary CTA
+with PlusIcon. Adds `data-testid='add-first-address-button'`.
+
+## T — Search no-results editorial · `fd0604b`
+
+Search no-match branch now matches the empty-state card pattern:
+- `bg-ev-elevated` with `.ev-grain`, gold/15 border, centered.
+- Gold-ringed `SearchResultsIcon` disc.
+- `ev-eyebrow` 'Beyond the veil' over `ev-display-soft` 'Nothing
+  matches "<query>"' — query string rendered in gold.
+- Brand-voiced copy ('the catalogue is small but loud').
+- `data-testid='search-empty'` for QA.
+
+Verified rendered for `/in/results/zzznothingmatchesthis`.
+
+## Verification — final state
+
+Production build active (`next start` + the proxy.ts `_next/image`
+fix from P1). Playwright tap probe on the tunnel:
+
+- `HAMBURGER → dialog opened: true` ✓
+- `ACCORDION expanded: true` ✓
+- `SEARCH panel opened: true` ✓
+- non-HMR console errors: (none)
+
+Page sweep (15 routes, desktop UA + iPhone iOS 17 UA):
+
+| path | desktop | mobile |
+| --- | --- | --- |
+| /in | 200 | 200 |
+| /in/shop | 200 | 200 |
+| /in/lookbook | 200 | 200 |
+| /in/products/shorts | 200 | 200 |
+| /in/cart | 200 | 200 |
+| /in/account | 200 | 200 |
+| /in/results/shirt | 200 | 200 |
+| /in/results/zzznothing | 200 | 200 |
+| /in/this-doesnt-exist | 404 | 404 |
+| /in/about-us | 200 | 200 |
+| /in/faq | 200 | 200 |
+| /in/privacy-policy | 200 | 200 |
+| /in/blog | 200 | 200 |
+| /in/categories/shirts | 200 | 200 |
+| /in/reset-password | 200 | 200 |
+
+## Tunnel URLs
+
+Same as before — production-mode dev environment, tunnels live:
+- Storefront: https://poll-patrick-telling-webmaster.trycloudflare.com/in
+- Admin: https://healthy-authorization-isolated-optical.trycloudflare.com/app/
+
+Admin login: `admin@enteraveil.local` / `devpass123`.
+
+## Commits this segment (newest first)
+
+- `fd0604b` design(T): search no-results editorial state
+- `253b500` design(S): order card editorial + no-addresses empty state
+- `ff60992` design(R): shipping options — card-style radio
+- `c8a0afd` design(Q): variant pills + PDP tabs polish
+- `1fda877` design(P): footer overhaul — newsletter band, editorial nav
+- `03f3f4d` design(O): 404 cinematic — full-bleed hero, mono band
+
+All pushed to `origin/main`.
