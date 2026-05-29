@@ -45,7 +45,10 @@ export function ProductTile({
             <Badge label="New drop" variant="brand" />
           </Box>
         )}
-        <LocalizedClientLink href={`/products/${product.handle}`} aria-label={`View ${product.title}`}>
+        <LocalizedClientLink
+          href={`/products/${product.handle}`}
+          aria-label={`View ${product.title}`}
+        >
           <LoadingImage
             src={product.thumbnail}
             alt={product.title}
@@ -56,8 +59,18 @@ export function ProductTile({
         {/* Editorial overlay: shows on hover; complements quick-add button. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
+        {/* Faint palette swatches bottom-left — purely decorative, sets a
+            colourway-aware mood. Hidden until hover for restraint. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-3 left-3 z-10 flex items-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 small:bottom-5 small:left-5"
+        >
+          <span className="h-2 w-2 rounded-full bg-static ring-1 ring-static/40" />
+          <span className="h-2 w-2 rounded-full bg-[#1a1a1a] ring-1 ring-static/40" />
+          <span className="h-2 w-2 rounded-full bg-action-primary ring-1 ring-static/40" />
+        </div>
         <ProductActions productHandle={product.handle} regionId={regionId} />
       </Box>
       <ProductInfo
@@ -82,19 +95,28 @@ function ProductInfo({
   salePrice: string
 }) {
   return (
-    <Box className="flex flex-col gap-3 p-4 small:gap-6 small:p-5">
-      <div className="flex flex-1 flex-col justify-between gap-4">
-        <LocalizedClientLink href={`/products/${productHandle}`}>
+    <Box className="flex flex-col gap-3 px-1 pt-4 small:gap-4 small:px-1 small:pt-5">
+      <div className="flex items-start justify-between gap-4">
+        <LocalizedClientLink
+          href={`/products/${productHandle}`}
+          className="ev-link inline-block"
+        >
           <Text
             title={productTitle}
             as="span"
-            className="line-clamp-2 text-center text-lg text-basic-primary"
+            className="line-clamp-2 text-left text-base text-basic-primary small:text-lg"
           >
             {productTitle}
           </Text>
         </LocalizedClientLink>
         <ProductPrice calculatedPrice={calculatedPrice} salePrice={salePrice} />
       </div>
+      <LocalizedClientLink
+        href={`/products/${productHandle}`}
+        className="ev-mono inline-flex w-max items-center gap-1 text-secondary opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      >
+        Quick view →
+      </LocalizedClientLink>
     </Box>
   )
 }
