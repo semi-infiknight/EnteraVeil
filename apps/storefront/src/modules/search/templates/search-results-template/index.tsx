@@ -117,14 +117,29 @@ export default async function SearchResultsTemplate({
             </Suspense>
           </>
         ) : (
-          <Box className="flex flex-col items-center gap-6 p-0 small:pb-14 small:pt-6">
-            <SearchResultsIcon />
-            <Box className="flex flex-col items-center gap-2">
-              <Heading as="h3" className="text-xl small:text-2xl">
-                No results for &quot;{safeDecodeURIComponent(query)}&quot;
+          <Box
+            className="ev-grain relative mx-auto flex w-full max-w-[640px] flex-col items-center gap-5 overflow-hidden border border-action-primary/15 bg-ev-elevated px-6 py-14 text-center small:px-12 small:py-20"
+            data-testid="search-empty"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-action-primary/30 bg-primary/40 text-action-primary">
+              <SearchResultsIcon className="h-7 w-7" />
+            </div>
+            <Box className="flex flex-col items-center gap-3">
+              <span className="ev-eyebrow text-action-primary">
+                Beyond the veil
+              </span>
+              <Heading
+                as="h3"
+                className="ev-display-soft text-3xl text-basic-primary small:text-4xl"
+              >
+                Nothing matches{' '}
+                <span className="text-action-primary">
+                  &ldquo;{safeDecodeURIComponent(query)}&rdquo;.
+                </span>
               </Heading>
-              <p className="text-center text-md text-secondary">
-                Please try again using a different spelling or phrase
+              <p className="max-w-[460px] text-center text-md text-secondary">
+                Try a different spelling, a single keyword, or browse the
+                drop directly — the catalogue is small but loud.
               </p>
             </Box>
           </Box>
