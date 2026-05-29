@@ -224,3 +224,104 @@ d8ef0a6  chore(types,a11y): silence medusa policy-binding gen + hamburger testid
 ```
 
 All pushed to `origin/main`.
+
+---
+
+## Cosmetic push (2026-05-30 IST · 8 design passes)
+
+Functional baseline was clean coming in. Ran a hard cosmetic pass across
+typography, hero, page rhythm, product cards, lookbook, mobile chrome,
+micro-interactions, and surface depth — eight commits, one per pass,
+typecheck clean throughout, all 13 page routes still 200/404 as
+expected on desktop + iPhone UAs.
+
+HTML snapshots per pass live under
+`C:/Labs/reference-screenshots/design-pass-{A..H}/after/`. (PNG
+renders were skipped this session — Chromium isn't downloaded into the
+local playwright cache, and the explicit rule for this resume is never
+to read images back. The HTML diffs + git diffs are the source of
+truth.)
+
+### A — Typography overhaul · `4c3de47`
+Adopted **Bricolage Grotesque** (400/600/700/800) and **JetBrains
+Mono** (400/500) via `next/font/google` alongside existing Inter +
+Space Grotesk. Wired both into Tailwind's `font-display` and
+`font-mono` families. `.ev-display` is now Bricolage-800 / -0.045em /
+0.86 leading, `.ev-eyebrow` shifted to JetBrains Mono so eyebrow rows
+read as magazine credit lines. Type scale extended to 10xl with
+display-tuned line-heights. Body leading loosened to 1.6.
+
+### B — Split editorial hero · `47cd15e`
+HeroFallback rewritten as a 7/5 split (image right, type left, stacks
+on mobile). New copy: 'Beyond / the veil.' headline at clamp(3.25rem,
+9vw, 9rem). Adds a bottom metadata band of 4 mono-label + display-
+value pairs (01/200, Bangalore, India 3–5d, COD · UPI), a rotated
+'DROP 001 · SS26 · BLR · INDIA' vertical strip down the photo edge, a
+pulsing 'Live now' badge top-right, and a pure-CSS SVG-data-URI noise
+grain layer (~5%, mix-blend-overlay).
+
+### C — Section dividers + rhythm · `4357b58`
+New `SectionDivider` primitive ("01 — COLLECTIONS" with gold rule).
+Home page walks six labelled chapters now (Collections, Categories,
+Best of the drop, Brand notes, Lookbook, Journal). Added a second
+mid-page Marquee between the carousel and brand banner. SectionHeading
+gains an optional `index` prop for poster-numeral badges.
+
+### D — Product tile editorial · `13504c2`
+Title left-aligned (was centered), with price floating top-right.
+Adopts `.ev-link` so the title sweeps a gold underline on hover. Three
+swatch dots (white / near-black / gold) fade in bottom-left on hover.
+A mono `Quick view →` line fades in beneath the title. The bottom
+gradient is taller (h-24, 70% black) so the layered affordances read.
+
+### E — Lookbook editorial · `202810d`
+Each look now reads as a magazine credit: poster `ev-num` top-left
+over a top gradient, mono meta line above a display-soft title in the
+caption. Hover zoom slowed to 1100ms ease-out 1.06. Tiles adopt
+`.ev-card-lift` for the soft gold lift. Closes with a full-width
+'Read the story behind the drop' card with arrow-shift hover.
+
+### F — Mobile bottom nav + safe area · `3a27e0b`
+New `MobileBottomNav`: fixed 5-cell bar (Home / Shop / Search /
+Account / Cart) shown only on small screens. Active state derived
+from pathname matching, lights gold via aria-current. Cart cell
+triggers the existing `openCartDropdown()`. Backdrop-blur over
+primary/90; respects `env(safe-area-inset-bottom)`; hidden on
+`/checkout`. Main content area gains `pb-[72px]` so the last section
+isn't covered. PDP sticky add-to-cart pill repositioned to
+`bottom-[calc(72px+max(env(safe-area-inset-bottom),0px))]` so it
+floats above the new bar. Both expose `data-testid` hooks.
+
+### G — Micro-interactions · `84864da`
+Button cva base gets `active:scale-[0.98]` with a 75ms tail — taps
+feel registered without bouncing — and `will-change-transform` for
+GPU smoothness. InteractiveLink adopts `.ev-link` and now both
+rotates 45° AND translates 0.5 right with a 300ms ease-out, reading
+as a confident 'going somewhere' gesture rather than a 150ms twitch.
+
+### H — Layered surfaces + grain + vignette · `baf5565`
+Adds three editorial dark-mode surface tokens — `--ev-deep` (6 6 6),
+`--ev-elevated` (20 20 20), `--ev-warm` (26 22 18) — exposed only on
+`.dark`, light mode untouched. Adds two decorator pseudo-element
+utilities: `.ev-grain` (inline-SVG noise, ~5%, mix-blend-overlay) and
+`.ev-vignette` (radial edge darken from 55% out). Adoption:
+- Footer: `bg-static` → `bg-ev-warm` + `ev-grain`
+- Brand banner copy column: `bg-secondary` → `bg-ev-elevated` + grain
+- Lookbook end-card: `bg-secondary` → `bg-ev-elevated` + grain
+- Hero image column: gains `.ev-vignette` to keep the eye in the type
+
+### Commits this push (latest first)
+
+```
+baf5565  design(H): layered dark surfaces + svg noise + edge vignette
+84864da  design(G): button :active scale + interactive link sweep
+3a27e0b  design(F): sticky mobile bottom nav + safe-area-inset PDP CTA
+202810d  design(E): lookbook editorial — poster numerals + end card
+13504c2  design(D): product tile gets left-aligned editorial layout
+4357b58  design(C): numbered chapter dividers + second marquee
+47cd15e  design(B): split editorial hero with mono metadata strip
+4c3de47  design(A): bricolage display + jetbrains mono, editorial scale
+```
+
+All pushed to `origin/main`. Tunnel URLs from the resume section still
+live — same Cloudflared processes, no restart was needed.
