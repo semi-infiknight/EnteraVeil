@@ -4,7 +4,7 @@ import { cn } from '@lib/util/cn'
 import { cva, VariantProps } from 'cva'
 
 const buttonVariants = cva({
-  base: 'rounded-3xl text-md px-4 py-3 transition-all duration-150 ease-in-out flex gap-2 items-center justify-center',
+  base: 'rounded-3xl text-md px-4 py-3 transition-all duration-200 ease-out flex gap-2 items-center justify-center will-change-transform active:scale-[0.98] active:duration-75',
   variants: {
     variant: {
       filled:
