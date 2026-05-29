@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 
 import { getBaseURL } from '@lib/util/env'
 import { Marquee } from '@modules/common/components/marquee'
+import MobileBottomNav from '@modules/layout/components/mobile-bottom-nav'
 import Footer from '@modules/layout/templates/footer'
 import NavWrapper from '@modules/layout/templates/nav'
 
@@ -28,8 +29,11 @@ export default async function PageLayout(props: {
         ]}
       />
       <NavWrapper countryCode={countryCode} />
-      {props.children}
+      {/* Mobile bottom-nav reserves ~64px; pad the main content so the
+          last section isn't covered. Desktop is unaffected via large:pb-0. */}
+      <div className="pb-[72px] large:pb-0">{props.children}</div>
       <Footer countryCode={countryCode} />
+      <MobileBottomNav />
     </>
   )
 }
