@@ -1,0 +1,1557 @@
+{
+  "pagesAudited": [
+    "404",
+    "home",
+    "shop",
+    "pdp",
+    "cart",
+    "account",
+    "lookbook",
+    "about",
+    "faq",
+    "blog",
+    "results",
+    "categories"
+  ],
+  "perPage": {
+    "404": {
+      "types": 6,
+      "eyebrows": 3,
+      "buttons": 0,
+      "radii": 1
+    },
+    "home": {
+      "types": 20,
+      "eyebrows": 14,
+      "buttons": 11,
+      "radii": 3
+    },
+    "shop": {
+      "types": 15,
+      "eyebrows": 7,
+      "buttons": 15,
+      "radii": 3
+    },
+    "pdp": {
+      "types": 15,
+      "eyebrows": 7,
+      "buttons": 16,
+      "radii": 3
+    },
+    "cart": {
+      "types": 14,
+      "eyebrows": 6,
+      "buttons": 11,
+      "radii": 3
+    },
+    "account": {
+      "types": 12,
+      "eyebrows": 6,
+      "buttons": 11,
+      "radii": 2
+    },
+    "lookbook": {
+      "types": 12,
+      "eyebrows": 5,
+      "buttons": 7,
+      "radii": 2
+    },
+    "about": {
+      "types": 15,
+      "eyebrows": 6,
+      "buttons": 7,
+      "radii": 2
+    },
+    "faq": {
+      "types": 13,
+      "eyebrows": 5,
+      "buttons": 11,
+      "radii": 2
+    },
+    "blog": {
+      "types": 2,
+      "eyebrows": 0,
+      "buttons": 2,
+      "radii": 1
+    },
+    "results": {
+      "types": 15,
+      "eyebrows": 7,
+      "buttons": 15,
+      "radii": 3
+    },
+    "categories": {
+      "types": 13,
+      "eyebrows": 6,
+      "buttons": 7,
+      "radii": 2
+    }
+  },
+  "uniqueTypeSignatures": 45,
+  "topTypeSignatures": [
+    {
+      "sig": "a@16px/25.6px w=400 ls=normal tt=none",
+      "count": 11,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "EnteraVeilEnteraVeil",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "25.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h2@48px/56px w=700 ls=-1.68px tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "h2",
+        "text": "Best of the drop",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "56px",
+        "letterSpacing": "-1.68px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h3@24px/38.4px w=400 ls=normal tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "CategoriesChevron down icon",
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "lineHeight": "38.4px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "p@14px/22px w=400 ls=normal tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "p",
+        "text": "Three capsules, one universe. Pick your faction — ",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "p@12px/20px w=400 ls=normal tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "p",
+        "text": "By signing up you agree to our privacy policy. Uns",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@12px/20px w=400 ls=3.36px tt=uppercase",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "Drop 001 — out now",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "3.36px",
+        "textTransform": "uppercase",
+        "fontFamily": "Space Grotesk, Space Grotesk Fallback, Space Grote"
+      }
+    },
+    {
+      "sig": "a@16px/24px w=400 ls=normal tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "Shop",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "a@14px/22px w=400 ls=normal tt=none",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "Shop all",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@11px/11px w=500 ls=3.52px tt=uppercase",
+      "count": 8,
+      "pages": [
+        "home",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "SS26 · Drop 001",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "11px",
+        "letterSpacing": "3.52px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, Space Gro"
+      }
+    },
+    {
+      "sig": "p@16px/24px w=700 ls=normal tt=none",
+      "count": 5,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "tag": "p",
+        "text": "₹1,099.00",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "a@11px/15.4px w=500 ls=1.98px tt=uppercase",
+      "count": 5,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "Quick view →",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "15.4px",
+        "letterSpacing": "1.98px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
+      }
+    },
+    {
+      "sig": "span@16px/25.6px w=400 ls=normal tt=none",
+      "count": 4,
+      "pages": [
+        "shop",
+        "pdp",
+        "faq",
+        "results"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "Shop",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "25.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@48px/56px w=700 ls=-1.68px tt=none",
+      "count": 4,
+      "pages": [
+        "cart",
+        "account",
+        "lookbook",
+        "categories"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "drop.",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "56px",
+        "letterSpacing": "-1.68px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "p@16px/24px w=400 ls=normal tt=none",
+      "count": 3,
+      "pages": [
+        "home",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "tag": "p",
+        "text": "Hand-printed tees, heavyweight sweats and otherwor",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@11px/15.4px w=500 ls=1.98px tt=uppercase",
+      "count": 3,
+      "pages": [
+        "home",
+        "pdp",
+        "404"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "DROP 001 · SS26 · BLR · INDIA",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "15.4px",
+        "letterSpacing": "1.98px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
+      }
+    },
+    {
+      "sig": "span@16px/24px w=400 ls=normal tt=none",
+      "count": 3,
+      "pages": [
+        "shop",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "Medusa Shorts",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h2@60px/57px w=700 ls=-2.1px tt=none",
+      "count": 2,
+      "pages": [
+        "home",
+        "about"
+      ],
+      "example": {
+        "tag": "h2",
+        "text": "Born from the veil.",
+        "fontSize": "60px",
+        "fontWeight": "700",
+        "lineHeight": "57px",
+        "letterSpacing": "-2.1px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h1@48px/56px w=400 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "shop",
+        "results"
+      ],
+      "example": {
+        "tag": "h1",
+        "text": "All products",
+        "fontSize": "48px",
+        "fontWeight": "400",
+        "lineHeight": "56px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h3@16px/24px w=500 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "shop",
+        "results"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "Collections",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@14px/22px w=400 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "shop",
+        "results"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "Chevron down icon",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h2@32px/40px w=400 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "pdp",
+        "faq"
+      ],
+      "example": {
+        "tag": "h2",
+        "text": "Medusa Shorts",
+        "fontSize": "32px",
+        "fontWeight": "400",
+        "lineHeight": "40px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h2@24px/32px w=400 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "cart",
+        "account"
+      ],
+      "example": {
+        "tag": "h2",
+        "text": "Your shopping cart is empty",
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "span@12px/20px w=400 ls=normal tt=none",
+      "count": 2,
+      "pages": [
+        "account",
+        "lookbook"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "© 2026 EnteraVeil. All rights reserved.",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h1@115.2px/99.072px w=800 ls=-5.184px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "h1",
+        "text": "Beyondthe veil.",
+        "fontSize": "115.2px",
+        "fontWeight": "800",
+        "lineHeight": "99.072px",
+        "letterSpacing": "-5.184px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h2@60px/57px w=800 ls=-2.7px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "h2",
+        "text": "Small batch.Loud graphics.",
+        "fontSize": "60px",
+        "fontWeight": "800",
+        "lineHeight": "57px",
+        "letterSpacing": "-2.7px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h3@48px/56px w=800 ls=-2.16px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "Abyss",
+        "fontSize": "48px",
+        "fontWeight": "800",
+        "lineHeight": "56px",
+        "letterSpacing": "-2.16px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h3@32px/40px w=800 ls=-1.44px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "Shirts",
+        "fontSize": "32px",
+        "fontWeight": "800",
+        "lineHeight": "40px",
+        "letterSpacing": "-1.44px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h3@48px/56px w=700 ls=-1.68px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "Read the storybehind the drop.",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "56px",
+        "letterSpacing": "-1.68px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "span@115.2px/99.072px w=800 ls=-5.184px tt=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "the veil.",
+        "fontSize": "115.2px",
+        "fontWeight": "800",
+        "lineHeight": "99.072px",
+        "letterSpacing": "-5.184px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "h3@16px/24px w=700 ls=-0.56px tt=none",
+      "count": 1,
+      "pages": [
+        "pdp"
+      ],
+      "example": {
+        "tag": "h3",
+        "text": "Description",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.56px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    }
+  ],
+  "uniqueFontFamilies": [
+    [
+      "Inter, Inter Fallback, Inter, ui-sans-serif, syste",
+      90
+    ],
+    [
+      "Bricolage Grotesque, Bricolage Grotesque Fallback,",
+      34
+    ],
+    [
+      "Space Grotesk, Space Grotesk Fallback, Space Grote",
+      10
+    ],
+    [
+      "JetBrains Mono, JetBrains Mono Fallback, Space Gro",
+      8
+    ],
+    [
+      "JetBrains Mono, JetBrains Mono Fallback, JetBrains",
+      8
+    ],
+    [
+      "system-ui, Segoe UI, Roboto, Helvetica, Arial, san",
+      2
+    ]
+  ],
+  "uniqueBgColors": 14,
+  "topBgColors": [
+    [
+      "rgb(10, 10, 10)",
+      117
+    ],
+    [
+      "rgba(255, 255, 255, 0.1)",
+      74
+    ],
+    [
+      "rgb(245, 245, 244)",
+      43
+    ],
+    [
+      "rgb(26, 26, 26)",
+      23
+    ],
+    [
+      "rgb(21, 21, 21)",
+      15
+    ],
+    [
+      "rgba(10, 10, 10, 0.9)",
+      10
+    ],
+    [
+      "rgb(44, 43, 42)",
+      6
+    ],
+    [
+      "rgba(10, 10, 10, 0.95)",
+      4
+    ],
+    [
+      "rgba(10, 10, 10, 0.8)",
+      2
+    ],
+    [
+      "rgba(10, 10, 10, 0.6)",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.2)",
+      1
+    ],
+    [
+      "rgba(10, 10, 10, 0.7)",
+      1
+    ],
+    [
+      "rgb(255, 255, 255)",
+      1
+    ],
+    [
+      "rgb(23, 23, 23)",
+      1
+    ]
+  ],
+  "uniqueTextColors": 21,
+  "topTextColors": [
+    [
+      "rgb(245, 245, 244)",
+      1987
+    ],
+    [
+      "rgb(255, 255, 255)",
+      1347
+    ],
+    [
+      "rgb(255, 182, 39)",
+      558
+    ],
+    [
+      "rgba(255, 255, 255, 0.75)",
+      283
+    ],
+    [
+      "rgba(255, 255, 255, 0.7)",
+      173
+    ],
+    [
+      "rgb(10, 10, 10)",
+      158
+    ],
+    [
+      "rgba(255, 255, 255, 0.85)",
+      140
+    ],
+    [
+      "rgba(255, 255, 255, 0.8)",
+      133
+    ],
+    [
+      "rgba(255, 255, 255, 0.55)",
+      87
+    ],
+    [
+      "rgb(165, 165, 165)",
+      54
+    ],
+    [
+      "rgb(0, 0, 0)",
+      53
+    ],
+    [
+      "rgb(23, 23, 23)",
+      48
+    ],
+    [
+      "rgba(0, 0, 0, 0)",
+      46
+    ],
+    [
+      "rgba(255, 182, 39, 0.8)",
+      40
+    ],
+    [
+      "rgb(108, 108, 108)",
+      24
+    ],
+    [
+      "rgba(255, 255, 255, 0.65)",
+      20
+    ],
+    [
+      "rgba(255, 255, 255, 0.4)",
+      10
+    ],
+    [
+      "rgba(255, 182, 39, 0.9)",
+      6
+    ],
+    [
+      "rgba(255, 182, 39, 0.85)",
+      5
+    ],
+    [
+      "rgba(245, 245, 244, 0.85)",
+      3
+    ]
+  ],
+  "uniqueBorderColors": 13,
+  "topBorderColors": [
+    [
+      "rgba(255, 255, 255, 0.08)",
+      4999
+    ],
+    [
+      "rgb(228, 228, 231)",
+      100
+    ],
+    [
+      "rgba(245, 245, 244, 0.2)",
+      25
+    ],
+    [
+      "rgba(245, 245, 244, 0.3)",
+      23
+    ],
+    [
+      "rgb(33, 33, 33)",
+      10
+    ],
+    [
+      "rgb(245, 245, 244)",
+      5
+    ],
+    [
+      "rgba(245, 245, 244, 0.4)",
+      3
+    ],
+    [
+      "rgba(33, 33, 33, 0.25)",
+      3
+    ],
+    [
+      "rgba(33, 33, 33, 0.2)",
+      2
+    ],
+    [
+      "rgba(245, 245, 244, 0.5)",
+      1
+    ],
+    [
+      "rgba(245, 245, 244, 0.25)",
+      1
+    ],
+    [
+      "rgb(255, 255, 255)",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.08)",
+      1
+    ]
+  ],
+  "uniqueRadii": 4,
+  "allRadii": [
+    {
+      "radius": "9999px",
+      "count": 337
+    },
+    {
+      "radius": "24px",
+      "count": 96
+    },
+    {
+      "radius": "16px",
+      "count": 46
+    },
+    {
+      "radius": "6px",
+      "count": 2
+    }
+  ],
+  "uniqueDurations": 15,
+  "allDurations": [
+    {
+      "duration": "anim:0.2s",
+      "count": 337
+    },
+    {
+      "duration": "0.15s",
+      "count": 214
+    },
+    {
+      "duration": "0.2s",
+      "count": 187
+    },
+    {
+      "duration": "0.22s",
+      "count": 173
+    },
+    {
+      "duration": "anim:0.3s",
+      "count": 170
+    },
+    {
+      "duration": "0.32s",
+      "count": 120
+    },
+    {
+      "duration": "0.3s",
+      "count": 108
+    },
+    {
+      "duration": "anim:0.15s",
+      "count": 41
+    },
+    {
+      "duration": "0.7s",
+      "count": 32
+    },
+    {
+      "duration": "anim:0.7s",
+      "count": 32
+    },
+    {
+      "duration": "0.5s",
+      "count": 27
+    },
+    {
+      "duration": "anim:0.5s",
+      "count": 27
+    },
+    {
+      "duration": "anim:28s",
+      "count": 11
+    },
+    {
+      "duration": "anim:0.52s",
+      "count": 8
+    },
+    {
+      "duration": "anim:60s",
+      "count": 1
+    }
+  ],
+  "uniqueEasings": 9,
+  "allEasings": [
+    {
+      "easing": "1)",
+      "count": 609
+    },
+    {
+      "easing": "0",
+      "count": 569
+    },
+    {
+      "easing": "0.2",
+      "count": 569
+    },
+    {
+      "easing": "cubic-bezier(0.4",
+      "count": 463
+    },
+    {
+      "easing": "cubic-bezier(0",
+      "count": 106
+    },
+    {
+      "easing": "ease",
+      "count": 80
+    },
+    {
+      "easing": "1",
+      "count": 40
+    },
+    {
+      "easing": "cubic-bezier(0.22",
+      "count": 40
+    },
+    {
+      "easing": "0.36",
+      "count": 40
+    }
+  ],
+  "uniqueButtonSigs": 25,
+  "topButtons": [
+    {
+      "sig": "r=0px p=0px fs=14px/400 h=22px bg=rgba(0, 0, 0, 0)",
+      "count": 20,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Shirts",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgba(255, 255, 255, 0.8)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "22px"
+      }
+    },
+    {
+      "sig": "r=24px p=14px fs=14px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Bars icon",
+        "borderRadius": "24px",
+        "padding": "14px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 182, 39)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "auto"
+      }
+    },
+    {
+      "sig": "r=9999px p=14px fs=16px/400 h=48px bg=rgba(0, 0, 0, 0)",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "User Icon",
+        "borderRadius": "9999px",
+        "padding": "14px",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 182, 39)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "48px"
+      }
+    },
+    {
+      "sig": "r=24px p=12px 24px fs=16px/400 h=48px bg=rgb(245, 245, 244)",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Sign me up →",
+        "borderRadius": "24px",
+        "padding": "12px 24px",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "backgroundColor": "rgb(245, 245, 244)",
+        "color": "rgb(10, 10, 10)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "48px"
+      }
+    },
+    {
+      "sig": "r=0px p=0px 0px 8px fs=24px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "CategoriesChevron down icon",
+        "borderRadius": "0px",
+        "padding": "0px 0px 8px",
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "auto"
+      }
+    },
+    {
+      "sig": "r=0px p=10px 0px fs=16px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Bag iconCart",
+        "borderRadius": "0px",
+        "padding": "10px 0px",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgba(255, 255, 255, 0.75)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "auto"
+      }
+    },
+    {
+      "sig": "r=24px p=14px fs=14px/400 h=44px bg=rgba(0, 0, 0, 0)",
+      "count": 9,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "text": "Arrow left icon",
+        "borderRadius": "24px",
+        "padding": "14px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(108, 108, 108)",
+        "textTransform": "none",
+        "border": "1px solid rgba(245, 245, 244, 0.3)",
+        "height": "44px"
+      }
+    },
+    {
+      "sig": "r=24px p=14px fs=14px/400 h=48px bg=rgb(245, 245, 244)",
+      "count": 5,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "text": "Bag icon",
+        "borderRadius": "24px",
+        "padding": "14px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgb(245, 245, 244)",
+        "color": "rgb(10, 10, 10)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "48px"
+      }
+    },
+    {
+      "sig": "r=0px p=0px fs=16px/400 h=24px bg=rgba(0, 0, 0, 0)",
+      "count": 5,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "text": "Medusa Shorts",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(245, 245, 244)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "24px"
+      }
+    },
+    {
+      "sig": "r=0px p=12px 16px fs=14px/400 h=48px bg=rgb(21, 21, 21)",
+      "count": 3,
+      "pages": [
+        "shop",
+        "pdp",
+        "results"
+      ],
+      "example": {
+        "text": "CollectionsChevron down icon",
+        "borderRadius": "0px",
+        "padding": "12px 16px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgb(21, 21, 21)",
+        "color": "rgb(245, 245, 244)",
+        "textTransform": "none",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "height": "48px"
+      }
+    },
+    {
+      "sig": "r=24px p=12px 16px fs=14px/400 h=48px bg=rgba(255, 255, 255, 0.1)",
+      "count": 3,
+      "pages": [
+        "shop",
+        "account",
+        "results"
+      ],
+      "example": {
+        "text": "Filter iconFilters",
+        "borderRadius": "24px",
+        "padding": "12px 16px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(255, 255, 255, 0.1)",
+        "color": "rgb(255, 182, 39)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "48px"
+      }
+    },
+    {
+      "sig": "r=0px p=0px fs=24px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "count": 2,
+      "pages": [
+        "shop",
+        "results"
+      ],
+      "example": {
+        "text": "CollectionsChevron down icon",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(245, 245, 244)",
+        "textTransform": "none",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "height": "auto"
+      }
+    }
+  ],
+  "uniqueCardSigs": 4,
+  "topCards": [
+    {
+      "sig": "r=0px bg=rgba(0, 0, 0, 0) bord=0px solid rgba(255, 255, 255,  pad=0px sh=none",
+      "count": 5,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "tag": "A",
+        "classes": "group relative block overflow-hidden ev-card-lift aspect-[4/5] small:row-span-2 ",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      }
+    },
+    {
+      "sig": "r=0px bg=rgb(44, 43, 42) bord=0px solid rgba(255, 255, 255,  pad=0px sh=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "FIGURE",
+        "classes": "group relative overflow-hidden bg-skeleton-primary ev-card-lift aspect-[3/4] sma",
+        "backgroundColor": "rgb(44, 43, 42)",
+        "border": "0px solid rgba(255, 255, 255, 0.08)",
+        "borderRadius": "0px",
+        "padding": "0px",
+        "boxShadow": "none"
+      }
+    },
+    {
+      "sig": "r=0px bg=rgba(0, 0, 0, 0) bord=1px solid rgba(245, 245, 244,  pad=56px 48px sh=none",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "A",
+        "classes": "ev-card-lift ev-grain group relative flex flex-col items-start justify-between g",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "1px solid rgba(245, 245, 244, 0.25)",
+        "borderRadius": "0px",
+        "padding": "56px 48px",
+        "boxShadow": "none"
+      }
+    },
+    {
+      "sig": "r=0px bg=rgb(21, 21, 21) bord=1px solid rgba(245, 245, 244,  pad=24px sh=none",
+      "count": 1,
+      "pages": [
+        "about"
+      ],
+      "example": {
+        "tag": "DIV",
+        "classes": "flex flex-col gap-3 border border-action-primary/20 bg-secondary p-6 ev-card-lif",
+        "backgroundColor": "rgb(21, 21, 21)",
+        "border": "1px solid rgba(245, 245, 244, 0.2)",
+        "borderRadius": "0px",
+        "padding": "24px",
+        "boxShadow": "none"
+      }
+    }
+  ],
+  "uniqueEyebrowSigs": 5,
+  "topEyebrows": [
+    {
+      "sig": "fs=11px w=500 ls=3.52px ff=JetBrains Mono, JetB",
+      "count": 23,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "text": "SS26 · Drop 001",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "letterSpacing": "3.52px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgb(255, 182, 39)",
+        "classes": "ev-eyebrow text-action-primary"
+      }
+    },
+    {
+      "sig": "fs=11px w=500 ls=1.98px ff=JetBrains Mono, JetB",
+      "count": 23,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "text": "Numbered",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "letterSpacing": "1.98px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgba(255, 255, 255, 0.55)",
+        "classes": "ev-mono text-static/55"
+      }
+    },
+    {
+      "sig": "fs=10px w=500 ls=1.8px ff=JetBrains Mono, JetB",
+      "count": 15,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Home",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "letterSpacing": "1.8px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgb(255, 182, 39)",
+        "classes": "ev-mono text-[10px] leading-none"
+      }
+    },
+    {
+      "sig": "fs=12px w=400 ls=3.36px ff=Space Grotesk, Space",
+      "count": 10,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "text": "Drop 001 — out now",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "letterSpacing": "3.36px",
+        "fontFamily": "Space Grotesk, Space Grotesk Fallback, S",
+        "color": "rgb(255, 255, 255)",
+        "classes": "mx-6 flex items-center gap-6 text-sm tracking-[0.28em] upper"
+      }
+    },
+    {
+      "sig": "fs=10px w=500 ls=1.6px ff=Inter, Inter Fallbac",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "text": "01",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "letterSpacing": "1.6px",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-se",
+        "color": "rgb(245, 245, 244)",
+        "classes": "absolute left-3 top-3 z-10 inline-flex h-6 items-center roun"
+      }
+    }
+  ],
+  "breakpoints": [
+    "(max-width: 600px)",
+    "(min-width: 1100px)",
+    "(min-width: 1700px)",
+    "(min-width: 355px)",
+    "(min-width: 640px)",
+    "(min-width: 768px)",
+    "(min-width: 900px)"
+  ]
+}
