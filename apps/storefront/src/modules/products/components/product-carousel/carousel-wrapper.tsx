@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { cn } from '@lib/util/cn'
 import { Box } from '@modules/common/components/box'
-import { Button } from '@modules/common/components/button'
 import { Heading } from '@modules/common/components/heading'
 import { ArrowLeftIcon, ArrowRightIcon } from '@modules/common/icons'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -74,26 +73,26 @@ export default function CarouselWrapper({
             'small:hidden': isLessThanTwoProducts,
           })}
         >
-          <Button
-            withIcon
-            variant="icon"
+          {/* Sharp-rect arrow buttons (6px radius via .rounded-md) — replaces
+              the prior 24px pill icon buttons (anti-Claude rule #2). */}
+          <button
+            type="button"
             aria-label="Previous"
-            className="h-11 w-11 border border-action-primary/30 bg-transparent text-action-primary hover:bg-action-primary/10 disabled:opacity-30"
             onClick={scrollPrev}
             disabled={!canScrollPrev}
+            className="flex h-11 w-11 items-center justify-center rounded-md border border-ev-gold/30 bg-transparent text-ev-gold transition-colors hover:border-ev-gold hover:bg-ev-gold/10 disabled:cursor-not-allowed disabled:opacity-25"
           >
             <ArrowLeftIcon />
-          </Button>
-          <Button
-            withIcon
-            variant="icon"
+          </button>
+          <button
+            type="button"
             aria-label="Next"
-            className="h-11 w-11 border border-action-primary/30 bg-transparent text-action-primary hover:bg-action-primary/10 disabled:opacity-30"
             onClick={scrollNext}
             disabled={!canScrollNext}
+            className="flex h-11 w-11 items-center justify-center rounded-md border border-ev-gold/30 bg-transparent text-ev-gold transition-colors hover:border-ev-gold hover:bg-ev-gold/10 disabled:cursor-not-allowed disabled:opacity-25"
           >
             <ArrowRightIcon />
-          </Button>
+          </button>
         </Box>
       </Box>
       <div ref={emblaRef} className="mt-6 small:mt-8">{children}</div>

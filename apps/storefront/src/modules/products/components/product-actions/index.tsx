@@ -220,7 +220,7 @@ export default function ProductActions({
           add-to-cart. Hidden on large screens where the panel is sticky.
           Sits 72px above the bottom edge so it floats above MobileBottomNav,
           and respects the iOS safe-area-inset on devices with home bars. */}
-      <div className="pointer-events-none fixed inset-x-0 z-40 flex justify-center px-4 large:hidden bottom-[calc(72px+max(env(safe-area-inset-bottom),0px))]">
+      <div className="pointer-events-none fixed inset-x-0 z-40 flex justify-center px-4 large:hidden bottom-[calc(56px+max(env(safe-area-inset-bottom),0px))]">
         <div className="pointer-events-auto flex w-full max-w-[600px] items-center gap-3 rounded-full border border-action-primary/40 bg-primary/95 px-3 py-2 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur">
           <div className="ml-2 flex min-w-0 flex-col">
             <span className="line-clamp-1 text-sm text-basic-primary">

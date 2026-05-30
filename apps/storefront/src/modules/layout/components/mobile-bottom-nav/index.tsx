@@ -5,80 +5,20 @@ import { usePathname } from 'next/navigation'
 import { useCartStore } from '@lib/store/useCartStore'
 import { cn } from '@lib/util/cn'
 import LocalizedClientLink from '@modules/common/components/localized-client-link'
-import {
-  BagIcon,
-  SearchIcon,
-  UserIcon,
-} from '@modules/common/icons'
+import { BagIcon, SearchIcon, UserIcon } from '@modules/common/icons'
 
-type Item = {
-  href: string
-  label: string
-  icon: React.ReactNode
-  match: (pathname: string) => boolean
-}
-
-const HomeIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="22"
-    height="22"
-    viewBox="0 0 22 22"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-    aria-hidden
-  >
-    <path
-      d="M3 10.5L11 4l8 6.5V18a1.5 1.5 0 0 1-1.5 1.5h-3v-5h-7v5h-3A1.5 1.5 0 0 1 3 18v-7.5Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
-
-const items: Item[] = [
-  {
-    href: '/',
-    label: 'Home',
-    icon: <HomeIcon className="h-[22px] w-[22px]" />,
-    match: (p) => /^\/[a-z]{2}\/?$/.test(p),
-  },
-  {
-    href: '/shop',
-    label: 'Shop',
-    icon: (
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 22 22"
-        fill="none"
-        aria-hidden
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 7h16l-1.2 10a2 2 0 0 1-2 1.75H6.2a2 2 0 0 1-2-1.75L3 7Zm4 0V5a4 4 0 1 1 8 0v2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-    match: (p) => p.includes('/shop') || p.includes('/categories'),
-  },
-  {
-    href: '/results/all',
-    label: 'Search',
-    icon: <SearchIcon className="h-[22px] w-[22px]" />,
-    match: (p) => p.includes('/results'),
-  },
-  {
-    href: '/account',
-    label: 'Account',
-    icon: <UserIcon className="h-[22px] w-[22px]" />,
-    match: (p) => p.includes('/account'),
-  },
-]
+/**
+ * Mobile bottom nav — anti-Claude rule #6 rewrite.
+ *
+ * Previously: 5 evenly-spaced cells with icons + labels (Home, Shop,
+ * Search, Account, Cart). User flagged this as "default app strip."
+ *
+ * Now: 3 sparse icons (Search, Account, Cart) right-aligned with a
+ * thin top rule. No labels. No homogeneous grid. The hamburger + logo
+ * + cart in the main nav already cover Home and Shop access.
+ *
+ * Cart includes a badge when items exist (delegated to the cart-store).
+ */
 
 export function MobileBottomNav() {
   const pathname = usePathname()
@@ -87,50 +27,50 @@ export function MobileBottomNav() {
   // Hide on checkout — that flow has its own dedicated nav/footer
   if (pathname?.includes('/checkout')) return null
 
+  const isActive = (pred: boolean) =>
+    pred ? 'text-ev-gold' : 'text-ev-secondary hover:text-ev-primary'
+
   return (
     <nav
-      aria-label="Mobile primary navigation"
+      aria-label="Mobile quick actions"
       data-testid="mobile-bottom-nav"
       className={cn(
-        'fixed inset-x-0 bottom-0 z-30 border-t border-action-primary/20 bg-primary/90 backdrop-blur-lg large:hidden',
-        'pb-[max(env(safe-area-inset-bottom),4px)]'
+        'fixed inset-x-0 bottom-0 z-30 border-t border-ev-gold/15 bg-primary/85 backdrop-blur-lg large:hidden',
+        'pb-[max(env(safe-area-inset-bottom),6px)]'
       )}
     >
-      <ul className="mx-auto grid max-w-[600px] grid-cols-5">
-        {items.map((it) => {
-          const active = it.match(pathname ?? '')
-          return (
-            <li key={it.href} className="flex">
-              <LocalizedClientLink
-                href={it.href}
-                className={cn(
-                  'flex w-full flex-col items-center justify-center gap-1 py-2.5 transition-colors',
-                  active
-                    ? 'text-action-primary'
-                    : 'text-static/75 hover:text-static'
-                )}
-                aria-current={active ? 'page' : undefined}
-              >
-                <span className="h-[22px] w-[22px]">{it.icon}</span>
-                <span className="ev-mono text-[10px] leading-none">
-                  {it.label}
-                </span>
-              </LocalizedClientLink>
-            </li>
-          )
-        })}
-        <li className="flex">
-          <button
-            type="button"
-            onClick={openCartDropdown}
-            className="flex w-full flex-col items-center justify-center gap-1 py-2.5 text-static/75 transition-colors hover:text-static focus-visible:text-action-primary"
-            aria-label="Open cart"
-          >
-            <BagIcon className="h-[22px] w-[22px]" />
-            <span className="ev-mono text-[10px] leading-none">Cart</span>
-          </button>
-        </li>
-      </ul>
+      <div className="ml-auto flex w-max items-center gap-5 px-5 pt-3 small:px-7">
+        <LocalizedClientLink
+          href="/results/all"
+          aria-label="Search"
+          className={cn(
+            'flex h-10 w-10 items-center justify-center transition-colors',
+            isActive(pathname?.includes('/results') ?? false)
+          )}
+        >
+          <SearchIcon className="h-5 w-5" />
+        </LocalizedClientLink>
+
+        <LocalizedClientLink
+          href="/account"
+          aria-label="Account"
+          className={cn(
+            'flex h-10 w-10 items-center justify-center transition-colors',
+            isActive(pathname?.includes('/account') ?? false)
+          )}
+        >
+          <UserIcon className="h-5 w-5" />
+        </LocalizedClientLink>
+
+        <button
+          type="button"
+          onClick={openCartDropdown}
+          aria-label="Open cart"
+          className="flex h-10 w-10 items-center justify-center text-ev-secondary transition-colors hover:text-ev-primary focus-visible:text-ev-gold"
+        >
+          <BagIcon className="h-5 w-5" />
+        </button>
+      </div>
     </nav>
   )
 }

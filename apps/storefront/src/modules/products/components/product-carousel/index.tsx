@@ -1,7 +1,6 @@
 import { getProductPrice } from '@lib/util/get-product-price'
 import { StoreProduct } from '@medusajs/types'
 import { Box } from '@modules/common/components/box'
-import { Button } from '@modules/common/components/button'
 import { Container } from '@modules/common/components/container'
 import LocalizedClientLink from '@modules/common/components/localized-client-link'
 
@@ -68,14 +67,12 @@ export function ProductCarousel({
           </Box>
         </CarouselWrapper>
         {viewAll && (
-          <Button asChild>
-            <LocalizedClientLink
-              href={viewAll.link}
-              className="mx-auto w-max !px-5 !py-3"
-            >
-              {viewAll.text || 'View all'}
-            </LocalizedClientLink>
-          </Button>
+          <LocalizedClientLink
+            href={viewAll.link}
+            className="ev-arrow-link mx-auto w-max"
+          >
+            {viewAll.text || 'View all'} →
+          </LocalizedClientLink>
         )}
       </Box>
     </Container>

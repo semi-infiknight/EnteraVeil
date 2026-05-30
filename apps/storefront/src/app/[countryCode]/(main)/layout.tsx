@@ -32,9 +32,9 @@ export default async function PageLayout(props: {
         ]}
       />
       <NavWrapper countryCode={countryCode} />
-      {/* Mobile bottom-nav reserves ~64px; pad the main content so the
+      {/* Mobile bottom-nav reserves ~56px; pad the main content so the
           last section isn't covered. Desktop is unaffected via large:pb-0. */}
-      <div className="pb-[72px] large:pb-0">{props.children}</div>
+      <div className="pb-[56px] large:pb-0">{props.children}</div>
       <Footer countryCode={countryCode} />
       <MobileBottomNav />
     </>
