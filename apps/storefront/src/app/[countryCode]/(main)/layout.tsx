@@ -19,13 +19,16 @@ export default async function PageLayout(props: {
 
   return (
     <>
+      {/* Top marquee — functional copy (xenpachi/comicsense pattern, see
+          docs/inspiration-notes.md). Mix offers + thresholds + policy. */}
       <Marquee
         items={[
-          'Drop 001 — out now',
-          'Free shipping over ₹2,000',
-          'Hand-printed in Bangalore',
-          'COD available across India',
-          'Limited stitches · numbered runs',
+          'SS26 DROP 001 LIVE',
+          'FREE SHIPPING OVER ₹1,500',
+          'USE CODE DROP001 — 15% OFF',
+          'COD ACROSS INDIA',
+          '7-DAY NO-QUESTIONS RETURNS',
+          'HAND-PRINTED IN BANGALORE',
         ]}
       />
       <NavWrapper countryCode={countryCode} />

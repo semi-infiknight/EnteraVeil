@@ -2,6 +2,74 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* ─────────────────────────────────────────────────────────────────────────
+   EnteraVeil design tokens
+
+   Single source of truth. All cosmetic values (timing, spacing, text
+   alpha, surface bg) should reference these instead of being written
+   inline per-component. Added in 2026-05 as part of the coherence-audit
+   consolidation push (see docs/coherence-audit.md).
+
+   Token namespaces:
+     --ev-duration-*   transition/animation timing
+     --ev-ease-*       easing curves (only two)
+     --ev-space-*      four spacing tiers (between sections + inside cards)
+     --ev-text-*       four text-alpha tiers on dark surfaces
+     --ev-bg-*         five layered dark surface tones
+     --ev-gold-*       gold accent + its 0.8 alpha soft variant
+     --ev-radius-*     three corner radii (pill / md / sm)
+   ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Duration — three tiers. Replaces the 150/200/220/300/320 sprawl. */
+  --ev-duration-fast: 150ms;     /* button :active, focus-visible */
+  --ev-duration-med:  240ms;     /* card hover, drawer slide */
+  --ev-duration-slow: 400ms;     /* page transitions, opacity fades */
+  --ev-duration-image: 700ms;    /* product/lookbook image scale on hover */
+  --ev-duration-rise: 520ms;     /* hero ev-rise sequence */
+
+  /* Easing — two curves only. */
+  --ev-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ev-ease-spring:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Spacing — used between sections + inside cards. Replaces ad-hoc
+     16/20/24/32/48/56/96 paddings. Mostly applied via tailwind classes
+     (`py-12`, `py-16`) so authors don't have to remember the token names;
+     the values are documented here so future changes stay aligned. */
+  --ev-space-tight: 16px;        /* inner card padding */
+  --ev-space-snug:  24px;        /* between in-section items */
+  --ev-space-loose: 48px;        /* card padding "deluxe" + section gap */
+  --ev-space-roomy: 96px;        /* between major sections */
+
+  /* Radii — anti-Claude bias: streetwear/poster sharp edges.
+     Pill (9999) is reserved for icon-only buttons + status dots. */
+  --ev-radius-pill: 9999px;
+  --ev-radius-md:   6px;         /* slight softening — buttons "poster" variant */
+  --ev-radius-sm:   2px;         /* hairline rounding on inputs / chips */
+}
+
+/* Dark mode surface + text tokens. EV is dark-mode-default; light-mode
+   values are inherited from the Medusa preset and aren't redefined here. */
+:root.dark,
+.dark {
+  /* Surface tones — five layers, dark to less-dark to warm */
+  --ev-bg-deep:     6 6 6;        /* sink — below the fold */
+  --ev-bg-primary:  10 10 10;     /* default page */
+  --ev-bg-elevated: 20 20 20;     /* card / panel one step up */
+  --ev-bg-warm:     26 22 18;     /* footers / archives (warm tint) */
+  --ev-bg-scrim:    10 10 10;     /* over-image scrims (use w/ alpha) */
+
+  /* Text alpha tiers on dark surfaces. Replaces the 7-shade sprawl. */
+  --ev-text-primary: 245 245 244;        /* default body / heading on dark */
+  --ev-text-alpha-primary: 1;            /* full opacity */
+  --ev-text-alpha-secondary: 0.75;       /* sub-copy, captions */
+  --ev-text-alpha-tertiary:  0.55;       /* metadata, helper text */
+  --ev-text-alpha-muted:     0.40;       /* disabled, decorative */
+
+  /* Gold accent */
+  --ev-gold:       255 182 39;           /* solid */
+  --ev-gold-soft-alpha: 0.8;             /* for hover / less-emphatic gold */
+}
+
 @layer base {
   body {
     @apply bg-primary;
@@ -10,7 +78,25 @@
     line-height: 1.6;
   }
 
-  /* Editorial display — Bricolage Grotesque, very tight, poster-scale. */
+  /* Heading defaults — coherence audit Issue #1 fix.
+     ALL h1/h2/h3 default to Bricolage Grotesque display family. Pages
+     that opt into a different family (e.g. PDP tab titles using
+     `.ev-display-soft text-base`) override locally. */
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-heading),
+      'Bricolage Grotesque', 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  /* ── Editorial display ─────────────────────────────────────────────────
+     Three tiers — collapsed / soft / standard. Picks for:
+     .ev-display           — section / brand headlines (60-80px)
+     .ev-display-soft      — sub-section / card headlines (32-48px)
+     .ev-display-collapsed — hero h1 only, line-height collapsed
+                             to inspo-xenpachi extremes (~0.74).
+  */
   .ev-display {
     font-family: var(--font-display), var(--font-heading), 'Space Grotesk',
       sans-serif;
@@ -20,7 +106,6 @@
     font-feature-settings: 'ss01' 1, 'ss02' 1;
   }
 
-  /* Slightly relaxed display — for section titles where 0.86 is too tight. */
   .ev-display-soft {
     font-family: var(--font-display), var(--font-heading), 'Space Grotesk',
       sans-serif;
@@ -29,7 +114,24 @@
     line-height: 0.96;
   }
 
-  /* Wide-tracked uppercase eyebrow */
+  .ev-display-collapsed {
+    font-family: var(--font-display), var(--font-heading), 'Space Grotesk',
+      sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.74;
+    font-feature-settings: 'ss01' 1, 'ss02' 1;
+  }
+
+  /* ── Eyebrows / metadata ───────────────────────────────────────────────
+     Two distinct widths — DO NOT confuse them.
+     .ev-eyebrow  — wide-tracked (0.32em ≈ 3.5px), used for "section
+                    labels" above headings — reads as magazine masthead.
+     .ev-mono     — tighter-tracked (0.18em ≈ 2px), used for "metadata
+                    strips" inline with values (mono labels above values).
+     Both are JetBrains Mono 11px 500w uppercase. The tracking is the
+     ONLY difference and it's intentional.
+  */
   .ev-eyebrow {
     font-family: var(--font-mono), var(--font-heading), 'Space Grotesk',
       monospace;
@@ -40,7 +142,6 @@
     font-weight: 500;
   }
 
-  /* Monospace metadata — vertical strips, dropbar callouts */
   .ev-mono {
     font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11px;
@@ -52,45 +153,59 @@
 }
 
 @layer utilities {
-  /* Marquee — used by the top ticker strip in the layout. */
+  /* ── Surface backgrounds ─────────────────────────────────────────────── */
+  .bg-ev-deep {
+    background-color: rgb(var(--ev-bg-deep) / <alpha-value>);
+  }
+  .bg-ev-elevated {
+    background-color: rgb(var(--ev-bg-elevated) / <alpha-value>);
+  }
+  .bg-ev-warm {
+    background-color: rgb(var(--ev-bg-warm) / <alpha-value>);
+  }
+
+  /* ── Text alpha tiers ──────────────────────────────────────────────────
+     Use these instead of `text-white/0.75` etc. */
+  .text-ev-primary   { color: rgb(var(--ev-text-primary) / 1); }
+  .text-ev-secondary { color: rgb(var(--ev-text-primary) / 0.75); }
+  .text-ev-tertiary  { color: rgb(var(--ev-text-primary) / 0.55); }
+  .text-ev-muted     { color: rgb(var(--ev-text-primary) / 0.40); }
+
+  /* Gold accents */
+  .text-ev-gold       { color: rgb(var(--ev-gold) / 1); }
+  .text-ev-gold-soft  { color: rgb(var(--ev-gold) / 0.8); }
+  .bg-ev-gold         { background-color: rgb(var(--ev-gold) / 1); }
+  .border-ev-gold     { border-color: rgb(var(--ev-gold) / 1); }
+
+  /* ── Marquee — used by the top ticker strip in the layout. ──────────── */
   @keyframes ev-marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  .animate-marquee {
-    animation: ev-marquee 28s linear infinite;
-  }
-  .animate-marquee-slow {
-    animation: ev-marquee 60s linear infinite;
-  }
+  .animate-marquee      { animation: ev-marquee 28s linear infinite; }
+  .animate-marquee-slow { animation: ev-marquee 60s linear infinite; }
 
-  /* Marquee edge fade — keeps the ticker feeling like a strip, not a sentence
-     awkwardly clipped by the viewport. */
+  /* Marquee edge fade — keeps the ticker feeling like a strip, not a
+     sentence awkwardly clipped by the viewport. */
   .ev-marquee-mask {
     -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      #000 6%,
-      #000 94%,
-      transparent 100%
+      90deg, transparent 0%, #000 6%, #000 94%, transparent 100%
     );
             mask-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      #000 6%,
-      #000 94%,
-      transparent 100%
+      90deg, transparent 0%, #000 6%, #000 94%, transparent 100%
     );
   }
 
-  /* Subtle hover lift for editorial cards, now with a soft gold glow. */
+  /* ── Card lift on hover ──────────────────────────────────────────────── */
   .ev-card-lift {
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 320ms ease, border-color 320ms ease;
+    transition:
+      transform var(--ev-duration-med) var(--ev-ease-spring),
+      box-shadow var(--ev-duration-med) ease,
+      border-color var(--ev-duration-med) ease;
   }
   .ev-card-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 18px 40px -18px rgb(var(--bg-action-primary) / 0.35);
+    box-shadow: 0 18px 40px -18px rgb(var(--ev-gold) / 0.35);
   }
 
   /* Gold accent rule */
@@ -99,9 +214,9 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgb(var(--bg-action-primary) / 0.6) 12%,
-      rgb(var(--bg-action-primary) / 0.8) 50%,
-      rgb(var(--bg-action-primary) / 0.6) 88%,
+      rgb(var(--ev-gold) / 0.6)  12%,
+      rgb(var(--ev-gold) / 0.8)  50%,
+      rgb(var(--ev-gold) / 0.6)  88%,
       transparent 100%
     );
   }
@@ -115,93 +230,125 @@
     line-height: 1;
   }
 
-  /* Underline-from-left link animation. Pair with .ev-link on any anchor
-     where the gold underline should sweep in on hover. */
+  /* Sweep underline-from-left link animation. Pair with .ev-link on
+     any anchor where the gold underline should sweep in on hover. */
   .ev-link {
     position: relative;
     display: inline-flex;
     align-items: center;
-    transition: color 220ms ease;
+    transition: color var(--ev-duration-fast) ease;
   }
   .ev-link::after {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -3px;
+    left: 0; right: 0; bottom: -3px;
     height: 1px;
-    background-color: rgb(var(--bg-action-primary));
+    background-color: rgb(var(--ev-gold));
     transform-origin: left center;
     transform: scaleX(0);
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform var(--ev-duration-med) var(--ev-ease-spring);
   }
   .ev-link:hover::after,
   .ev-link:focus-visible::after {
     transform: scaleX(1);
   }
 
-  /* Soft fade-in on first paint — used for hero / above-the-fold imagery. */
+  /* ── Arrow-link (anti-Claude — text + → instead of pills) ───────────────
+     Use everywhere a secondary CTA used to be a pill button.
+     Example: <Link className="ev-arrow-link">Shop all →</Link>
+  */
+  .ev-arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgb(var(--ev-gold));
+    line-height: 1;
+    padding: 4px 0;
+    border-bottom: 1px solid rgb(var(--ev-gold) / 0.3);
+    transition: gap var(--ev-duration-med) var(--ev-ease-spring),
+                border-color var(--ev-duration-fast) ease;
+  }
+  .ev-arrow-link:hover,
+  .ev-arrow-link:focus-visible {
+    gap: 0.7em;
+    border-color: rgb(var(--ev-gold));
+  }
+
+  /* ── Sharp-rect filled button (anti-Claude — replaces rounded-3xl pills
+     on primary CTAs in editorial slots). Use on hero CTAs, cart
+     checkout, "Add to cart" PDP. */
+  .ev-rect {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 14px 28px;
+    border-radius: var(--ev-radius-md);
+    background-color: rgb(var(--ev-gold));
+    color: rgb(10 10 10);
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid transparent;
+    transition: transform var(--ev-duration-fast) var(--ev-ease-spring),
+                background-color var(--ev-duration-fast) ease;
+  }
+  .ev-rect:hover {
+    transform: translateY(-1px);
+  }
+  .ev-rect:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 75ms;
+  }
+
+  .ev-rect-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 13px 27px;
+    border-radius: var(--ev-radius-md);
+    background-color: transparent;
+    color: rgb(var(--ev-text-primary));
+    border: 1px solid rgb(var(--ev-text-primary) / 0.25);
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1;
+    transition: border-color var(--ev-duration-fast) ease,
+                color var(--ev-duration-fast) ease,
+                transform var(--ev-duration-fast) var(--ev-ease-spring);
+  }
+  .ev-rect-outline:hover {
+    border-color: rgb(var(--ev-gold));
+    color: rgb(var(--ev-gold));
+    transform: translateY(-1px);
+  }
+  .ev-rect-outline:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 75ms;
+  }
+
+  /* ── Hero rise-in sequence ─────────────────────────────────────────── */
   @keyframes ev-rise {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .ev-rise {
-    animation: ev-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: ev-rise var(--ev-duration-rise) var(--ev-ease-spring) both;
   }
   .ev-rise-delay-1 { animation-delay: 80ms; }
   .ev-rise-delay-2 { animation-delay: 160ms; }
   .ev-rise-delay-3 { animation-delay: 240ms; }
-
-  /* Respect prefers-reduced-motion — kill all the editorial motion utilities */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-marquee,
-    .animate-marquee-slow,
-    .ev-rise,
-    .ev-card-lift {
-      animation: none !important;
-      transition: none !important;
-    }
-    .ev-card-lift:hover {
-      transform: none;
-    }
-  }
-}
-
-@layer base {
-  /* Brand-coloured selection */
-  ::selection {
-    background-color: rgb(var(--bg-action-primary) / 0.85);
-    color: rgb(var(--fg-action-on-primary, 10 10 10));
-  }
-
-  /* Keyboard focus ring — gold, visible on dark surfaces */
-  :focus-visible {
-    outline: 2px solid rgb(var(--bg-action-primary));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  /* Editorial surface layering. Use opt-in via class. These sit on top of
-     the existing primary/secondary tokens — we add depth without
-     reshuffling the design system. */
-  :root.dark,
-  .dark {
-    --ev-deep: 6 6 6;        /* below-the-fold sink, darker than primary */
-    --ev-elevated: 20 20 20; /* card / panel one step above primary */
-    --ev-warm: 26 22 18;     /* faint warm tint for footers / archives */
-  }
-}
-
-@layer utilities {
-  .bg-ev-deep {
-    background-color: rgb(var(--ev-deep) / <alpha-value>);
-  }
-  .bg-ev-elevated {
-    background-color: rgb(var(--ev-elevated) / <alpha-value>);
-  }
-  .bg-ev-warm {
-    background-color: rgb(var(--ev-warm) / <alpha-value>);
-  }
 
   /* SVG noise grain — pure data URI, no asset request. Pair with
      .relative on the parent so the layer covers it; opacity is tiny on
@@ -225,23 +372,64 @@
     inset: 0;
     pointer-events: none;
     background: radial-gradient(
-      120% 80% at 50% 50%,
-      transparent 55%,
-      rgba(0, 0, 0, 0.45) 100%
+      120% 80% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45) 100%
     );
+  }
+
+  /* Background-scale decorative category label
+     (comicsense pattern, see docs/inspiration-notes.md). Wraps a giant
+     Bricolage 800 word with low opacity behind a section header. */
+  .ev-chapter-mark {
+    font-family: var(--font-display), 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    color: rgb(var(--ev-text-primary) / 0.06);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Reduced motion — kill all editorial motion utilities */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-marquee-slow,
+    .ev-rise,
+    .ev-card-lift,
+    .ev-arrow-link,
+    .ev-rect,
+    .ev-rect-outline,
+    .ev-link {
+      animation: none !important;
+      transition: none !important;
+    }
+    .ev-card-lift:hover,
+    .ev-rect:hover,
+    .ev-rect-outline:hover {
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  /* Brand-coloured selection */
+  ::selection {
+    background-color: rgb(var(--ev-gold) / 0.85);
+    color: rgb(10 10 10);
+  }
+
+  /* Keyboard focus ring — gold, visible on dark surfaces */
+  :focus-visible {
+    outline: 2px solid rgb(var(--ev-gold));
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 @layer utilities {
   /* Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar::-webkit-scrollbar-track { background-color: transparent; }
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -251,10 +439,7 @@
   input:not(:placeholder-shown) ~ label {
     font-size: 12px;
   }
-
-  input:focus ~ label {
-    left: 0;
-  }
+  input:focus ~ label { left: 0; }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -273,15 +458,11 @@
   .dark input:-webkit-autofill,
   .dark input:-webkit-autofill:hover,
   .dark input:-webkit-autofill:focus,
-  .dark input:-webkit-autofill::first-line {
-    color: white;
-  }
+  .dark input:-webkit-autofill::first-line { color: white; }
   .light input:-webkit-autofill,
   .light input:-webkit-autofill:hover,
   .light input:-webkit-autofill:focus,
-  .light input:-webkit-autofill::first-line {
-    color: black;
-  }
+  .light input:-webkit-autofill::first-line { color: black; }
 
   input[type='search']::-webkit-search-decoration,
   input[type='search']::-webkit-search-cancel-button,
