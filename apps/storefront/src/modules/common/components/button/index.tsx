@@ -17,6 +17,11 @@ const buttonVariants = cva({
       destructive:
         'text-static bg-fg-primary-negative hover:bg-fg-primary-negative-hover active:bg-fg-primary-negative-pressed',
       icon: 'bg-transparent hover:bg-fg-secondary-hover active:bg-fg-secondary-pressed text-action-primary hover:text-action-primary-hover active:text-action-primary-pressed',
+      /* Editorial poster — sharp 6px corners, JetBrains Mono caps, gold
+         fill on dark text. Anti-Claude rule #2 — primary CTAs in
+         editorial slots (PDP add-to-cart, cart checkout). */
+      poster:
+        '!rounded-md bg-ev-gold text-[rgb(10,10,10)] hover:bg-ev-gold/90 active:bg-ev-gold/80 font-mono uppercase tracking-[0.2em] text-xs font-semibold',
     },
     size: {
       sm: 'h-10',

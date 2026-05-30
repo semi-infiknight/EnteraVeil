@@ -7,7 +7,10 @@ import { useFormStatus } from 'react-dom'
 
 export function SubmitButton({
   children,
-  variant = 'filled',
+  // Default the checkout submit buttons to the editorial poster variant
+  // — sharp 6px corners, JetBrains Mono caps, gold fill. Anti-Claude
+  // rule #2 (primary CTAs in editorial slots aren't pill buttons).
+  variant = 'poster',
   className,
   isLoading,
   'data-testid': dataTestId,
@@ -20,6 +23,7 @@ export function SubmitButton({
     | 'text'
     | 'destructive'
     | 'icon'
+    | 'poster'
     | null
   className?: string
   isLoading?: boolean
@@ -32,7 +36,7 @@ export function SubmitButton({
       className={className}
       type="submit"
       isLoading={isLoading ?? pending}
-      variant={variant || 'filled'}
+      variant={(variant as any) || 'poster'}
       data-testid={dataTestId}
     >
       {children}

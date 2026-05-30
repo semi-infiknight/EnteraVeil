@@ -108,11 +108,12 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                 name="email"
                 required
                 placeholder="you@somewhere.com"
-                className="flex-1 rounded-full border border-static/20 bg-transparent px-5 py-3 text-static placeholder:text-static/40 focus:border-action-primary focus:outline-none focus:ring-2 focus:ring-action-primary/30"
+                className="flex-1 rounded-md border border-static/20 bg-transparent px-5 py-3 text-static placeholder:text-static/40 focus:border-ev-gold focus:outline-none focus:ring-2 focus:ring-ev-gold/30"
               />
               <Button
+                variant="poster"
                 type="submit"
-                className="!h-12 !px-6 text-base shrink-0 shadow-[0_0_0_1px_rgb(var(--bg-action-primary)/0.45)]"
+                className="!h-12 !px-6 shrink-0"
               >
                 Sign me up →
               </Button>
