@@ -119,20 +119,18 @@ export default async function FAQPage() {
   }))
 
   return (
-    <Container className="min-h-screen max-w-full bg-secondary !p-0">
+    <Container className="min-h-screen max-w-full bg-ev-elevated !p-0">
       <Container className="!py-8">
         <StoreBreadcrumbs breadcrumb="Frequently asked questions" />
-        <span className="mt-2 block ev-eyebrow text-action-primary">
+        <span className="mt-2 flex items-center gap-3 ev-eyebrow text-ev-gold">
+          <span aria-hidden className="h-px w-10 bg-ev-gold/70" />
           Need a hand?
         </span>
-        <Heading
-          as="h1"
-          className="ev-display mt-4 text-4xl text-basic-primary small:text-5xl medium:text-6xl"
-        >
+        <h1 className="ev-display-soft mt-4 text-4xl text-ev-primary small:text-5xl medium:text-6xl">
           Questions
           <br />
-          <span className="text-action-primary">we get a lot.</span>
-        </Heading>
+          <span className="text-ev-gold">we get a lot.</span>
+        </h1>
         <Box className="mt-6 grid grid-cols-12 medium:mt-12">
           <Box className="col-span-12 mb-10 medium:col-span-3 medium:mb-0">
             <SidebarBookmarks data={bookmarks} />

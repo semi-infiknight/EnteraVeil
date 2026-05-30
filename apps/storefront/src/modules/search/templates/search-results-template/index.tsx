@@ -76,19 +76,20 @@ export default async function SearchResultsTemplate({
       <Container className="flex flex-col gap-8 !py-8">
         {results && results.length > 0 ? (
           <>
-            <Box className="flex flex-col gap-4">
+            <Box className="flex flex-col gap-3">
               <StoreBreadcrumbs
                 breadcrumb={`"${safeDecodeURIComponent(query)}"`}
               />
-              <Heading
-                as="h1"
-                className="text-4xl text-basic-primary small:text-5xl"
-              >
-                &quot;{safeDecodeURIComponent(query)}&quot;
-              </Heading>
-              <Text className="text-md text-secondary">
-                {count === 1 ? `${count} product` : `${count} products`}
-              </Text>
+              <span className="ev-eyebrow flex items-center gap-3 text-ev-gold">
+                <span aria-hidden className="h-px w-10 bg-ev-gold/70" />
+                Search results
+              </span>
+              <h1 className="ev-display-soft text-4xl text-ev-primary small:text-5xl medium:text-6xl">
+                &ldquo;{safeDecodeURIComponent(query)}&rdquo;
+              </h1>
+              <p className="text-base text-ev-secondary">
+                {count === 1 ? `${count} product` : `${count} products`} found
+              </p>
               <Box className="grid w-full grid-cols-2 items-center justify-between gap-2 small:flex small:flex-wrap">
                 <Box className="hidden small:flex">
                   <ProductFilters filters={filters} />
