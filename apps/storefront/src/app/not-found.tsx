@@ -70,7 +70,7 @@ export default function NotFound() {
         </Heading>
         <Text
           size="lg"
-          className="ev-rise ev-rise-delay-2 max-w-[480px] text-static/75"
+          className="ev-rise ev-rise-delay-2 max-w-[480px] text-ev-secondary"
         >
           This page didn&apos;t make it past the veil. The link may have moved,
           the drop may have sold out, or it may have never existed — either way,
@@ -96,19 +96,19 @@ export default function NotFound() {
         </div>
 
         {/* Bottom metadata band — paired mono labels + display values */}
-        <div className="mt-10 hidden w-full max-w-[640px] items-end justify-between gap-6 border-t border-static/15 pt-5 text-static/70 small:flex">
+        <div className="mt-10 hidden w-full max-w-[640px] items-end justify-between gap-6 border-t border-static/15 pt-5 text-ev-secondary small:flex">
           <div>
-            <div className="ev-mono text-static/55">Error code</div>
+            <div className="ev-mono text-ev-tertiary">Error code</div>
             <div className="ev-display-soft mt-1 text-2xl text-static">404</div>
           </div>
           <div>
-            <div className="ev-mono text-static/55">Reason</div>
+            <div className="ev-mono text-ev-tertiary">Reason</div>
             <div className="ev-display-soft mt-1 text-2xl text-static">
               Not found
             </div>
           </div>
           <div>
-            <div className="ev-mono text-static/55">Try</div>
+            <div className="ev-mono text-ev-tertiary">Try</div>
             <div className="ev-display-soft mt-1 text-2xl text-static">
               The drop ↗
             </div>

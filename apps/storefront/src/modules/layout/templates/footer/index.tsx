@@ -30,7 +30,7 @@ function SocialMedia({ className }: { className?: string }) {
         href="#"
         data-testid="linkedin-link"
         aria-label="LinkedIn"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-static/85 transition-all duration-200 hover:border-action-primary hover:text-action-primary"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-ev-secondary transition-all duration-200 hover:border-action-primary hover:text-action-primary"
       >
         <LinkedinIcon className="h-4 w-4" />
       </LocalizedClientLink>
@@ -38,7 +38,7 @@ function SocialMedia({ className }: { className?: string }) {
         href="#"
         data-testid="facebook-link"
         aria-label="Facebook"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-static/85 transition-all duration-200 hover:border-action-primary hover:text-action-primary"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-ev-secondary transition-all duration-200 hover:border-action-primary hover:text-action-primary"
       >
         <FacebookIcon className="h-4 w-4" />
       </LocalizedClientLink>
@@ -46,7 +46,7 @@ function SocialMedia({ className }: { className?: string }) {
         href="#"
         data-testid="x-link"
         aria-label="X / Twitter"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-static/85 transition-all duration-200 hover:border-action-primary hover:text-action-primary"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-static/20 text-ev-secondary transition-all duration-200 hover:border-action-primary hover:text-action-primary"
       >
         <XLogoIcon className="h-4 w-4" />
       </LocalizedClientLink>
@@ -85,7 +85,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
               <br />
               <span className="text-action-primary">drop.</span>
             </Heading>
-            <Text size="md" className="max-w-[440px] text-static/65">
+            <Text size="md" className="max-w-[440px] text-ev-tertiary">
               Once a month, no spam. Drop dates, lookbooks, the occasional
               early-access code. Made for people who actually wear the
               clothes.
@@ -108,7 +108,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                 name="email"
                 required
                 placeholder="you@somewhere.com"
-                className="flex-1 rounded-md border border-static/20 bg-transparent px-5 py-3 text-static placeholder:text-static/40 focus:border-ev-gold focus:outline-none focus:ring-2 focus:ring-ev-gold/30"
+                className="flex-1 rounded-md border border-static/20 bg-transparent px-5 py-3 text-static placeholder:text-ev-muted focus:border-ev-gold focus:outline-none focus:ring-2 focus:ring-ev-gold/30"
               />
               <Button
                 variant="poster"
@@ -118,7 +118,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                 Sign me up →
               </Button>
             </form>
-            <Text size="sm" className="text-static/40">
+            <Text size="sm" className="text-ev-muted">
               By signing up you agree to our privacy policy. Unsubscribe in one
               tap.
             </Text>
@@ -138,7 +138,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
             >
               <Wordmark className="h-7 text-static" />
             </LocalizedClientLink>
-            <Text size="md" className="max-w-[320px] text-static/65">
+            <Text size="md" className="max-w-[320px] text-ev-tertiary">
               Anime streetwear from beyond the veil. Hand-printed in Bangalore,
               numbered runs, no restocks on most pieces.
             </Text>
@@ -163,7 +163,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                     href={`/${countryCode}${link.href}`}
                     key={`${id}-navigationItem-${linkId}`}
                     variant="secondary"
-                    className="ev-link w-max text-static/80 hover:text-static"
+                    className="ev-link w-max text-ev-secondary hover:text-static"
                     data-testid={formatNameForTestId(`${link.title}-link`)}
                   >
                     {link.title}
@@ -194,7 +194,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                   </span>
                   <div
                     id="chevronDownSvg"
-                    className="flex h-10 w-10 shrink-0 items-center justify-center text-static/70 duration-200 ease-in-out"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center text-ev-tertiary duration-200 ease-in-out"
                   >
                     <ChevronDownIcon />
                   </div>
@@ -205,7 +205,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
                       href={link.href}
                       key={`${id}-navigationItem-${linkId}`}
                       variant="secondary"
-                      className="ev-link w-max text-static/80 hover:text-static"
+                      className="ev-link w-max text-ev-secondary hover:text-static"
                       data-testid={formatNameForTestId(`${link.title}-link`)}
                     >
                       {link.title}
@@ -219,7 +219,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
 
         {/* Legal strip */}
         <Box className="flex flex-col gap-4 border-t border-static/10 pt-6 small:flex-row small:items-center small:justify-between">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-static/55">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ev-tertiary">
             <span>
               © {new Date().getFullYear()} EnteraVeil. All rights reserved.
             </span>
@@ -227,7 +227,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
               <NavigationItem
                 key={`other-${id}`}
                 variant="secondary"
-                className="ev-link shrink-0 text-static/55 hover:text-static"
+                className="ev-link shrink-0 text-ev-tertiary hover:text-static"
                 href={link.href}
                 data-testid={formatNameForTestId(`${link.title}-link`)}
               >
@@ -237,7 +237,7 @@ export default async function Footer({ countryCode }: { countryCode: string }) {
           </div>
 
           {/* Region / drop chip */}
-          <div className="flex items-center gap-3 text-static/55">
+          <div className="flex items-center gap-3 text-ev-tertiary">
             <span className="ev-mono inline-flex items-center gap-1.5 rounded-full border border-static/15 px-2.5 py-1">
               <span className="h-1 w-1 rounded-full bg-action-primary" />
               India · INR

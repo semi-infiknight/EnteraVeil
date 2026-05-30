@@ -89,7 +89,7 @@ const HeroFallback = () => (
         {/* Bottom metadata band — VISIBLE on mobile too (was small:flex).
             2 cells on phones, 3-4 on larger viewports. Anti-Claude rule #5:
             don't collapse asymmetry on mobile. */}
-        <div className="ev-rise ev-rise-delay-3 mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-static/15 pt-5 text-static/70 small:mt-12 small:grid-cols-4 small:gap-x-8">
+        <div className="ev-rise ev-rise-delay-3 mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-static/15 pt-5 text-ev-secondary small:mt-12 small:grid-cols-4 small:gap-x-8">
           <div>
             <div className="ev-mono text-ev-gold-soft">Numbered</div>
             <div className="ev-display-soft mt-1 text-2xl text-ev-primary small:text-3xl">

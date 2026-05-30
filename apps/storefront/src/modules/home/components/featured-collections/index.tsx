@@ -73,7 +73,7 @@ const FeaturedCollections = () => (
             <h3 className="ev-display text-3xl text-static small:text-4xl medium:text-5xl">
               {c.title}
             </h3>
-            <span className="text-sm text-static/80">{c.tagline}</span>
+            <span className="text-sm text-ev-secondary">{c.tagline}</span>
             <span className="mt-3 inline-flex items-center gap-2 text-sm text-action-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               Discover{' '}
               <span aria-hidden className="-translate-x-1 transition-transform duration-300 group-hover:translate-x-0">
