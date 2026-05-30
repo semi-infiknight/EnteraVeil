@@ -49,11 +49,14 @@ const AboutFallback = () => (
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/85" />
       <Container className="!relative !z-10 flex h-full !max-w-[1328px] flex-col justify-end !pb-12 small:!pb-20">
-        <span className="ev-eyebrow text-action-primary">About EnteraVeil</span>
-        <h1 className="ev-display mt-4 max-w-[16ch] text-5xl text-static small:text-7xl medium:text-8xl">
+        <span className="ev-eyebrow flex items-center gap-3 text-ev-gold">
+          <span aria-hidden className="h-px w-10 bg-ev-gold/70" />
+          About EnteraVeil
+        </span>
+        <h1 className="ev-display-collapsed mt-4 max-w-[16ch] text-5xl text-ev-primary small:text-7xl medium:text-8xl">
           From beyond
           <br />
-          <span className="text-action-primary">the veil.</span>
+          <span className="text-ev-gold">the veil.</span>
         </h1>
       </Container>
     </section>
@@ -95,43 +98,50 @@ const AboutFallback = () => (
         {VALUES.map((v, idx) => (
           <Box
             key={v.title}
-            className="flex flex-col gap-3 border border-action-primary/20 bg-ev-elevated p-6 ev-card-lift"
+            className="flex flex-col gap-3 border border-ev-gold/20 bg-ev-elevated p-6 ev-card-lift"
           >
-            <span className="ev-display text-3xl text-action-primary">
+            <span className="ev-display text-3xl text-ev-gold">
               {String(idx + 1).padStart(2, '0')}
             </span>
-            <h3 className="ev-display text-2xl text-basic-primary">{v.title}</h3>
-            <Text className="text-secondary">{v.body}</Text>
+            <h3 className="ev-display text-2xl text-ev-primary">{v.title}</h3>
+            <Text className="text-ev-secondary">{v.body}</Text>
           </Box>
         ))}
       </Box>
     </Container>
 
     <Container>
-      <Box className="grid grid-cols-2 gap-4 border-y border-action-primary/20 py-10 small:grid-cols-4 small:gap-6">
+      <Box className="grid grid-cols-2 gap-4 border-y border-ev-gold/20 py-10 small:grid-cols-4 small:gap-6">
         {STATS.map((s) => (
           <Box key={s.v} className="flex flex-col gap-1">
-            <span className="ev-display text-3xl text-action-primary small:text-5xl">
+            <span className="ev-display text-3xl text-ev-gold small:text-5xl">
               {s.k}
             </span>
-            <span className="ev-eyebrow text-secondary">{s.v}</span>
+            <span className="ev-eyebrow text-ev-secondary">{s.v}</span>
           </Box>
         ))}
       </Box>
     </Container>
 
-    <Container className="flex flex-col items-center gap-4 text-center small:gap-6">
-      <span className="ev-eyebrow text-action-primary">Drop 001 is live</span>
-      <h2 className="ev-display max-w-[18ch] text-3xl text-basic-primary small:text-5xl">
+    {/* Closing CTA — left-aligned (anti-Claude rule #1), sharp poster
+        primary + arrow-link secondary (anti-Claude rule #2). */}
+    <Container className="flex flex-col items-start gap-4 small:gap-6">
+      <span className="ev-eyebrow flex items-center gap-3 text-ev-gold">
+        <span aria-hidden className="h-px w-10 bg-ev-gold/70" />
+        Drop 001 is live
+      </span>
+      <h2 className="ev-display-soft max-w-[18ch] text-3xl text-ev-primary small:text-5xl">
         Pick the piece you&apos;d wear twice a week.
       </h2>
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <Button asChild className="!h-12 !px-6 text-base">
-          <LocalizedClientLink href="/shop">Shop the drop →</LocalizedClientLink>
+      <div className="flex flex-wrap items-center gap-5 pt-2">
+        <Button variant="poster" asChild className="!h-12 !px-7">
+          <LocalizedClientLink href="/shop">
+            Shop the drop →
+          </LocalizedClientLink>
         </Button>
-        <Button asChild variant="tonal" className="!h-12 !px-6 text-base">
-          <LocalizedClientLink href="/blog">Lookbook</LocalizedClientLink>
-        </Button>
+        <LocalizedClientLink href="/lookbook" className="ev-arrow-link">
+          View the lookbook →
+        </LocalizedClientLink>
       </div>
     </Container>
   </>
