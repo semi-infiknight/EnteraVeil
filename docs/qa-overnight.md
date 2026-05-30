@@ -719,3 +719,73 @@ all toggle state. Zero non-HMR console errors. All 10 routes 200/404.
 Tunnel URLs (still live):
 - Storefront: https://poll-patrick-telling-webmaster.trycloudflare.com/in
 - Admin: https://healthy-authorization-isolated-optical.trycloudflare.com/app/
+
+---
+
+## Round 4 — token sweep + content polish · 2026-05-30 IST
+
+Four more commits after the prior coherence-verified round. Targeted
+the deferred sweeps that were called out as "follow-up needed."
+
+`0c0c264` chore(tokens): unify text + bg color shades — sweep text-static/X
+  - All 7 distinct white-alpha variants (40/55/65/70/75/80/85) on
+    text-static/X collapsed to the 4-tier `.text-ev-{primary,secondary,
+    tertiary,muted}` system. 0 occurrences remain after sweep.
+  - Affected: not-found, hero-fallback, featured-collections, footer.
+
+`f24cc0e` chore(layout): SectionHeading adoption on shop/results/cart/faq
+  - Shop layout: bare Inter h1 "All products" -> editorial ev-eyebrow
+    "The drop" + .ev-display-soft h1 "All products."
+  - Search results: bare h1 query -> eyebrow + display-soft with
+    query in gold quotes + count line in text-ev-secondary.
+  - Cart empty: rewritten to match the unified bg-ev-elevated +
+    ev-grain + gold-ringed-icon empty-state card pattern. Button
+    variant='poster' for shop CTA + .ev-arrow-link for lookbook.
+  - FAQ: bg-secondary -> bg-ev-elevated. text-action-primary ->
+    text-ev-gold. Adds gold-rule prefix to "Need a hand?" eyebrow.
+
+`215178f` chore(cards): unify surface — bg-secondary -> bg-ev-elevated
+  - 10 page-level surfaces swept: checkout, cart, privacy, terms,
+    account-layout, about-fallback, framed-text-section, numerical-
+    section, order-completed-template, reset-password.
+  - Intentionally NOT swept: Button cva (bg-secondary is tonal variant),
+    Input/Select/Radio/Checkbox/NativeSelect/Toast (form chrome).
+
+`7ad17b5` design(about): anti-Claude polish + token sweep on about-us
+  - Hero eyebrow gets gold-rule prefix. Hero h1 -> .ev-display-collapsed
+    (xenpachi-style 0.74 line-height).
+  - Closing CTA cluster: centered text-stack -> LEFT-aligned items-start
+    (anti-Claude rule #1). Button -> variant='poster' (sharp). Secondary
+    tonal Button -> .ev-arrow-link (rule #2).
+  - Tokens: text-action-primary -> text-ev-gold, text-basic-primary ->
+    text-ev-primary, text-secondary -> text-ev-secondary, border-action-
+    primary -> border-ev-gold.
+
+### Round 4 audit deltas (before this round → after)
+
+| dimension | round 3 end | round 4 end |
+| --- | ---: | ---: |
+| unique text colors | 20 | **15** ↓ |
+| unique bg colors | 12 | 13 (+1 bg-ev-elevated adoption) |
+| unique type signatures | 43 | 43 |
+| card signatures | 2 | 2 |
+| eyebrow signatures | 4 | 4 |
+| Bricolage heading nodes | 50 | 49 |
+| 6px radius nodes | 37 | (similar) |
+
+Text-color sprawl down by 25% — the explicit Phase 2 deferral landed.
+Other counts hold steady; remaining drift comes from form chrome
+(Button cva, Input/Select/etc) that we intentionally don't sweep
+because the Medusa preset tokens there are functional, not
+decorative.
+
+### Round 4 verification
+
+- `pnpm typecheck` clean
+- Production build `pnpm build` -> ✓ Compiled successfully
+- Playwright tap-verify on tunnel:
+  - HAMBURGER → dialog: **true** ✓
+  - ACCORDION expanded: **true** ✓
+  - SEARCH panel: **true** ✓
+  - non-HMR errors: (none)
+- All 13 routes 200/404 in desktop + mobile UA sweep
