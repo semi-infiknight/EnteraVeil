@@ -95,7 +95,7 @@ const AboutFallback = () => (
         {VALUES.map((v, idx) => (
           <Box
             key={v.title}
-            className="flex flex-col gap-3 border border-action-primary/20 bg-secondary p-6 ev-card-lift"
+            className="flex flex-col gap-3 border border-action-primary/20 bg-ev-elevated p-6 ev-card-lift"
           >
             <span className="ev-display text-3xl text-action-primary">
               {String(idx + 1).padStart(2, '0')}

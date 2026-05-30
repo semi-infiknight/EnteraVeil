@@ -18,7 +18,7 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({
 }) => {
   if (!customer) {
     return (
-      <Box className="flex justify-center bg-secondary">
+      <Box className="flex justify-center bg-ev-elevated">
         <Container className="w-full !max-w-[660px] !pb-16 !pt-8">
           <div className="flex items-center justify-center">{children}</div>
         </Container>
@@ -27,7 +27,7 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({
   }
 
   return (
-    <Box className="bg-secondary">
+    <Box className="bg-ev-elevated">
       <AccountMobileNav />
       <Container>
         <Box className="gap grid grid-cols-12 gap-6">

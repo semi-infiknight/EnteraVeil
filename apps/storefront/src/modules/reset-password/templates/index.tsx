@@ -4,7 +4,7 @@ import { ResetPassword } from '@modules/reset-password/components/reset-password
 
 export function ResetPasswordTemplate() {
   return (
-    <Box className="flex justify-center bg-secondary">
+    <Box className="flex justify-center bg-ev-elevated">
       <Container className="w-full !max-w-[660px] !pb-16 !pt-8">
         <div className="flex items-center justify-center">
           <ResetPassword />

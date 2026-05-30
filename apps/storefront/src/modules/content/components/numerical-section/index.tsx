@@ -10,7 +10,7 @@ export const NumericalSection = ({
   data: Omit<ContentAttributes, 'Image'>[]
 }) => {
   return (
-    <Container className="flex flex-col gap-6 bg-secondary small:flex-row large:gap-2">
+    <Container className="flex flex-col gap-6 bg-ev-elevated small:flex-row large:gap-2">
       {data.map((item, id) => (
         <Box key={id} className="flex flex-1 flex-col items-center gap-4">
           <Heading className="text-4xl text-basic-primary small:text-5xl">

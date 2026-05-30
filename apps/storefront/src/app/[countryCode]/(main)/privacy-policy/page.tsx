@@ -27,7 +27,7 @@ export default async function PrivacyPolicyPage() {
 
   if (!PageContent) {
     return (
-      <Container className="min-h-screen max-w-full bg-secondary !p-0">
+      <Container className="min-h-screen max-w-full bg-ev-elevated !p-0">
         <Container className="!py-8">
           <StoreBreadcrumbs breadcrumb="Privacy Policy" />
           <Box className="mt-6 grid grid-cols-12 medium:mt-12">
@@ -65,7 +65,7 @@ export default async function PrivacyPolicyPage() {
   })
 
   return (
-    <Container className="min-h-screen max-w-full bg-secondary !p-0">
+    <Container className="min-h-screen max-w-full bg-ev-elevated !p-0">
       <Container className="!py-8">
         <StoreBreadcrumbs breadcrumb="Privacy Policy" />
         <Heading as="h1" className="mt-4 text-4xl medium:text-5xl">

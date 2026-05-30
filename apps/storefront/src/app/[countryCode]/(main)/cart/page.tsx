@@ -50,7 +50,7 @@ export default async function Cart(props: {
   ])
 
   return (
-    <Container className="max-w-full bg-secondary !p-0">
+    <Container className="max-w-full bg-ev-elevated !p-0">
       <CartTemplate cart={cart} />
       {region && products?.length > 0 && (
         <Suspense fallback={<SkeletonProductsCarousel />}>

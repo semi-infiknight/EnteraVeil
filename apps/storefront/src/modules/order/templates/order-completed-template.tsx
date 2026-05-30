@@ -17,7 +17,7 @@ export default function OrderCompletedTemplate({
   order,
 }: OrderCompletedTemplateProps) {
   return (
-    <Box className="bg-secondary">
+    <Box className="bg-ev-elevated">
       <Container className="mx-auto py-8">
         <Box
           className="mx-auto flex h-full w-full max-w-2xl flex-col gap-4"
