@@ -684,3 +684,38 @@ Admin login: `admin@enteraveil.local` / `devpass123`.
 - `03f3f4d` design(O): 404 cinematic — full-bleed hero, mono band
 
 All pushed to `origin/main`.
+
+---
+
+## Polish round 3 (grounded in inspo) · 2026-05-30 IST
+
+See `docs/overnight-polish-round.md` for the full log of this round.
+
+Eight commits this round, all anchored in xenpachi.com + comicsense.store
+evidence captured via Playwright DOM/computed styles (no images read).
+
+Phase ordering: capture → coherence audit → structural map → token
+consolidation → structural reorder → anti-Claude per-section polish →
+coherence re-verify → final wrap.
+
+Big visible wins on the storefront tunnel:
+- Hero CTAs replaced with sharp gold rectangles + arrow link (was 2 pills)
+- "LIVE" badge inline (was rounded backdrop-blur pill)
+- 6 SectionDividers removed from home (was "01 — Collections" etc)
+- FeaturedCollections removed (duplicated Categories)
+- Two product carousels lead the page now (xenpachi multi-strip)
+- Decorative "CATEGORIES" giant translucent label behind grid (comicsense)
+- Lookbook trimmed 6 → 3 tiles
+- BrandBanner trimmed 520px → 280px slim band
+- StatusStrip added above footer
+- Mobile bottom nav: 5 labeled cells → 3 sparse icons right-aligned
+- Marquee thinner (~28px) + functional offers (codes, thresholds)
+- Every h1/h2/h3 now defaults to Bricolage Grotesque (was Inter on
+  shop/results/pdp/cart/faq)
+
+Playwright tap-verify on tunnel — hamburger, footer accordion, search
+all toggle state. Zero non-HMR console errors. All 10 routes 200/404.
+
+Tunnel URLs (still live):
+- Storefront: https://poll-patrick-telling-webmaster.trycloudflare.com/in
+- Admin: https://healthy-authorization-isolated-optical.trycloudflare.com/app/

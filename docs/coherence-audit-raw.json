@@ -21,52 +21,52 @@
       "radii": 1
     },
     "home": {
-      "types": 20,
-      "eyebrows": 14,
-      "buttons": 11,
-      "radii": 3
+      "types": 17,
+      "eyebrows": 11,
+      "buttons": 10,
+      "radii": 4
     },
     "shop": {
       "types": 15,
-      "eyebrows": 7,
-      "buttons": 15,
-      "radii": 3
+      "eyebrows": 5,
+      "buttons": 14,
+      "radii": 4
     },
     "pdp": {
       "types": 15,
-      "eyebrows": 7,
+      "eyebrows": 5,
       "buttons": 16,
-      "radii": 3
+      "radii": 4
     },
     "cart": {
       "types": 14,
-      "eyebrows": 6,
-      "buttons": 11,
-      "radii": 3
+      "eyebrows": 5,
+      "buttons": 10,
+      "radii": 4
     },
     "account": {
       "types": 12,
-      "eyebrows": 6,
+      "eyebrows": 4,
       "buttons": 11,
-      "radii": 2
+      "radii": 3
     },
     "lookbook": {
       "types": 12,
-      "eyebrows": 5,
+      "eyebrows": 4,
       "buttons": 7,
-      "radii": 2
+      "radii": 3
     },
     "about": {
       "types": 15,
-      "eyebrows": 6,
+      "eyebrows": 5,
       "buttons": 7,
-      "radii": 2
+      "radii": 3
     },
     "faq": {
       "types": 13,
-      "eyebrows": 5,
+      "eyebrows": 4,
       "buttons": 11,
-      "radii": 2
+      "radii": 3
     },
     "blog": {
       "types": 2,
@@ -76,19 +76,46 @@
     },
     "results": {
       "types": 15,
-      "eyebrows": 7,
-      "buttons": 15,
-      "radii": 3
+      "eyebrows": 5,
+      "buttons": 14,
+      "radii": 4
     },
     "categories": {
       "types": 13,
-      "eyebrows": 6,
+      "eyebrows": 4,
       "buttons": 7,
-      "radii": 2
+      "radii": 3
     }
   },
-  "uniqueTypeSignatures": 45,
+  "uniqueTypeSignatures": 43,
   "topTypeSignatures": [
+    {
+      "sig": "span@11px/15.4px w=500 ls=1.98px tt=uppercase",
+      "count": 11,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "SS26 DROP 001 LIVE",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "15.4px",
+        "letterSpacing": "1.98px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
+      }
+    },
     {
       "sig": "a@16px/25.6px w=400 ls=normal tt=none",
       "count": 11,
@@ -143,7 +170,7 @@
       }
     },
     {
-      "sig": "h3@24px/38.4px w=400 ls=normal tt=none",
+      "sig": "h3@24px/25.2px w=700 ls=-0.6px tt=none",
       "count": 10,
       "pages": [
         "home",
@@ -161,11 +188,11 @@
         "tag": "h3",
         "text": "CategoriesChevron down icon",
         "fontSize": "24px",
-        "fontWeight": "400",
-        "lineHeight": "38.4px",
-        "letterSpacing": "normal",
+        "fontWeight": "700",
+        "lineHeight": "25.2px",
+        "letterSpacing": "-0.6px",
         "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
@@ -185,65 +212,13 @@
       ],
       "example": {
         "tag": "p",
-        "text": "Three capsules, one universe. Pick your faction — ",
+        "text": "Once a month, no spam. Drop dates, lookbooks, the ",
         "fontSize": "14px",
         "fontWeight": "400",
         "lineHeight": "22px",
         "letterSpacing": "normal",
         "textTransform": "none",
         "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
-      }
-    },
-    {
-      "sig": "p@12px/20px w=400 ls=normal tt=none",
-      "count": 10,
-      "pages": [
-        "home",
-        "shop",
-        "pdp",
-        "cart",
-        "account",
-        "lookbook",
-        "about",
-        "faq",
-        "results",
-        "categories"
-      ],
-      "example": {
-        "tag": "p",
-        "text": "By signing up you agree to our privacy policy. Uns",
-        "fontSize": "12px",
-        "fontWeight": "400",
-        "lineHeight": "20px",
-        "letterSpacing": "normal",
-        "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
-      }
-    },
-    {
-      "sig": "span@12px/20px w=400 ls=3.36px tt=uppercase",
-      "count": 10,
-      "pages": [
-        "home",
-        "shop",
-        "pdp",
-        "cart",
-        "account",
-        "lookbook",
-        "about",
-        "faq",
-        "results",
-        "categories"
-      ],
-      "example": {
-        "tag": "span",
-        "text": "Drop 001 — out now",
-        "fontSize": "12px",
-        "fontWeight": "400",
-        "lineHeight": "20px",
-        "letterSpacing": "3.36px",
-        "textTransform": "uppercase",
-        "fontFamily": "Space Grotesk, Space Grotesk Fallback, Space Grote"
       }
     },
     {
@@ -300,9 +275,10 @@
     },
     {
       "sig": "span@11px/11px w=500 ls=3.52px tt=uppercase",
-      "count": 8,
+      "count": 9,
       "pages": [
         "home",
+        "pdp",
         "cart",
         "account",
         "lookbook",
@@ -313,13 +289,38 @@
       ],
       "example": {
         "tag": "span",
-        "text": "SS26 · Drop 001",
+        "text": "More from the drop",
         "fontSize": "11px",
         "fontWeight": "500",
         "lineHeight": "11px",
         "letterSpacing": "3.52px",
         "textTransform": "uppercase",
         "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, Space Gro"
+      }
+    },
+    {
+      "sig": "p@12px/20px w=400 ls=normal tt=none",
+      "count": 9,
+      "pages": [
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories"
+      ],
+      "example": {
+        "tag": "p",
+        "text": "By signing up you agree to our privacy policy. Uns",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
       }
     },
     {
@@ -344,24 +345,23 @@
       }
     },
     {
-      "sig": "a@11px/15.4px w=500 ls=1.98px tt=uppercase",
-      "count": 5,
+      "sig": "span@16px/24px w=400 ls=normal tt=none",
+      "count": 4,
       "pages": [
         "home",
         "shop",
-        "pdp",
         "cart",
         "results"
       ],
       "example": {
-        "tag": "a",
-        "text": "Quick view →",
-        "fontSize": "11px",
-        "fontWeight": "500",
-        "lineHeight": "15.4px",
-        "letterSpacing": "1.98px",
-        "textTransform": "uppercase",
-        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
+        "tag": "span",
+        "text": "Medusa Shorts",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
       }
     },
     {
@@ -382,6 +382,26 @@
         "letterSpacing": "normal",
         "textTransform": "none",
         "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "a@11px/15.4px w=500 ls=1.98px tt=uppercase",
+      "count": 4,
+      "pages": [
+        "shop",
+        "pdp",
+        "cart",
+        "results"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "Quick view →",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "15.4px",
+        "letterSpacing": "1.98px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
       }
     },
     {
@@ -424,44 +444,6 @@
       }
     },
     {
-      "sig": "span@11px/15.4px w=500 ls=1.98px tt=uppercase",
-      "count": 3,
-      "pages": [
-        "home",
-        "pdp",
-        "404"
-      ],
-      "example": {
-        "tag": "span",
-        "text": "DROP 001 · SS26 · BLR · INDIA",
-        "fontSize": "11px",
-        "fontWeight": "500",
-        "lineHeight": "15.4px",
-        "letterSpacing": "1.98px",
-        "textTransform": "uppercase",
-        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, JetBrains"
-      }
-    },
-    {
-      "sig": "span@16px/24px w=400 ls=normal tt=none",
-      "count": 3,
-      "pages": [
-        "shop",
-        "cart",
-        "results"
-      ],
-      "example": {
-        "tag": "span",
-        "text": "Medusa Shorts",
-        "fontSize": "16px",
-        "fontWeight": "400",
-        "lineHeight": "24px",
-        "letterSpacing": "normal",
-        "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
-      }
-    },
-    {
       "sig": "h2@60px/57px w=700 ls=-2.1px tt=none",
       "count": 2,
       "pages": [
@@ -470,7 +452,7 @@
       ],
       "example": {
         "tag": "h2",
-        "text": "Born from the veil.",
+        "text": "Small batch. Loud graphics.",
         "fontSize": "60px",
         "fontWeight": "700",
         "lineHeight": "57px",
@@ -480,7 +462,7 @@
       }
     },
     {
-      "sig": "h1@48px/56px w=400 ls=normal tt=none",
+      "sig": "h1@48px/56px w=700 ls=-1.2px tt=none",
       "count": 2,
       "pages": [
         "shop",
@@ -490,15 +472,15 @@
         "tag": "h1",
         "text": "All products",
         "fontSize": "48px",
-        "fontWeight": "400",
+        "fontWeight": "700",
         "lineHeight": "56px",
-        "letterSpacing": "normal",
+        "letterSpacing": "-1.2px",
         "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
-      "sig": "h3@16px/24px w=500 ls=normal tt=none",
+      "sig": "h3@16px/24px w=500 ls=-0.4px tt=none",
       "count": 2,
       "pages": [
         "shop",
@@ -510,9 +492,9 @@
         "fontSize": "16px",
         "fontWeight": "500",
         "lineHeight": "24px",
-        "letterSpacing": "normal",
+        "letterSpacing": "-0.4px",
         "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
@@ -534,7 +516,7 @@
       }
     },
     {
-      "sig": "h2@32px/40px w=400 ls=normal tt=none",
+      "sig": "h2@32px/40px w=700 ls=-0.8px tt=none",
       "count": 2,
       "pages": [
         "pdp",
@@ -544,15 +526,15 @@
         "tag": "h2",
         "text": "Medusa Shorts",
         "fontSize": "32px",
-        "fontWeight": "400",
+        "fontWeight": "700",
         "lineHeight": "40px",
-        "letterSpacing": "normal",
+        "letterSpacing": "-0.8px",
         "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
-      "sig": "h2@24px/32px w=400 ls=normal tt=none",
+      "sig": "h2@24px/32px w=700 ls=-0.6px tt=none",
       "count": 2,
       "pages": [
         "cart",
@@ -562,11 +544,11 @@
         "tag": "h2",
         "text": "Your shopping cart is empty",
         "fontSize": "24px",
-        "fontWeight": "400",
+        "fontWeight": "700",
         "lineHeight": "32px",
-        "letterSpacing": "normal",
+        "letterSpacing": "-0.6px",
         "textTransform": "none",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
@@ -588,7 +570,7 @@
       }
     },
     {
-      "sig": "h1@115.2px/99.072px w=800 ls=-5.184px tt=none",
+      "sig": "h1@140.8px/104.192px w=800 ls=-7.04px tt=none",
       "count": 1,
       "pages": [
         "home"
@@ -596,50 +578,16 @@
       "example": {
         "tag": "h1",
         "text": "Beyondthe veil.",
-        "fontSize": "115.2px",
+        "fontSize": "140.8px",
         "fontWeight": "800",
-        "lineHeight": "99.072px",
-        "letterSpacing": "-5.184px",
+        "lineHeight": "104.192px",
+        "letterSpacing": "-7.04px",
         "textTransform": "none",
         "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
-      "sig": "h2@60px/57px w=800 ls=-2.7px tt=none",
-      "count": 1,
-      "pages": [
-        "home"
-      ],
-      "example": {
-        "tag": "h2",
-        "text": "Small batch.Loud graphics.",
-        "fontSize": "60px",
-        "fontWeight": "800",
-        "lineHeight": "57px",
-        "letterSpacing": "-2.7px",
-        "textTransform": "none",
-        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
-      }
-    },
-    {
-      "sig": "h3@48px/56px w=800 ls=-2.16px tt=none",
-      "count": 1,
-      "pages": [
-        "home"
-      ],
-      "example": {
-        "tag": "h3",
-        "text": "Abyss",
-        "fontSize": "48px",
-        "fontWeight": "800",
-        "lineHeight": "56px",
-        "letterSpacing": "-2.16px",
-        "textTransform": "none",
-        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
-      }
-    },
-    {
-      "sig": "h3@32px/40px w=800 ls=-1.44px tt=none",
+      "sig": "h3@32px/40px w=700 ls=-1.12px tt=none",
       "count": 1,
       "pages": [
         "home"
@@ -648,32 +596,32 @@
         "tag": "h3",
         "text": "Shirts",
         "fontSize": "32px",
-        "fontWeight": "800",
+        "fontWeight": "700",
         "lineHeight": "40px",
-        "letterSpacing": "-1.44px",
+        "letterSpacing": "-1.12px",
         "textTransform": "none",
         "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
     },
     {
-      "sig": "h3@48px/56px w=700 ls=-1.68px tt=none",
+      "sig": "p@16px/25.6px w=400 ls=normal tt=none",
       "count": 1,
       "pages": [
         "home"
       ],
       "example": {
-        "tag": "h3",
-        "text": "Read the storybehind the drop.",
-        "fontSize": "48px",
-        "fontWeight": "700",
-        "lineHeight": "56px",
-        "letterSpacing": "-1.68px",
+        "tag": "p",
+        "text": "Hand-printed by a tiny crew in Bangalore. Numbered",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "25.6px",
+        "letterSpacing": "normal",
         "textTransform": "none",
-        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
       }
     },
     {
-      "sig": "span@115.2px/99.072px w=800 ls=-5.184px tt=none",
+      "sig": "span@140.8px/104.192px w=800 ls=-7.04px tt=none",
       "count": 1,
       "pages": [
         "home"
@@ -681,12 +629,29 @@
       "example": {
         "tag": "span",
         "text": "the veil.",
-        "fontSize": "115.2px",
+        "fontSize": "140.8px",
         "fontWeight": "800",
-        "lineHeight": "99.072px",
-        "letterSpacing": "-5.184px",
+        "lineHeight": "104.192px",
+        "letterSpacing": "-7.04px",
         "textTransform": "none",
         "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
+    },
+    {
+      "sig": "a@12px/12px w=600 ls=2.4px tt=uppercase",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "tag": "a",
+        "text": "Shop the drop →",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "2.4px",
+        "textTransform": "uppercase",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback, monospace"
       }
     },
     {
@@ -705,82 +670,108 @@
         "textTransform": "none",
         "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
       }
+    },
+    {
+      "sig": "span@24px/32px w=400 ls=normal tt=none",
+      "count": 1,
+      "pages": [
+        "pdp"
+      ],
+      "example": {
+        "tag": "span",
+        "text": "₹1,099.00",
+        "fontSize": "24px",
+        "fontWeight": "400",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-serif, syste"
+      }
+    },
+    {
+      "sig": "h1@40px/48px w=700 ls=-1px tt=none",
+      "count": 1,
+      "pages": [
+        "lookbook"
+      ],
+      "example": {
+        "tag": "h1",
+        "text": "Lookbook",
+        "fontSize": "40px",
+        "fontWeight": "700",
+        "lineHeight": "48px",
+        "letterSpacing": "-1px",
+        "textTransform": "none",
+        "fontFamily": "Bricolage Grotesque, Bricolage Grotesque Fallback,"
+      }
     }
   ],
   "uniqueFontFamilies": [
     [
       "Inter, Inter Fallback, Inter, ui-sans-serif, syste",
-      90
+      72
     ],
     [
       "Bricolage Grotesque, Bricolage Grotesque Fallback,",
-      34
-    ],
-    [
-      "Space Grotesk, Space Grotesk Fallback, Space Grote",
-      10
-    ],
-    [
-      "JetBrains Mono, JetBrains Mono Fallback, Space Gro",
-      8
+      50
     ],
     [
       "JetBrains Mono, JetBrains Mono Fallback, JetBrains",
-      8
+      15
+    ],
+    [
+      "JetBrains Mono, JetBrains Mono Fallback, Space Gro",
+      9
     ],
     [
       "system-ui, Segoe UI, Roboto, Helvetica, Arial, san",
       2
+    ],
+    [
+      "JetBrains Mono, JetBrains Mono Fallback, monospace",
+      1
     ]
   ],
-  "uniqueBgColors": 14,
+  "uniqueBgColors": 12,
   "topBgColors": [
     [
       "rgb(10, 10, 10)",
-      117
+      115
     ],
     [
       "rgba(255, 255, 255, 0.1)",
-      74
+      70
     ],
     [
       "rgb(245, 245, 244)",
-      43
+      27
     ],
     [
       "rgb(26, 26, 26)",
       23
     ],
     [
+      "rgb(255, 182, 39)",
+      20
+    ],
+    [
       "rgb(21, 21, 21)",
       15
     ],
     [
-      "rgba(10, 10, 10, 0.9)",
+      "rgba(10, 10, 10, 0.85)",
       10
-    ],
-    [
-      "rgb(44, 43, 42)",
-      6
-    ],
-    [
-      "rgba(10, 10, 10, 0.95)",
-      4
     ],
     [
       "rgba(10, 10, 10, 0.8)",
       2
     ],
     [
-      "rgba(10, 10, 10, 0.6)",
-      1
-    ],
-    [
-      "rgba(0, 0, 0, 0.2)",
-      1
-    ],
-    [
       "rgba(10, 10, 10, 0.7)",
+      1
+    ],
+    [
+      "rgba(10, 10, 10, 0.95)",
       1
     ],
     [
@@ -792,31 +783,31 @@
       1
     ]
   ],
-  "uniqueTextColors": 21,
+  "uniqueTextColors": 20,
   "topTextColors": [
     [
       "rgb(245, 245, 244)",
-      1987
+      1962
     ],
     [
       "rgb(255, 255, 255)",
-      1347
+      1368
     ],
     [
       "rgb(255, 182, 39)",
-      558
-    ],
-    [
-      "rgba(255, 255, 255, 0.75)",
-      283
+      534
     ],
     [
       "rgba(255, 255, 255, 0.7)",
-      173
+      169
     ],
     [
       "rgb(10, 10, 10)",
-      158
+      156
+    ],
+    [
+      "rgba(245, 245, 244, 0.75)",
+      153
     ],
     [
       "rgba(255, 255, 255, 0.85)",
@@ -824,74 +815,74 @@
     ],
     [
       "rgba(255, 255, 255, 0.8)",
-      133
+      130
     ],
     [
       "rgba(255, 255, 255, 0.55)",
-      87
-    ],
-    [
-      "rgb(165, 165, 165)",
-      54
-    ],
-    [
-      "rgb(0, 0, 0)",
-      53
+      83
     ],
     [
       "rgb(23, 23, 23)",
-      48
+      62
     ],
     [
-      "rgba(0, 0, 0, 0)",
-      46
+      "rgb(0, 0, 0)",
+      57
     ],
     [
       "rgba(255, 182, 39, 0.8)",
-      40
+      55
     ],
     [
-      "rgb(108, 108, 108)",
-      24
+      "rgb(165, 165, 165)",
+      46
+    ],
+    [
+      "rgba(0, 0, 0, 0)",
+      39
     ],
     [
       "rgba(255, 255, 255, 0.65)",
       20
     ],
     [
+      "rgb(117, 117, 117)",
+      12
+    ],
+    [
       "rgba(255, 255, 255, 0.4)",
       10
     ],
     [
-      "rgba(255, 182, 39, 0.9)",
-      6
-    ],
-    [
-      "rgba(255, 182, 39, 0.85)",
-      5
-    ],
-    [
       "rgba(245, 245, 244, 0.85)",
       3
+    ],
+    [
+      "rgba(245, 245, 244, 0.06)",
+      1
+    ],
+    [
+      "rgba(255, 255, 255, 0.75)",
+      1
     ]
   ],
-  "uniqueBorderColors": 13,
+  "uniqueBorderColors": 14,
   "topBorderColors": [
     [
       "rgba(255, 255, 255, 0.08)",
-      4999
+      4825
     ],
     [
       "rgb(228, 228, 231)",
-      100
+      119
     ],
     [
       "rgba(245, 245, 244, 0.2)",
-      25
+      14
     ],
     [
-      "rgba(245, 245, 244, 0.3)",
-      23
+      "rgba(245, 245, 244, 0.25)",
+      10
     ],
     [
       "rgb(33, 33, 33)",
@@ -902,23 +893,27 @@
       5
     ],
     [
-      "rgba(245, 245, 244, 0.4)",
-      3
+      "rgba(255, 255, 255, 0.08) rgba(255, 255, 255, 0.08) rgba(255, 182, 39, 0.3)",
+      4
     ],
     [
       "rgba(33, 33, 33, 0.25)",
       3
     ],
     [
+      "rgba(245, 245, 244, 0.4)",
+      2
+    ],
+    [
       "rgba(33, 33, 33, 0.2)",
       2
     ],
     [
-      "rgba(245, 245, 244, 0.5)",
+      "rgba(245, 245, 244, 0.15)",
       1
     ],
     [
-      "rgba(245, 245, 244, 0.25)",
+      "rgba(245, 245, 244, 0.3)",
       1
     ],
     [
@@ -934,11 +929,11 @@
   "allRadii": [
     {
       "radius": "9999px",
-      "count": 337
+      "count": 316
     },
     {
       "radius": "24px",
-      "count": 96
+      "count": 65
     },
     {
       "radius": "16px",
@@ -946,38 +941,34 @@
     },
     {
       "radius": "6px",
-      "count": 2
+      "count": 37
     }
   ],
-  "uniqueDurations": 15,
+  "uniqueDurations": 13,
   "allDurations": [
     {
-      "duration": "anim:0.2s",
-      "count": 337
+      "duration": "0.15s",
+      "count": 380
     },
     {
-      "duration": "0.15s",
-      "count": 214
+      "duration": "anim:0.2s",
+      "count": 319
     },
     {
       "duration": "0.2s",
-      "count": 187
-    },
-    {
-      "duration": "0.22s",
-      "count": 173
+      "count": 169
     },
     {
       "duration": "anim:0.3s",
-      "count": 170
+      "count": 163
     },
     {
-      "duration": "0.32s",
-      "count": 120
+      "duration": "0.24s",
+      "count": 103
     },
     {
       "duration": "0.3s",
-      "count": 108
+      "count": 101
     },
     {
       "duration": "anim:0.15s",
@@ -985,11 +976,11 @@
     },
     {
       "duration": "0.7s",
-      "count": 32
+      "count": 29
     },
     {
       "duration": "anim:0.7s",
-      "count": 32
+      "count": 29
     },
     {
       "duration": "0.5s",
@@ -1001,54 +992,50 @@
     },
     {
       "duration": "anim:28s",
-      "count": 11
+      "count": 10
     },
     {
       "duration": "anim:0.52s",
       "count": 8
-    },
-    {
-      "duration": "anim:60s",
-      "count": 1
     }
   ],
   "uniqueEasings": 9,
   "allEasings": [
     {
       "easing": "1)",
-      "count": 609
+      "count": 566
     },
     {
       "easing": "0",
-      "count": 569
+      "count": 528
     },
     {
       "easing": "0.2",
-      "count": 569
+      "count": 528
     },
     {
       "easing": "cubic-bezier(0.4",
-      "count": 463
+      "count": 439
     },
     {
       "easing": "cubic-bezier(0",
-      "count": 106
+      "count": 89
     },
     {
       "easing": "ease",
-      "count": 80
+      "count": 71
     },
     {
       "easing": "1",
-      "count": 40
+      "count": 38
     },
     {
       "easing": "cubic-bezier(0.22",
-      "count": 40
+      "count": 38
     },
     {
       "easing": "0.36",
-      "count": 40
+      "count": 38
     }
   ],
   "uniqueButtonSigs": 25,
@@ -1138,7 +1125,7 @@
       }
     },
     {
-      "sig": "r=24px p=12px 24px fs=16px/400 h=48px bg=rgb(245, 245, 244)",
+      "sig": "r=6px p=12px 24px fs=16px/600 h=48px bg=rgb(255, 182, 39)",
       "count": 10,
       "pages": [
         "home",
@@ -1154,19 +1141,19 @@
       ],
       "example": {
         "text": "Sign me up →",
-        "borderRadius": "24px",
+        "borderRadius": "6px",
         "padding": "12px 24px",
         "fontSize": "16px",
-        "fontWeight": "400",
-        "backgroundColor": "rgb(245, 245, 244)",
+        "fontWeight": "600",
+        "backgroundColor": "rgb(255, 182, 39)",
         "color": "rgb(10, 10, 10)",
-        "textTransform": "none",
+        "textTransform": "uppercase",
         "border": "0px solid rgba(255, 255, 255, 0.08)",
         "height": "48px"
       }
     },
     {
-      "sig": "r=0px p=0px 0px 8px fs=24px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "sig": "r=0px p=0px 0px 8px fs=24px/700 h=auto bg=rgba(0, 0, 0, 0)",
       "count": 10,
       "pages": [
         "home",
@@ -1185,7 +1172,7 @@
         "borderRadius": "0px",
         "padding": "0px 0px 8px",
         "fontSize": "24px",
-        "fontWeight": "400",
+        "fontWeight": "700",
         "backgroundColor": "rgba(0, 0, 0, 0)",
         "color": "rgb(255, 255, 255)",
         "textTransform": "none",
@@ -1194,7 +1181,7 @@
       }
     },
     {
-      "sig": "r=0px p=10px 0px fs=16px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "sig": "r=0px p=0px fs=16px/400 h=40px bg=rgba(0, 0, 0, 0)",
       "count": 10,
       "pages": [
         "home",
@@ -1209,21 +1196,21 @@
         "categories"
       ],
       "example": {
-        "text": "Bag iconCart",
+        "text": "Bag icon",
         "borderRadius": "0px",
-        "padding": "10px 0px",
+        "padding": "0px",
         "fontSize": "16px",
         "fontWeight": "400",
         "backgroundColor": "rgba(0, 0, 0, 0)",
-        "color": "rgba(255, 255, 255, 0.75)",
+        "color": "rgba(245, 245, 244, 0.75)",
         "textTransform": "none",
         "border": "0px solid rgba(255, 255, 255, 0.08)",
-        "height": "auto"
+        "height": "40px"
       }
     },
     {
-      "sig": "r=24px p=14px fs=14px/400 h=44px bg=rgba(0, 0, 0, 0)",
-      "count": 9,
+      "sig": "r=6px p=0px fs=16px/400 h=44px bg=rgba(0, 0, 0, 0)",
+      "count": 5,
       "pages": [
         "home",
         "shop",
@@ -1233,14 +1220,14 @@
       ],
       "example": {
         "text": "Arrow left icon",
-        "borderRadius": "24px",
-        "padding": "14px",
-        "fontSize": "14px",
+        "borderRadius": "6px",
+        "padding": "0px",
+        "fontSize": "16px",
         "fontWeight": "400",
         "backgroundColor": "rgba(0, 0, 0, 0)",
-        "color": "rgb(108, 108, 108)",
+        "color": "rgb(255, 182, 39)",
         "textTransform": "none",
-        "border": "1px solid rgba(245, 245, 244, 0.3)",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
         "height": "44px"
       }
     },
@@ -1333,7 +1320,7 @@
       }
     },
     {
-      "sig": "r=0px p=0px fs=24px/400 h=auto bg=rgba(0, 0, 0, 0)",
+      "sig": "r=0px p=0px fs=24px/700 h=auto bg=rgba(0, 0, 0, 0)",
       "count": 2,
       "pages": [
         "shop",
@@ -1344,7 +1331,7 @@
         "borderRadius": "0px",
         "padding": "0px",
         "fontSize": "24px",
-        "fontWeight": "400",
+        "fontWeight": "700",
         "backgroundColor": "rgba(0, 0, 0, 0)",
         "color": "rgb(245, 245, 244)",
         "textTransform": "none",
@@ -1353,7 +1340,7 @@
       }
     }
   ],
-  "uniqueCardSigs": 4,
+  "uniqueCardSigs": 2,
   "topCards": [
     {
       "sig": "r=0px bg=rgba(0, 0, 0, 0) bord=0px solid rgba(255, 255, 255,  pad=0px sh=none",
@@ -1366,44 +1353,12 @@
         "results"
       ],
       "example": {
-        "tag": "A",
-        "classes": "group relative block overflow-hidden ev-card-lift aspect-[4/5] small:row-span-2 ",
+        "tag": "DIV",
+        "classes": "group flex h-full flex-col ev-card-lift",
         "backgroundColor": "rgba(0, 0, 0, 0)",
         "border": "0px solid rgba(255, 255, 255, 0.08)",
         "borderRadius": "0px",
         "padding": "0px",
-        "boxShadow": "none"
-      }
-    },
-    {
-      "sig": "r=0px bg=rgb(44, 43, 42) bord=0px solid rgba(255, 255, 255,  pad=0px sh=none",
-      "count": 1,
-      "pages": [
-        "home"
-      ],
-      "example": {
-        "tag": "FIGURE",
-        "classes": "group relative overflow-hidden bg-skeleton-primary ev-card-lift aspect-[3/4] sma",
-        "backgroundColor": "rgb(44, 43, 42)",
-        "border": "0px solid rgba(255, 255, 255, 0.08)",
-        "borderRadius": "0px",
-        "padding": "0px",
-        "boxShadow": "none"
-      }
-    },
-    {
-      "sig": "r=0px bg=rgba(0, 0, 0, 0) bord=1px solid rgba(245, 245, 244,  pad=56px 48px sh=none",
-      "count": 1,
-      "pages": [
-        "home"
-      ],
-      "example": {
-        "tag": "A",
-        "classes": "ev-card-lift ev-grain group relative flex flex-col items-start justify-between g",
-        "backgroundColor": "rgba(0, 0, 0, 0)",
-        "border": "1px solid rgba(245, 245, 244, 0.25)",
-        "borderRadius": "0px",
-        "padding": "56px 48px",
         "boxShadow": "none"
       }
     },
@@ -1424,11 +1379,11 @@
       }
     }
   ],
-  "uniqueEyebrowSigs": 5,
+  "uniqueEyebrowSigs": 4,
   "topEyebrows": [
     {
-      "sig": "fs=11px w=500 ls=3.52px ff=JetBrains Mono, JetB",
-      "count": 23,
+      "sig": "fs=11px w=500 ls=1.98px ff=JetBrains Mono, JetB",
+      "count": 31,
       "pages": [
         "home",
         "shop",
@@ -1443,105 +1398,71 @@
         "404"
       ],
       "example": {
-        "text": "SS26 · Drop 001",
+        "text": "SS26 DROP 001 LIVE",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "letterSpacing": "1.98px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgb(255, 255, 255)",
+        "classes": "ev-mono mx-5 flex items-center gap-5"
+      }
+    },
+    {
+      "sig": "fs=11px w=500 ls=3.52px ff=JetBrains Mono, JetB",
+      "count": 22,
+      "pages": [
+        "home",
+        "shop",
+        "pdp",
+        "cart",
+        "account",
+        "lookbook",
+        "about",
+        "faq",
+        "results",
+        "categories",
+        "404"
+      ],
+      "example": {
+        "text": "More from the drop",
         "fontSize": "11px",
         "fontWeight": "500",
         "letterSpacing": "3.52px",
         "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
         "color": "rgb(255, 182, 39)",
-        "classes": "ev-eyebrow text-action-primary"
+        "classes": "ev-eyebrow flex items-center gap-3 text-action-primary"
       }
     },
     {
-      "sig": "fs=11px w=500 ls=1.98px ff=JetBrains Mono, JetB",
-      "count": 23,
-      "pages": [
-        "home",
-        "shop",
-        "pdp",
-        "cart",
-        "account",
-        "lookbook",
-        "about",
-        "faq",
-        "results",
-        "categories",
-        "404"
-      ],
-      "example": {
-        "text": "Numbered",
-        "fontSize": "11px",
-        "fontWeight": "500",
-        "letterSpacing": "1.98px",
-        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
-        "color": "rgba(255, 255, 255, 0.55)",
-        "classes": "ev-mono text-static/55"
-      }
-    },
-    {
-      "sig": "fs=10px w=500 ls=1.8px ff=JetBrains Mono, JetB",
-      "count": 15,
-      "pages": [
-        "home",
-        "shop",
-        "pdp",
-        "cart",
-        "account",
-        "lookbook",
-        "about",
-        "faq",
-        "results",
-        "categories"
-      ],
-      "example": {
-        "text": "Home",
-        "fontSize": "10px",
-        "fontWeight": "500",
-        "letterSpacing": "1.8px",
-        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
-        "color": "rgb(255, 182, 39)",
-        "classes": "ev-mono text-[10px] leading-none"
-      }
-    },
-    {
-      "sig": "fs=12px w=400 ls=3.36px ff=Space Grotesk, Space",
-      "count": 10,
-      "pages": [
-        "home",
-        "shop",
-        "pdp",
-        "cart",
-        "account",
-        "lookbook",
-        "about",
-        "faq",
-        "results",
-        "categories"
-      ],
-      "example": {
-        "text": "Drop 001 — out now",
-        "fontSize": "12px",
-        "fontWeight": "400",
-        "letterSpacing": "3.36px",
-        "fontFamily": "Space Grotesk, Space Grotesk Fallback, S",
-        "color": "rgb(255, 255, 255)",
-        "classes": "mx-6 flex items-center gap-6 text-sm tracking-[0.28em] upper"
-      }
-    },
-    {
-      "sig": "fs=10px w=500 ls=1.6px ff=Inter, Inter Fallbac",
+      "sig": "fs=12px w=600 ls=2.4px ff=JetBrains Mono, JetB",
       "count": 1,
       "pages": [
         "home"
       ],
       "example": {
-        "text": "01",
-        "fontSize": "10px",
-        "fontWeight": "500",
-        "letterSpacing": "1.6px",
-        "fontFamily": "Inter, Inter Fallback, Inter, ui-sans-se",
-        "color": "rgb(245, 245, 244)",
-        "classes": "absolute left-3 top-3 z-10 inline-flex h-6 items-center roun"
+        "text": "Shop the drop →",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "letterSpacing": "2.4px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgb(10, 10, 10)",
+        "classes": "ev-rect"
+      }
+    },
+    {
+      "sig": "fs=12px w=400 ls=2.16px ff=JetBrains Mono, JetB",
+      "count": 1,
+      "pages": [
+        "home"
+      ],
+      "example": {
+        "text": "View the lookbook →",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "letterSpacing": "2.16px",
+        "fontFamily": "JetBrains Mono, JetBrains Mono Fallback,",
+        "color": "rgb(255, 182, 39)",
+        "classes": "ev-arrow-link"
       }
     }
   ],
