@@ -6,12 +6,10 @@ const nextConfig = {
   // node_modules ship (Dockerfile copies both). Image is ~600 MB
   // instead of ~180 MB — acceptable trade.
 
-  // CI gates: typecheck + lint run as separate jobs.
+  // CI typecheck + lint run as separate jobs.
+  // (Next 16 dropped the eslint config key; use `next lint` standalone.)
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
 
   images: {
