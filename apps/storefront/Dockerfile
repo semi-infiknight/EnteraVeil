@@ -38,7 +38,14 @@ ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=$NEXT_PUBLIC_MEDUSA_BACKEND_URL \
     NEXT_PUBLIC_SHOP_NAME=$NEXT_PUBLIC_SHOP_NAME \
     NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm --filter ./apps/storefront build
+# Build with verbose tee'd output so failure modes are visible in CI logs.
+RUN pnpm --filter ./apps/storefront build 2>&1 | tee /tmp/build.log; \
+    rc=${PIPESTATUS[0]}; \
+    if [ "$rc" != "0" ]; then \
+      echo '======= BUILD FAILED ======='; \
+      tail -200 /tmp/build.log; \
+      exit "$rc"; \
+    fi
 
 # Prune to prod-only deps after the build
 RUN pnpm install --frozen-lockfile --prod --filter ./apps/storefront... \
