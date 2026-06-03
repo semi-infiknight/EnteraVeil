@@ -261,11 +261,41 @@ Cheaper than this and you're on either Hetzner (no India region, 200 ms+ latency
 
 ---
 
-## Building images — pick one (1 GB droplet can't build, must use 1 of these)
+## Building images — RECOMMENDED PATH
 
-The Dockerfiles for Medusa + Storefront + Strapi each peak around 1.5–2 GB during `pnpm install + build`. Trying to build on the $6 droplet will OOM-kill the build even with swap. Pick one of these.
+**This repo is public on GitHub → GitHub Actions + GHCR are both
+unlimited free.** The workflow at `.github/workflows/build-images.yml`
+already exists and runs on every push to `main` (or manually via the
+Actions tab).
 
-### Option A — build on your laptop, push tarballs (simplest, $0)
+Each push triggers:
+1. Three parallel build jobs (medusa, storefront, strapi)
+2. Each pushes to `ghcr.io/semi-infiknight/enteraveil-<app>:latest`
+   (and a tag with the commit SHA)
+3. Total wall time: ~8–12 min for a cold cache, ~3–5 min once GHA cache
+   is warm
+
+To deploy on the droplet after a push:
+
+```bash
+ssh deploy@<DROPLET_IP>
+cd /opt/enteraveil-store
+git pull                          # to refresh compose/scripts if changed
+./scripts/deploy.sh               # pulls latest images, restarts changed services
+```
+
+That's the entire deploy loop. If the change includes a Medusa DB
+migration:
+
+```bash
+./scripts/deploy.sh --migrate     # runs db:migrate before restart
+```
+
+### When you'd want Option A instead (laptop builds)
+
+Only useful if you're editing offline or want to test image changes
+without pushing to main first. Keep these for emergencies — you're
+on Option B by default.
 
 On your laptop (where `docker` is installed):
 
@@ -294,79 +324,36 @@ rm enteraveil-images.tar.gz
 docker compose -f docker-compose.prod.images.yml --env-file .env.prod up -d
 ```
 
-(If `docker-compose.prod.images.yml` doesn't exist yet, copy `docker-compose.prod.yml` and replace each `build: { context: ..., dockerfile: ... }` block with `image: enteraveil-medusa:latest` etc.)
+Use `docker-compose.prod.yml` (the one with `build:` blocks), then
+push tarballs to the droplet and load them. Slow because the
+droplet has to receive ~600 MB over your home connection.
 
-Repeat the build + scp + load cycle every time you ship a change. Annoying but free.
-
-### Option B — GitHub Actions → ghcr.io (cleanest, $0 for public repos)
-
-Add `.github/workflows/build.yml` that builds and pushes on every `main` commit. Free for public repos; private repos get 500 MB GHCR storage on the free plan (enough for these three images at ~150 MB each).
-
-Workflow skeleton:
-
-```yaml
-name: build-and-push
-on:
-  push:
-    branches: [main]
-    tags: ['phase-*-done', 'v*']
-permissions:
-  packages: write
-  contents: read
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: [medusa, storefront, strapi]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: apps/${{ matrix.app }}/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/enteraveil-${{ matrix.app }}:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-```
-
-Then on the droplet, the compose just references `ghcr.io/semi-infiknight/enteraveil-storefront:latest` etc. Pull + restart is a 30-second operation.
-
-> If the repo is private, the droplet needs `docker login ghcr.io` with a fine-grained PAT that has `read:packages` scope.
-
-### Option C — pay the $6 → $12 upgrade just for build days
-
-If you really want to build on the droplet, resize 1 GB → 2 GB → 1 GB around build time. Build takes ~10 min, resize takes ~1 min each way, downtime ~2 min total. Costs $0.0167/hour pro-rated when on 2 GB. Practical bill: ~$0.01 per deploy.
+Just `git push` instead — Option B handles all this for free.
 
 ---
 
 ## When you ship a code change
 
-After Phase 8 first deploy, the loop becomes:
-
+Laptop:
 ```bash
-# Local (laptop)
-git push origin main                          # CI builds + pushes if you set up Option B
-# OR
-docker compose -f docker-compose.prod.yml build && \
-  docker save ... | gzip > images.tar.gz && \
-  scp images.tar.gz deploy@<IP>:/opt/enteraveil-store/
-
-# Droplet
-cd /opt/enteraveil-store
-git pull
-docker compose -f docker-compose.prod.images.yml pull     # Option B
-# OR
-docker load < images.tar.gz && rm images.tar.gz          # Option A
-
-docker compose -f docker-compose.prod.images.yml up -d
+git push origin main
 ```
 
-DB migrations: `docker compose exec medusa pnpm medusa db:migrate`. Run after any release that touches `apps/medusa/src/modules` or `apps/medusa/migrations`.
+Watch the build at https://github.com/semi-infiknight/EnteraVeil/actions
+(takes ~8-12 min cold, 3-5 min warm).
+
+Droplet:
+```bash
+ssh deploy@<DROPLET_IP>
+cd /opt/enteraveil-store
+./scripts/deploy.sh                          # add --migrate if you changed Medusa DB
+```
+
+That's the entire loop. Most pushes (CSS tweaks, copy edits in
+frontmatter) finish to live in under 10 minutes door-to-door without
+touching the droplet manually beyond running `deploy.sh`.
+
+**For copy edits, gf doesn't need to deploy at all.** She edits in
+Strapi or Medusa Admin (`https://cms.enteraveil.com/admin` and
+`https://api.enteraveil.com/app`). Strapi calls the storefront's
+revalidation webhook, the page re-renders. Live in seconds.
