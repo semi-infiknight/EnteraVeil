@@ -1,32 +1,35 @@
 # syntax=docker/dockerfile:1.7
+#
+# Medusa production image. Builds in a fat builder stage, ships a
+# trimmed runner stage. Skips `pnpm deploy` (which has known bugs
+# with v10 + workspace + Medusa's plugin structure) — instead copies
+# the built app directly and prunes dev deps in the runner stage.
+
 # ----- builder -----
 FROM node:20-bookworm-slim AS builder
 
-# pnpm via corepack
+# Native compile tools for any modules that need them at install time
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 build-essential pkg-config libc6-dev curl \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
 RUN corepack enable && corepack prepare pnpm@10.34.1 --activate
 
 WORKDIR /repo
 
-# Copy lockfile + workspace metadata first for cached install
+# Workspace metadata first for cached install layer
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/medusa/package.json apps/medusa/package.json
 COPY apps/storefront/package.json apps/storefront/package.json
 COPY apps/strapi/package.json apps/strapi/package.json
 
-# Fetch all deps into the pnpm store (workspace-wide)
-RUN pnpm fetch
+# Install with online registry — more reliable than fetch+offline
+RUN pnpm install --frozen-lockfile --filter ./apps/medusa...
 
-# Bring in the medusa source
+# Bring in the medusa source and build
 COPY apps/medusa apps/medusa
-
-# Install + build the medusa workspace only
-RUN pnpm install --offline --frozen-lockfile --filter ./apps/medusa...
 RUN pnpm --filter ./apps/medusa build
-
-# Produce a self-contained deploy tree (pnpm deploy bakes only the
-# medusa workspace's deps into /app, no symlinks to workspace root)
-RUN pnpm --filter ./apps/medusa deploy --prod /app
 
 # ----- runner -----
 FROM node:20-bookworm-slim AS runner
@@ -34,15 +37,31 @@ FROM node:20-bookworm-slim AS runner
 ENV NODE_ENV=production
 WORKDIR /app
 
+# Need pnpm in runner to run scripts (medusa exec, db:migrate)
+ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
+RUN corepack enable && corepack prepare pnpm@10.34.1 --activate
+
 # Non-root user
 RUN groupadd --system --gid 1001 medusa \
-  && useradd --system --uid 1001 --gid medusa medusa \
-  && chown -R medusa:medusa /app
+  && useradd --system --uid 1001 --gid medusa medusa
 
-COPY --from=builder --chown=medusa:medusa /app /app
+# Copy workspace metadata
+COPY --chown=medusa:medusa pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY --chown=medusa:medusa apps/medusa/package.json apps/medusa/
+
+# Install prod deps only (smaller image)
+RUN pnpm install --frozen-lockfile --prod --filter ./apps/medusa... \
+  && pnpm store prune
+
+# Bring the built app + necessary runtime files
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/.medusa apps/medusa/.medusa
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/medusa-config.ts apps/medusa/
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/instrumentation.ts apps/medusa/
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
+
+WORKDIR /app/apps/medusa
 
 USER medusa
 EXPOSE 9000
 
-# `medusa start` reads medusa-config.ts; migrations are run by deploy.sh.
-CMD ["node_modules/.bin/medusa", "start"]
+CMD ["pnpm", "start"]
