@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.7
 #
-# Storefront production image. Ships .next + production node_modules
-# directly (no standalone tracing — that fights pnpm workspaces).
-# ~600 MB runner image, but reliably builds in CI.
+# Storefront production image. Builder runs `next build`; runner stage
+# COPYs the build output + node_modules from the builder (avoids a
+# second pnpm install in the runner that would need native build tools).
 
 # ----- builder -----
 FROM node:20-bookworm-slim AS builder
@@ -38,14 +38,8 @@ ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=$NEXT_PUBLIC_MEDUSA_BACKEND_URL \
     NEXT_PUBLIC_SHOP_NAME=$NEXT_PUBLIC_SHOP_NAME \
     NEXT_TELEMETRY_DISABLED=1
 
-# Use bash for the build so set -o pipefail works (we want to see
-# the actual next build error in CI logs).
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 RUN pnpm --filter ./apps/storefront build
-
-# Prune to prod-only deps after the build
-RUN pnpm install --frozen-lockfile --prod --filter ./apps/storefront... \
-  && pnpm store prune
 
 # ----- runner -----
 FROM node:20-bookworm-slim AS runner
@@ -59,18 +53,11 @@ RUN corepack enable && corepack prepare pnpm@10.34.1 --activate
 RUN groupadd --system --gid 1001 nextjs \
   && useradd --system --uid 1001 --gid nextjs nextjs
 
-# Bring the workspace metadata + apps so the pnpm-store symlinks resolve
-COPY --from=builder --chown=nextjs:nextjs /repo/pnpm-lock.yaml /repo/pnpm-workspace.yaml /repo/package.json ./
-COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront/package.json apps/storefront/
-
-# Reinstall prod deps in the runner so node_modules symlinks are clean
-RUN pnpm install --frozen-lockfile --prod --filter ./apps/storefront... \
-  && pnpm store prune
-
-# Built output + public assets + .next
-COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront/.next apps/storefront/.next
-COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront/public apps/storefront/public
-COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront/next.config.js apps/storefront/
+# Copy the entire built workspace tree from the builder. The pnpm-store
+# symlinks resolve because we bring node_modules verbatim.
+COPY --from=builder --chown=nextjs:nextjs /repo/package.json /repo/pnpm-workspace.yaml /repo/pnpm-lock.yaml ./
+COPY --from=builder --chown=nextjs:nextjs /repo/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront ./apps/storefront
 
 USER nextjs
 WORKDIR /app/apps/storefront
