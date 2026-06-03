@@ -1,17 +1,12 @@
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Standalone output keeps the runner image small (~180 MB).
-  // The Dockerfile runner stage COPYs from .next/standalone/.
-  output: 'standalone',
+  // Standalone output was attempted but failed in the Docker build
+  // because pnpm workspace traversal + Next 16's file tracing don't
+  // play nicely together in CI. Falling back to a full .next + prod
+  // node_modules ship (Dockerfile copies both). Image is ~600 MB
+  // instead of ~180 MB — acceptable trade.
 
-  // Help Next trace deps from the pnpm workspace root.
-  outputFileTracingRoot: path.join(__dirname, '../../'),
-
-  // CI gates: typecheck + lint are run as separate jobs (and as part
-  // of pre-commit). Don't block the production build for them — they
-  // already passed before this commit landed.
+  // CI gates: typecheck + lint run as separate jobs.
   typescript: {
     ignoreBuildErrors: true,
   },
