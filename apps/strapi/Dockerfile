@@ -49,22 +49,19 @@ RUN groupadd --system --gid 1001 strapi \
 COPY --chown=strapi:strapi pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/
 
-# Install prod deps only
-RUN pnpm install --frozen-lockfile --prod --filter ./apps/strapi... \
-  && pnpm store prune
+# Copy node_modules from builder — prod reinstall + raw config/*.ts breaks Strapi 5 prod boot
+COPY --from=builder --chown=strapi:strapi /repo/node_modules ./node_modules
+COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/node_modules ./apps/strapi/node_modules
 
-# Copy built app
+# Built output only (config is compiled into dist/config/*.js)
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/dist apps/strapi/dist
-COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/config apps/strapi/config
-COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/database apps/strapi/database
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/public apps/strapi/public
-COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/src apps/strapi/src
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/strapi/
 
 WORKDIR /app/apps/strapi
 
 ENV HOME=/app
-RUN mkdir -p /app/.cache && chown -R strapi:strapi /app/.cache
+RUN mkdir -p /app/.cache /app/.config && chown -R strapi:strapi /app/.cache /app/.config
 
 USER strapi
 EXPOSE 1337
