@@ -31,16 +31,13 @@ railway variable set --service storefront --skip-deploys \
   "NEXT_PUBLIC_SHOP_DESCRIPTION=Anime streetwear from beyond the veil"
 
 echo "→ Strapi variables"
+# DATABASE_URL targets the strapi DB on shared Postgres (created via railway-init-db.sql)
 railway variable set --service strapi --skip-deploys \
   RAILWAY_DOCKERFILE_PATH=apps/strapi/Dockerfile \
   NODE_ENV=production \
   HOST=0.0.0.0 \
   DATABASE_CLIENT=postgres \
-  'DATABASE_HOST=${{Postgres.PGHOST}}' \
-  'DATABASE_PORT=${{Postgres.PGPORT}}' \
-  DATABASE_NAME=strapi \
-  'DATABASE_USERNAME=${{Postgres.PGUSER}}' \
-  'DATABASE_PASSWORD=${{Postgres.PGPASSWORD}}' \
+  'DATABASE_URL=postgresql://${{Postgres.PGUSER}}:${{Postgres.PGPASSWORD}}@${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/strapi' \
   DATABASE_SSL=false \
   "STOREFRONT_REVALIDATION_URL=${STOREFRONT_URL}/api/strapi-revalidate"
 
