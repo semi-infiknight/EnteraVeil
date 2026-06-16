@@ -15,4 +15,4 @@ watchPatterns = [
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-preDeployCommand = ["pnpm", "medusa", "db:migrate"]
+preDeployCommand = ["node", "/app/node_modules/.bin/medusa", "db:migrate"]

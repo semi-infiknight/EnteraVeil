@@ -66,4 +66,5 @@ WORKDIR /app/apps/strapi
 USER strapi
 EXPOSE 1337
 
-CMD ["pnpm", "start"]
+# Avoid pnpm/corepack at runtime — non-root user cannot write to ~/.cache
+CMD ["node", "/app/node_modules/.bin/strapi", "start"]

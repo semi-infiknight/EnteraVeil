@@ -64,4 +64,5 @@ WORKDIR /app/apps/storefront
 EXPOSE 8000
 ENV PORT=8000 HOSTNAME=0.0.0.0
 
-CMD ["pnpm", "start"]
+# Avoid pnpm/corepack at runtime — non-root user cannot write to ~/.cache
+CMD ["node", "/app/node_modules/next/dist/bin/next", "start", "-p", "8000"]

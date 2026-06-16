@@ -64,4 +64,5 @@ WORKDIR /app/apps/medusa
 USER medusa
 EXPOSE 9000
 
-CMD ["pnpm", "start"]
+# Avoid pnpm/corepack at runtime (packageManager field triggers yarn via corepack)
+CMD ["node", "/app/node_modules/.bin/medusa", "start"]
