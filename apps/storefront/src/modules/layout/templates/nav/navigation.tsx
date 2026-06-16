@@ -23,7 +23,7 @@ export default function Navigation({
   countryCode: string
   productCategories: StoreProductCategory[]
   collections: StoreCollection[]
-  strapiCollections: CollectionsData
+  strapiCollections?: CollectionsData | null
 }) {
   const pathname = usePathname()
   const [openDropdown, setOpenDropdown] = useState<{

@@ -1,13 +1,16 @@
 import { notFound } from 'next/navigation'
 
-import { getAllBlogSlugs, getBlogPostBySlug } from '@lib/data/fetch'
+import {
+  getLegacyBlogPostBySlug,
+  getLegacyBlogSlugs,
+} from '@lib/strapi'
 import { listRegions } from '@lib/data/regions'
 import { StoreRegion } from '@medusajs/types'
 import BlogPostTemplate from '@modules/blog/templates/blogPostTemplate'
 
 export async function generateStaticParams() {
   // Strapi may be offline — treat any failure as "no slugs".
-  const slugs = await getAllBlogSlugs().catch(() => [] as string[])
+  const slugs = await getLegacyBlogSlugs().catch(() => [] as string[])
   if (!slugs?.length) return []
 
   const countryCodes = await listRegions()
@@ -27,7 +30,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props) {
   const params = await props.params
-  const article = await getBlogPostBySlug(params.slug)
+  const article = await getLegacyBlogPostBySlug(params.slug)
 
   if (!article) {
     return {
@@ -45,7 +48,7 @@ export default async function BlogPost(props: {
 }) {
   const params = await props.params
   const { slug, countryCode } = params
-  const article = await getBlogPostBySlug(slug)
+  const article = await getLegacyBlogPostBySlug(slug)
 
   if (!article) {
     notFound()

@@ -1,16 +1,16 @@
 import { Metadata } from 'next'
 
 import { getCategoriesList } from '@lib/data/categories'
-import {
-  getHeroBannerData,
-  getMidBannerData,
-} from '@lib/data/fetch'
 import { getProductsList } from '@lib/data/products'
 import { getRegion } from '@lib/data/regions'
-import { Banner } from '@modules/home/components/banner'
+import {
+  findHomepageSection,
+  getHomepageSections,
+} from '@lib/strapi'
 import BrandQuote from '@modules/home/components/brand-quote'
+import CmsHero from '@modules/home/components/cms-hero'
+import CmsPromo from '@modules/home/components/cms-promo'
 import FeaturedCategories from '@modules/home/components/featured-categories'
-import Hero from '@modules/home/components/hero'
 import HeroFallback from '@modules/home/components/hero-fallback'
 import Lookbook from '@modules/home/components/lookbook'
 import StatusStrip from '@modules/home/components/status-strip'
@@ -55,12 +55,9 @@ export default async function Home(props: {
 
   const region = await safe(() => getRegion(countryCode), null as any)
 
-  const [heroRes, midRes] = await Promise.all([
-    safe(() => getHeroBannerData(), { data: { HeroBanner: null } } as any),
-    safe(() => getMidBannerData(), { data: { MidBanner: null } } as any),
-  ])
-  const HeroBanner = heroRes?.data?.HeroBanner
-  const MidBanner = midRes?.data?.MidBanner
+  const homepageSections = await safe(() => getHomepageSections(), [])
+  const heroSection = findHomepageSection(homepageSections, 'hero')
+  const promoSection = findHomepageSection(homepageSections, 'promo')
 
   // Split products into two carousels: lead with first 6, second carousel
   // shows remaining (or repeats if we don't have enough). Matches the
@@ -72,7 +69,7 @@ export default async function Home(props: {
   return (
     <>
       {/* 1. HERO — left-asymmetric, sharp CTAs (Pass anti-Claude #1, #2) */}
-      {HeroBanner ? <Hero data={HeroBanner} /> : <HeroFallback />}
+      {heroSection ? <CmsHero section={heroSection} /> : <HeroFallback />}
 
       {/* 2. LEAD PRODUCT CAROUSEL — comicsense/xenpachi pattern of leading
             with merchandise above any abstract section. */}
@@ -111,7 +108,7 @@ export default async function Home(props: {
       {/* 6. BRAND QUOTE — slim band, no image, replaces the prior full
             BrandBanner. Keeps the editorial brand voice but in 1/3 the
             vertical real estate. */}
-      {MidBanner ? <Banner data={MidBanner} /> : <BrandQuote />}
+      {promoSection ? <CmsPromo section={promoSection} /> : <BrandQuote />}
 
       {/* 7. STATUS STRIP — trust/policy band above the footer. */}
       <StatusStrip />

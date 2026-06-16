@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import { getBlogPostCategories } from '@lib/data/fetch'
+import { getLegacyBlogCategories } from '@lib/strapi'
 import { getProductsList } from '@lib/data/products'
 import BlogTemplate from '@modules/blog/templates'
 
@@ -25,7 +25,7 @@ export default async function BlogPage(props: Params) {
   const params = await props.params
   const searchParams = await props.searchParams
   const { sortBy, page, category, q } = searchParams
-  const { data: categories } = await getBlogPostCategories()
+  const categories = await getLegacyBlogCategories().catch(() => [])
 
   // TODO: Add logic in future
   const {

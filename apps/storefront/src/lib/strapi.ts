@@ -3,6 +3,8 @@
 // the storefront should degrade gracefully when Strapi is down rather than
 // throwing in a server component.
 
+import type { BlogData, BlogPost } from 'types/strapi'
+
 const BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? 'http://localhost:1337'
 const TOKEN =
   process.env.STRAPI_API_TOKEN ?? process.env.NEXT_PUBLIC_STRAPI_READ_TOKEN
@@ -159,4 +161,113 @@ export function strapiMediaUrl(media: StrapiMedia | null | undefined) {
   // Strapi stores absolute URLs when using S3-compatible storage; otherwise
   // they're relative to the Strapi host.
   return /^https?:\/\//.test(media.url) ? media.url : `${BASE_URL}${media.url}`
+}
+
+// ---------- Legacy Solace blog shape adapters (EnteraVeil content types) ----------
+
+const BLOG_PLACEHOLDER_IMAGE =
+  'https://images.unsplash.com/photo-1618354691373-d851ccb5c563?auto=format&fit=crop&w=800&q=70'
+
+export function toLegacyBlogPost(post: StrapiBlogPost): BlogPost {
+  const imageUrl = strapiMediaUrl(post.hero_image) ?? BLOG_PLACEHOLDER_IMAGE
+  return {
+    Title: post.title,
+    Slug: post.slug,
+    Content: post.body ?? '',
+    FeaturedImage: {
+      url: imageUrl,
+      alternativeText: post.title,
+    },
+    createdAt: post.publishedAt ?? '',
+  }
+}
+
+export async function getLegacyBlogPosts({
+  sortBy = 'publishedAt:desc',
+  query,
+  category,
+}: {
+  sortBy?: string
+  query?: string
+  category?: string
+}): Promise<BlogData> {
+  let posts = (await getBlogPosts()).map(toLegacyBlogPost)
+
+  if (query) {
+    const q = query.toLowerCase()
+    posts = posts.filter(
+      (p) =>
+        p.Title.toLowerCase().includes(q) ||
+        p.Content.toLowerCase().includes(q)
+    )
+  }
+
+  if (category) {
+    const raw = await getBlogPosts()
+    const tagged = raw.filter((p) =>
+      (p.tags ?? []).some(
+        (t) => t.toLowerCase() === category.toLowerCase()
+      )
+    )
+    posts = tagged.map(toLegacyBlogPost)
+  }
+
+  if (sortBy === 'createdAt:asc' || sortBy === 'publishedAt:asc') {
+    posts.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    )
+  } else {
+    posts.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+  }
+
+  return {
+    data: posts,
+    meta: {
+      pagination: {
+        page: 1,
+        pageSize: posts.length,
+        pageCount: 1,
+        total: posts.length,
+      },
+    },
+  }
+}
+
+export async function getLegacyBlogPostBySlug(
+  slug: string
+): Promise<BlogPost | null> {
+  const post = await getBlogPostBySlug(slug)
+  return post ? toLegacyBlogPost(post) : null
+}
+
+export async function getLegacyBlogSlugs(): Promise<string[]> {
+  const posts = await getBlogPosts()
+  return posts.map((p) => p.slug)
+}
+
+export async function getLegacyBlogCategories(): Promise<
+  { Slug: string; Title: string }[]
+> {
+  const posts = await getBlogPosts()
+  const tags = new Set<string>()
+  for (const post of posts) {
+    for (const tag of post.tags ?? []) {
+      if (tag) tags.add(tag)
+    }
+  }
+  return Array.from(tags).map((tag) => ({
+    Slug: tag,
+    Title: tag.charAt(0).toUpperCase() + tag.slice(1),
+  }))
+}
+
+export function findHomepageSection(
+  sections: StrapiHomepageSection[],
+  type: StrapiHomepageSection['type']
+) {
+  return sections.find((s) => s.type === type) ?? null
 }

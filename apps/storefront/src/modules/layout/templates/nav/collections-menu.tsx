@@ -12,22 +12,52 @@ import LocalizedClientLink from '@modules/common/components/localized-client-lin
 import { Text } from '@modules/common/components/text'
 import { CollectionsData } from 'types/strapi'
 
+const COLLECTION_PLACEHOLDER =
+  'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=70'
+
+type MenuCollection = {
+  Title: string
+  Handle: string
+  Description: string
+  Image: { url: string }
+}
+
 export default function CollectionsMenu({
   cmsCollections,
   medusaCollections,
 }: {
-  cmsCollections: CollectionsData
+  cmsCollections?: CollectionsData | null
   medusaCollections: StoreCollection[]
 }) {
-  const validCollections = useMemo(() => {
-    if (!cmsCollections?.data?.length || !medusaCollections?.length) return null
-    const collections = cmsCollections.data.filter((cmsCollection) =>
-      medusaCollections.some(
-        (medusaCollection) => medusaCollection.handle === cmsCollection.Handle
-      )
-    )
-    if (!collections || collections.length < 3) return null
-    return collections.sort((a, b) => b.id - a.id)
+  const validCollections = useMemo((): MenuCollection[] | null => {
+    if (cmsCollections?.data?.length && medusaCollections?.length) {
+      const collections = cmsCollections.data
+        .filter((cmsCollection) =>
+          medusaCollections.some(
+            (medusaCollection) =>
+              medusaCollection.handle === cmsCollection.Handle
+          )
+        )
+        .map((c) => ({
+          Title: c.Title,
+          Handle: c.Handle,
+          Description: c.Description,
+          Image: { url: c.Image.url },
+        }))
+      if (collections.length >= 3) {
+        return collections.sort((a, b) => b.Handle.localeCompare(a.Handle))
+      }
+    }
+
+    if (!medusaCollections?.length) return null
+
+    const fallback = medusaCollections.slice(0, 3).map((c) => ({
+      Title: c.title ?? c.handle,
+      Handle: c.handle,
+      Description: '',
+      Image: { url: COLLECTION_PLACEHOLDER },
+    }))
+    return fallback.length >= 1 ? fallback : null
   }, [cmsCollections, medusaCollections])
 
   const newestCollections = useMemo(() => {
@@ -39,9 +69,9 @@ export default function CollectionsMenu({
 
   return (
     <Container className="grid grid-cols-3 gap-2 !px-14 !pb-8 !pt-5">
-      {newestCollections.slice(0, 3).map((element, id) => (
+      {newestCollections.slice(0, 3).map((element) => (
         <CollectionTile
-          key={id}
+          key={element.Handle}
           title={element.Title}
           handle={element.Handle}
           imgSrc={element.Image.url}

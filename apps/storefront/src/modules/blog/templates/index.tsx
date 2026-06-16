@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 
 import { blogSortOptions } from '@lib/constants'
-import { getBlogPosts } from '@lib/data/fetch'
+import { getLegacyBlogPosts } from '@lib/strapi'
 import { getRegion } from '@lib/data/regions'
 import { cn } from '@lib/util/cn'
 import { StoreProduct } from '@medusajs/types'
@@ -46,7 +46,7 @@ export default async function BlogTemplate({
 
   const orderBy = sortBy === 'asc' ? 'createdAt:asc' : 'createdAt:desc'
 
-  const blogRes = await getBlogPosts({
+  const blogRes = await getLegacyBlogPosts({
     sortBy: orderBy,
     query,
     category: currentCategory,

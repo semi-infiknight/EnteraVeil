@@ -1,6 +1,5 @@
 import { listCategories } from '@lib/data/categories'
 import { getCollectionsList } from '@lib/data/collections'
-import { getCollectionsData } from '@lib/data/fetch'
 import { getProductsList } from '@lib/data/products'
 import { Container } from '@modules/common/components/container'
 
@@ -16,11 +15,10 @@ export default async function NavWrapper(props: any) {
       return fallback
     }
   }
-  const [productCategories, { collections }, strapiCollections, { products }] =
+  const [productCategories, { collections }, { products }] =
     await Promise.all([
       safe(() => listCategories(), [] as any),
       safe(() => getCollectionsList(), { collections: [], count: 0 } as any),
-      safe(() => getCollectionsData(), { data: null } as any),
       safe(
         () =>
           getProductsList({
@@ -41,7 +39,7 @@ export default async function NavWrapper(props: any) {
         <NavContent
           productCategories={productCategories}
           collections={collections}
-          strapiCollections={strapiCollections}
+          strapiCollections={{ data: null }}
           countryCode={props.countryCode}
           products={products}
         />
