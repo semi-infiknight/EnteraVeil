@@ -218,6 +218,7 @@ Copy edits in Strapi/Medusa admin still propagate via the revalidation webhook â
 | Strapi "database does not exist" | Run `scripts/railway-init-db.sql` against Postgres |
 | Medusa migration fails | `railway logs --service medusa` â€” confirm `DATABASE_URL=${{Postgres.DATABASE_URL}}` |
 | Razorpay webhook 401 | Wrong `RAZORPAY_WEBHOOK_SECRET` on medusa |
+| Strapi `/admin` returns "Not Found" | Ensure `tsconfig.json` is in the runner image so `distDir` resolves to `dist/` (admin bundle lives in `dist/build/`) |
 | OOM / slow cold starts | Scale service memory in Railway dashboard (Strapi admin is the hungry one) |
 
 See `docs/troubleshooting.md` for more.

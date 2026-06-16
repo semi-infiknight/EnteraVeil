@@ -42,7 +42,8 @@ RUN groupadd --system --gid 1001 strapi \
   && useradd --system --uid 1001 --gid strapi strapi
 
 COPY --chown=strapi:strapi pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/
+COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/package.json
+COPY --chown=strapi:strapi apps/strapi/tsconfig.json apps/strapi/tsconfig.json
 
 RUN pnpm install --frozen-lockfile --prod --filter ./apps/strapi... \
   && pnpm store prune
