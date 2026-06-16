@@ -53,8 +53,9 @@ COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/
 COPY --from=builder --chown=strapi:strapi /repo/node_modules ./node_modules
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/node_modules ./apps/strapi/node_modules
 
-# Built output only (config is compiled into dist/config/*.js)
+# Built output — strapi start expects ./config/*.js at app root (not dist/config)
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/dist apps/strapi/dist
+COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/dist/config apps/strapi/config
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/public apps/strapi/public
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/strapi/
 
