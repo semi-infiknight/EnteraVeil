@@ -87,7 +87,10 @@ const modules = {
       ],
     },
   },
-  [Modules.NOTIFICATION]: {
+};
+
+if (process.env.RESEND_API_KEY) {
+  (modules as Record<string, any>)[Modules.NOTIFICATION] = {
     resolve: '@medusajs/medusa/notification',
     options: {
       providers: [
@@ -102,8 +105,12 @@ const modules = {
         },
       ],
     },
-  },
-};
+  };
+} else {
+  console.warn(
+    'RESEND_API_KEY missing; notification provider will not be registered.'
+  );
+}
 
 // Index engine requires Redis-backed event bus to reliably re-index when
 // products are updated via workflows. In single-process dev with the in-memory
