@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Set optional production secrets on Railway (interactive — reads from env or prompts).
+# Set Razorpay production secrets on Railway (run last — after everything else).
+# For Resend only, use ./scripts/railway-set-resend.sh instead.
 # Copy .env.railway.template → .env.railway.local (gitignored), fill values, then:
 #   set -a && source .env.railway.local && set +a && ./scripts/railway-set-secrets.sh
 set -euo pipefail

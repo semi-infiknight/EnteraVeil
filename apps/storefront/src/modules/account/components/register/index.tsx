@@ -222,14 +222,14 @@ const Register = ({ setCurrentView }: Props) => {
             >
               I read and agree to{' '}
               <LocalizedClientLink
-                href="/terms-and-conditions"
+                href="/legal/terms-and-conditions"
                 className="w-max transition-all duration-200 hover:underline"
               >
                 Terms & Conditions
               </LocalizedClientLink>{' '}
               and{' '}
               <LocalizedClientLink
-                href="/privacy-policy"
+                href="/legal/privacy-policy"
                 className="w-max transition-all duration-200 hover:underline"
               >
                 Privacy Policy
