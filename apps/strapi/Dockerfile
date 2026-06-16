@@ -42,8 +42,7 @@ RUN groupadd --system --gid 1001 strapi \
   && useradd --system --uid 1001 --gid strapi strapi
 
 COPY --chown=strapi:strapi pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/package.json
-COPY --chown=strapi:strapi apps/strapi/tsconfig.json apps/strapi/tsconfig.json
+COPY --chown=strapi:strapi apps/strapi/package.json apps/strapi/
 
 RUN pnpm install --frozen-lockfile --prod --filter ./apps/strapi... \
   && pnpm store prune
@@ -55,7 +54,7 @@ COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/str
 
 WORKDIR /app/apps/strapi
 
-# Admin panel is built to dist/build; without tsconfig Strapi resolves distDir to app root.
+# Admin bundle lives in dist/build; strapi start resolves distDir to app root without tsconfig.
 RUN ln -sfn dist/build build
 
 ENV HOME=/app
