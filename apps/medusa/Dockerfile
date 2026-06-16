@@ -52,14 +52,15 @@ COPY --chown=medusa:medusa apps/medusa/package.json apps/medusa/
 # package.json still declares yarn@3 — strip so corepack doesn't hijack pnpm at runtime
 RUN node -e "const fs=require('fs'); const p='apps/medusa/package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); delete j.packageManager; fs.writeFileSync(p, JSON.stringify(j,null,2));"
 
-# Install prod deps only (smaller image)
-RUN pnpm install --frozen-lockfile --prod --filter ./apps/medusa... \
-  && pnpm store prune
+# Copy node_modules from builder — prod reinstall breaks pnpm symlinks for medusa-config.ts
+COPY --from=builder --chown=medusa:medusa /repo/node_modules ./node_modules
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/node_modules ./apps/medusa/node_modules
 
 # Bring the built app + necessary runtime files
 COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/.medusa apps/medusa/.medusa
 COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/medusa-config.ts apps/medusa/
 COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/instrumentation.ts apps/medusa/
+COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/tsconfig.json apps/medusa/
 COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
 
 WORKDIR /app/apps/medusa
