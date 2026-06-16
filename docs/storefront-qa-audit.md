@@ -1,4 +1,6 @@
-# Overnight QA — 2026-05-29
+# Storefront QA audit (historical) — 2026-05-29
+
+> Tunnel/local session log from pre-Railway polish. For current production status see [`PRODUCTION-STATE.md`](./PRODUCTION-STATE.md).
 
 Storefront tunnel: `https://tracked-clicks-properties-bloomberg.trycloudflare.com/in`
 Admin tunnel: `https://museum-staying-prairie-airplane.trycloudflare.com/app`
@@ -689,7 +691,7 @@ All pushed to `origin/main`.
 
 ## Polish round 3 (grounded in inspo) · 2026-05-30 IST
 
-See `docs/overnight-polish-round.md` for the full log of this round.
+See `docs/storefront-polish-round.md` for the full log of this round.
 
 Eight commits this round, all anchored in xenpachi.com + comicsense.store
 evidence captured via Playwright DOM/computed styles (no images read).

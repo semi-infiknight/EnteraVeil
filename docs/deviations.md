@@ -4,7 +4,7 @@ Every non-trivial decision deviating from PLAN.md is recorded here with a one-li
 
 ## Deployment — Railway (2026-06-16 → ongoing)
 
-- **Production target moved from DigitalOcean droplet + Docker Compose + Caddy to Railway.** All five components (Postgres, Redis, medusa, storefront, strapi) run as separate Railway services in project `enteraveil`; TLS and routing handled by Railway edge. Reason: user requested full stack on Railway project `a098d5f4-ebc5-41ed-a16e-3547c82d2b0b`. `docs/DEPLOY.md` rewritten; `docs/DEPLOY-CHEAPEST.md` kept as archived VPS reference. **Living snapshot:** `docs/PRODUCTION-STATE.md` (update on every deploy change).
+- **Production target moved from DigitalOcean droplet + Docker Compose + Caddy to Railway.** All five components (Postgres, Redis, medusa, storefront, strapi) run as separate Railway services in project `enteraveil`; TLS and routing handled by Railway edge. Reason: user requested full stack on Railway project `a098d5f4-ebc5-41ed-a16e-3547c82d2b0b`. `docs/DEPLOY.md` rewritten; VPS deploy doc removed (Railway only). **Living snapshot:** `docs/PRODUCTION-STATE.md` (update on every deploy change).
 - **Per-service `railway.toml` + `RAILWAY_DOCKERFILE_PATH` env** instead of monorepo Railpack auto-detect (which failed: no root start script). Dockerfiles unchanged; monorepo root remains build context.
 - **Strapi second DB** created via `scripts/railway-init-db.sql` on shared Postgres (`strapi` database); Medusa uses default `railway` DB. Matches docker-compose two-database layout without `postgres-init.sh` (Railway managed Postgres).
 - **Strapi `JWT_SECRET` env + `config/plugins.ts` users-permissions jwtSecret** — plugin bootstrap crashed without it; separate from `ADMIN_JWT_SECRET`.

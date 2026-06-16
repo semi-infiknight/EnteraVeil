@@ -250,6 +250,4 @@ See `docs/troubleshooting.md` for more.
 
 ## 10. Cost note
 
-Railway Hobby/Pro usage billing replaces the $6–12/mo DigitalOcean droplet. Postgres + Redis + 3 Node services typically lands around **$15–25/mo** on light traffic — trade-off is zero ops (no swap tuning, no Caddy, no SSH hardening).
-
-The old VPS guides are archived in `docs/DEPLOY-CHEAPEST.md` (DigitalOcean path) for reference only.
+Railway Hobby/Pro usage billing. Postgres + Redis + 3 Node services typically lands around **$15–25/mo** on light traffic.

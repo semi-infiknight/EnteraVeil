@@ -6,7 +6,7 @@
 # `docker compose -f docker-compose.prod.yml build`, save them with
 # `docker save`, scp the tarball to the droplet, then `docker load`.
 #
-# Full instructions: docs/DEPLOY-CHEAPEST.md, "Build pipeline — Option A".
+# Images built by .github/workflows/build-images.yml on push to main.
 
 services:
   postgres:

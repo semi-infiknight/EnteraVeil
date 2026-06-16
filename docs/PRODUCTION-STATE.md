@@ -84,6 +84,38 @@ npx @railway/cli link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4
 
 ---
 
+## What's next (per `PLAN.md`)
+
+Phases 0–7 built the stack. **Phase 8** (go live) is **in progress on Railway** — adapted from the original DigitalOcean runbook in `docs/DEPLOY.md`.
+
+| Phase | Goal | Status |
+|-------|------|--------|
+| **8 — Production deploy** | Live HTTPS, DNS, secrets, smoke tests | **~80%** — Railway up; custom domains + Resend + Razorpay pending |
+| **9 — Final QA + handoff** | Admin guide, troubleshooting, acceptance tests, `phase-9-done` tag | **Partial** — docs exist; acceptance tests not signed off |
+
+### Phase 8 remaining (Railway adaptation)
+1. Custom domains (`enteraveil.com`, `api.*`, `cms.*`) + `railway-set-vars.sh`
+2. Resend domain verified + `railway-set-resend.sh`
+3. Razorpay LIVE keys + webhook (last)
+4. Confirm `setup-india.ts` on prod
+5. Real catalog in Medusa (replace demo SKUs)
+6. Strapi content/images in admin
+
+### Phase 9 acceptance (from `PLAN.md` 🛑)
+1. **COD test order** — cart → checkout → Medusa order (+ emails when Resend live)
+2. **Strapi edit** — change About in Strapi → storefront updates within ~60s
+3. **`docs/admin-guide.md` review** — readable by non-dev operator
+4. **Live Razorpay ₹1 purchase** — payment + webhook + both emails (after keys)
+
+Then: `git tag phase-9-done` and **Done when** all nine phase tags exist + real Razorpay E2E (`PLAN.md` footer).
+
+### Code polish (not blocking launch)
+- Wire FAQ + home lookbook strip to Strapi
+- Footer contact/careers links
+- Verify Medusa `REDIS_URL` at runtime
+
+---
+
 ## What is not done yet
 
 | Item | Blocker / action |

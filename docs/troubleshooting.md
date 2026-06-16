@@ -31,7 +31,7 @@ npx @railway/cli ssh --service medusa
 
 ## SSH access (archived VPS path)
 
-> Production is on Railway. Section below applies to `docs/DEPLOY-CHEAPEST.md` DigitalOcean deploy only.
+> Production is on Railway. Section below is a **legacy VPS** playbook (pre-Railway); kept for reference only.
 
 ```bash
 ssh deploy@${VPS_HOST}

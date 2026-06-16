@@ -1,11 +1,7 @@
-# Overnight polish round · 2026-05-30 IST
+# Storefront polish round (historical) · 2026-05-30
 
-Run end-to-end in autonomy after the user said "you don't know
-anything about design" and asked me to ground every move in
-xenpachi.com + comicsense.store evidence rather than my own taste.
-
-This is appended in addition to the existing
-`docs/qa-overnight.md` log so the round's findings stay grouped.
+Design pass grounded in xenpachi.com + comicsense.store reference audits.
+Companion to [`storefront-qa-audit.md`](./storefront-qa-audit.md). Not a live deploy checklist — see [`PRODUCTION-STATE.md`](./PRODUCTION-STATE.md).
 
 ## Phase 1 — Reference capture + audit (foundation)
 

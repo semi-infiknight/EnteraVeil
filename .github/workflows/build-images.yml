@@ -10,7 +10,7 @@
 #   ghcr.io/semi-infiknight/enteraveil-storefront:latest
 #   ghcr.io/semi-infiknight/enteraveil-strapi:latest
 #
-# See docs/DEPLOY-CHEAPEST.md for the end-to-end deploy flow.
+# Railway deploy: docs/DEPLOY.md. GHCR images optional for self-hosted pulls.
 
 name: build-and-push
 
