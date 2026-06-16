@@ -130,7 +130,11 @@ module.exports = defineConfig({
     // through both the local origin and the public cloudflared tunnel without
     // baking a host into the JS.
     backendUrl: process.env.MEDUSA_ADMIN_BACKEND_URL ?? '',
-    disable: process.env.DISABLE_MEDUSA_ADMIN === 'true',
+    // Admin stays off in production unless explicitly opted in — the Vite bundle
+    // needs extra memory on Railway's default plan.
+    disable:
+      process.env.ENABLE_MEDUSA_ADMIN !== 'true' ||
+      process.env.DISABLE_MEDUSA_ADMIN === 'true',
     // Vite dev server rejects unknown hosts; allow cloudflared trycloudflare.com
     // subdomains so the admin loads through the public tunnel.
     vite: () => ({
