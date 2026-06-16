@@ -105,7 +105,7 @@ Copy `.env.railway.template` and set values on each service. Minimum to boot:
 | Service | Keys |
 |---------|------|
 | medusa | `JWT_SECRET`, `COOKIE_SECRET`, `DATABASE_URL=${{Postgres.DATABASE_URL}}`, `REDIS_URL=${{Redis.REDIS_URL}}` |
-| strapi | `APP_KEYS` (4 comma-separated), `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, `DATABASE_*` → `${{Postgres.*}}` |
+| strapi | `APP_KEYS` (4 comma-separated), `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `JWT_SECRET` (users-permissions), `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, `DATABASE_*` → `${{Postgres.*}}` |
 | storefront | `NEXT_PUBLIC_MEDUSA_BACKEND_URL`, `NEXT_PUBLIC_STRAPI_URL`, `STRAPI_WEBHOOK_REVALIDATION_SECRET` |
 
 Razorpay + Resend are optional at first boot (COD works without Razorpay; emails skip without Resend).
