@@ -67,4 +67,4 @@ WORKDIR /app/apps/storefront
 EXPOSE 8000
 ENV PORT=8000 HOSTNAME=0.0.0.0
 
-CMD ["pnpm", "start"]
+CMD ["sh", "-c", "pnpm exec next start -p ${PORT:-8000}"]
