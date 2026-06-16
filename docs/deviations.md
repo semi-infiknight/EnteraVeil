@@ -7,6 +7,10 @@ Every non-trivial decision deviating from PLAN.md is recorded here with a one-li
 - **Production target moved from DigitalOcean droplet + Docker Compose + Caddy to Railway.** All five components (Postgres, Redis, medusa, storefront, strapi) run as separate Railway services in project `enteraveil`; TLS and routing handled by Railway edge. Reason: user requested full stack on Railway project `a098d5f4-ebc5-41ed-a16e-3547c82d2b0b`. `docs/DEPLOY.md` rewritten; `docs/DEPLOY-CHEAPEST.md` kept as archived VPS reference.
 - **Per-service `railway.toml` + `RAILWAY_DOCKERFILE_PATH` env** instead of monorepo Railpack auto-detect (which failed: no root start script). Dockerfiles unchanged; monorepo root remains build context.
 - **Strapi second DB** created via `scripts/railway-init-db.sql` on shared Postgres (`strapi` database); Medusa uses default `railway` DB. Matches docker-compose two-database layout without `postgres-init.sh` (Railway managed Postgres).
+- **Strapi `JWT_SECRET` env + `config/plugins.ts` users-permissions jwtSecret** — plugin bootstrap crashed without it; separate from `ADMIN_JWT_SECRET`.
+- **Strapi admin panel in Docker runner** — symlink `build` → `dist/build` in `apps/strapi/Dockerfile`; copying `tsconfig.json` into runner triggers `tsc` with no sources. Do not copy tsconfig to production stage.
+- **Medusa admin UI disabled** via `DISABLE_MEDUSA_ADMIN=true` until admin bundle copy fixed; publishable key fetched via `/admin/api-keys` REST instead.
+- **Root `railway` npm package is the TS SDK**, not the CLI; use `npx @railway/cli` for deploy commands.
 
 ## Phase 0 — Skeleton
 
