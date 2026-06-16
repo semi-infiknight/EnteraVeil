@@ -63,8 +63,10 @@ COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/str
 
 WORKDIR /app/apps/strapi
 
+ENV HOME=/app
+RUN mkdir -p /app/.cache && chown -R strapi:strapi /app/.cache
+
 USER strapi
 EXPOSE 1337
 
-# Avoid pnpm/corepack at runtime — non-root user cannot write to ~/.cache
-CMD ["node", "/app/node_modules/.bin/strapi", "start"]
+CMD ["pnpm", "start"]

@@ -59,10 +59,12 @@ COPY --from=builder --chown=nextjs:nextjs /repo/package.json /repo/pnpm-workspac
 COPY --from=builder --chown=nextjs:nextjs /repo/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nextjs /repo/apps/storefront ./apps/storefront
 
+ENV HOME=/app
+RUN mkdir -p /app/.cache && chown -R nextjs:nextjs /app/.cache
+
 USER nextjs
 WORKDIR /app/apps/storefront
 EXPOSE 8000
 ENV PORT=8000 HOSTNAME=0.0.0.0
 
-# Avoid pnpm/corepack at runtime — non-root user cannot write to ~/.cache
-CMD ["node", "/app/node_modules/next/dist/bin/next", "start", "-p", "8000"]
+CMD ["pnpm", "start"]

@@ -49,6 +49,9 @@ RUN groupadd --system --gid 1001 medusa \
 COPY --chown=medusa:medusa pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY --chown=medusa:medusa apps/medusa/package.json apps/medusa/
 
+# package.json still declares yarn@3 — strip so corepack doesn't hijack pnpm at runtime
+RUN node -e "const fs=require('fs'); const p='apps/medusa/package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); delete j.packageManager; fs.writeFileSync(p, JSON.stringify(j,null,2));"
+
 # Install prod deps only (smaller image)
 RUN pnpm install --frozen-lockfile --prod --filter ./apps/medusa... \
   && pnpm store prune
@@ -61,8 +64,11 @@ COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
 
 WORKDIR /app/apps/medusa
 
+# Writable HOME for corepack/pnpm when running as non-root on Railway
+ENV HOME=/app
+RUN mkdir -p /app/.cache && chown -R medusa:medusa /app/.cache
+
 USER medusa
 EXPOSE 9000
 
-# Avoid pnpm/corepack at runtime (packageManager field triggers yarn via corepack)
-CMD ["node", "/app/node_modules/.bin/medusa", "start"]
+CMD ["pnpm", "start"]
