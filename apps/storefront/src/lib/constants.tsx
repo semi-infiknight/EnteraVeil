@@ -165,15 +165,15 @@ export const createFooterNavigation = (
         links: [
           {
             title: 'Orders and delivery',
-            href: '/terms-and-conditions',
+            href: '/legal/shipping-policy',
           },
           {
             title: 'Returns and refunds',
-            href: '/terms-and-conditions',
+            href: '/legal/refund-policy',
           },
           {
             title: 'Payment and pricing',
-            href: '/terms-and-conditions',
+            href: '/legal/terms-and-conditions',
           },
         ],
       },
@@ -219,11 +219,19 @@ export const createFooterNavigation = (
     other: [
       {
         title: 'Privacy Policy',
-        href: '/privacy-policy',
+        href: '/legal/privacy-policy',
       },
       {
         title: 'Terms & Conditions',
-        href: '/terms-and-conditions',
+        href: '/legal/terms-and-conditions',
+      },
+      {
+        title: 'Shipping Policy',
+        href: '/legal/shipping-policy',
+      },
+      {
+        title: 'Refund Policy',
+        href: '/legal/refund-policy',
       },
     ],
   }
@@ -232,11 +240,11 @@ export const createFooterNavigation = (
 export const checkoutFooterNavigation = [
   {
     title: 'Privacy Policy',
-    href: '/privacy-policy',
+    href: '/legal/privacy-policy',
   },
   {
     title: 'Terms & Conditions',
-    href: '/terms-and-conditions',
+    href: '/legal/terms-and-conditions',
   },
 ]
 
