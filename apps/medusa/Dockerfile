@@ -64,9 +64,9 @@ COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
 
 WORKDIR /app/apps/medusa
 
-# Writable HOME for corepack/pnpm when running as non-root on Railway
+# Writable HOME for corepack/pnpm + Medusa CLI configstore on Railway
 ENV HOME=/app
-RUN mkdir -p /app/.cache && chown -R medusa:medusa /app/.cache
+RUN mkdir -p /app/.cache /app/.config && chown -R medusa:medusa /app/.cache /app/.config
 
 USER medusa
 EXPOSE 9000
