@@ -4,6 +4,8 @@ End-to-end runbook for taking EnteraVeil live on [Railway](https://railway.com).
 
 **Live project:** [enteraveil on Railway](https://railway.com/project/a098d5f4-ebc5-41ed-a16e-3547c82d2b0b?environmentId=9c4375bb-bf48-4c61-86b1-b9a6dc28968d)
 
+**Current snapshot (URLs, done/pending, smoke tests):** [`docs/PRODUCTION-STATE.md`](./PRODUCTION-STATE.md) — update this file whenever production changes.
+
 ---
 
 ## Architecture on Railway
@@ -128,9 +130,27 @@ DB_URL=$(railway variable list --service Postgres --json | jq -r .DATABASE_PUBLI
 psql "$DB_URL" -f scripts/railway-init-db.sql
 ```
 
-### 3g. Strapi uploads volume (recommended)
+### 3g. Strapi uploads volume
 
-In the Railway dashboard → **strapi** service → add a volume mounted at `/app/apps/strapi/public/uploads`. (Or declare it in `.railway/railway.ts` and `railway config apply`.)
+Production already has `strapi-volume` at `/app/apps/strapi/public/uploads`. For a fresh env:
+
+```bash
+npx @railway/cli service link strapi
+npx @railway/cli volume add -m /app/apps/strapi/public/uploads
+```
+
+### 3h. Ops scripts (production)
+
+| Script | When |
+|--------|------|
+| `./scripts/railway-set-vars.sh` | First boot; again after custom domains |
+| `./scripts/railway-seed-medusa.sh` | Idempotent Medusa catalog + INR + filters |
+| `./scripts/railway-setup-strapi-webhook.sh` | After `STRAPI_WEBHOOK_REVALIDATION_SECRET` on storefront |
+| `./scripts/railway-set-resend.sh` | Resend + `ADMIN_EMAIL` (no Razorpay) |
+| `./scripts/railway-set-secrets.sh` | Razorpay — **run last** |
+| `./scripts/railway-enable-medusa-admin.sh` | Opt in to `/app` after scaling medusa ≥1 GB RAM |
+
+CLI: `npx @railway/cli` or `node node_modules/@railway/cli/bin/railway.js`. Template: `.env.railway.template`.
 
 ---
 
@@ -157,22 +177,20 @@ railway service status --json
 
 ## 5. Browser-only setup (one-time)
 
-Same as the old VPS runbook, but use Railway URLs:
+Use Railway URLs (see [`PRODUCTION-STATE.md`](./PRODUCTION-STATE.md) for current status).
 
-1. **Strapi admin** — `https://<strapi-domain>/admin` → create admin → API token (read-only) → set `STRAPI_API_TOKEN` on **storefront** → redeploy storefront.
-2. **Medusa admin** — `https://<medusa-domain>/app` → create user:
+1. **Strapi admin** — `https://<strapi-domain>/admin` → admin user (SSH if needed) → API token (read-only) → `STRAPI_API_TOKEN` on **storefront** → redeploy storefront. CMS seeded on boot (`apps/strapi/src/index.ts`).
+2. **Medusa admin** — `https://<medusa-domain>/app` (root `/` is 404 by design). Create user via SSH; catalog via `./scripts/railway-seed-medusa.sh` (not full `seed.ts` on prod).
    ```bash
-   railway ssh --service medusa
+   npx @railway/cli ssh --service medusa
    pnpm medusa user --email you@yourbox.com --password '<strong>'
    ```
-   → Settings → Publishable API Keys → copy to `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` on **storefront** → redeploy storefront.
-3. **India region seed:**
-   ```bash
-   railway ssh --service medusa
-   pnpm medusa exec ./src/scripts/setup-india.ts
-   ```
-4. **Razorpay webhook** — URL: `https://<medusa-domain>/hooks/payment/razorpay_razorpay` (events: `payment.captured`, `payment.failed`, `order.paid`, `refund.created`).
-5. **Strapi revalidation webhook** — URL: `https://<storefront-domain>/api/strapi-revalidate?secret=<STRAPI_WEBHOOK_REVALIDATION_SECRET>`.
+   → Publishable API Keys → `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` on **storefront** → redeploy storefront.
+3. **India region** — `pnpm medusa exec ./src/scripts/setup-india.ts` (confirm on prod).
+4. **Strapi revalidation** — `./scripts/railway-setup-strapi-webhook.sh` (Strapi 5: no `enabled` field in payload).
+5. **Razorpay webhook** (when keys exist) — `https://<medusa-domain>/hooks/payment/razorpay_razorpay`.
+
+**Medusa `/app` requirements:** `ENABLE_MEDUSA_ADMIN=true` on Railway; Dockerfile builds admin bundle and symlinks `public/admin` → `.medusa/server/public/admin`. See `docs/deviations.md`.
 
 ---
 
@@ -220,7 +238,11 @@ Copy edits in Strapi/Medusa admin still propagate via the revalidation webhook �
 | Razorpay webhook 401 | Wrong `RAZORPAY_WEBHOOK_SECRET` on medusa |
 | Strapi `/admin` returns "Not Found" | Runner image must symlink `build` → `dist/build` (see `apps/strapi/Dockerfile`); do not copy `tsconfig.json` into runner (triggers TS compile with no sources) |
 | Strapi `/api/*` returns 404 | Runner must also symlink `src` → `dist/src` so content-type routes and bootstrap seed load; restart after deploy — seed is idempotent in `apps/strapi/src/index.ts` |
-| OOM / slow cold starts | Scale service memory in Railway dashboard (Strapi admin is the hungry one) |
+| OOM / slow cold starts | Scale service memory in Railway dashboard (Medusa `/app` + Strapi admin are hungry) |
+| Medusa `/app` white screen | `public/admin` must point to `.medusa/server/public/admin`, not `.medusa/client` (dev stub loads `./entry.jsx` → 404) |
+| Medusa `/app` 404 | Set `ENABLE_MEDUSA_ADMIN=true`; ensure admin bundle built in Docker (`ENABLE_MEDUSA_ADMIN=true` in builder stage) |
+| Storefront legal pages old content | `railway up --service storefront` — redeploy alone may not rebuild from latest `main` |
+| `npx @railway/cli` silent fail | Run `node node_modules/@railway/cli/npm-install/postinstall.js` then use `node node_modules/@railway/cli/bin/railway.js` |
 
 See `docs/troubleshooting.md` for more.
 

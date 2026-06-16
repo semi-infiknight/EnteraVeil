@@ -2,11 +2,36 @@
 
 Developer-facing playbook for the things that break in production.
 
-For first-time deploy questions, see `docs/DEPLOY.md`. For everyday store ops, see `docs/admin-guide.md`. This doc covers when something is on fire.
+**Production host:** Railway — see [`docs/PRODUCTION-STATE.md`](./PRODUCTION-STATE.md) for URLs and current status.  
+Deploy runbook: [`docs/DEPLOY.md`](./DEPLOY.md). Store ops: [`docs/admin-guide.md`](./admin-guide.md).
 
 ---
 
-## SSH access
+## Railway (production)
+
+```bash
+cd EnteraVeil
+npx @railway/cli login
+npx @railway/cli link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4c61-86b1-b9a6dc28968d
+
+npx @railway/cli logs --service medusa
+npx @railway/cli service status --service storefront
+npx @railway/cli ssh --service medusa
+```
+
+| Symptom | Fix |
+|---------|-----|
+| Medusa `/app` white screen | `public/admin` must symlink `.medusa/server/public/admin` (see `apps/medusa/Dockerfile`) |
+| Medusa `/` 404 | Expected — API host has no homepage; use `/app` or storefront URL |
+| Storefront stale after push | `npx @railway/cli up --service storefront` (not just redeploy) |
+| Strapi revalidate 401 | `STRAPI_WEBHOOK_REVALIDATION_SECRET` mismatch between Strapi webhook URL and storefront env |
+| CLI exits 1 silently | `node node_modules/@railway/cli/npm-install/postinstall.js` |
+
+---
+
+## SSH access (archived VPS path)
+
+> Production is on Railway. Section below applies to `docs/DEPLOY-CHEAPEST.md` DigitalOcean deploy only.
 
 ```bash
 ssh deploy@${VPS_HOST}

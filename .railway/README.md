@@ -1,5 +1,7 @@
 # Railway configuration
 
+**Production snapshot:** [`docs/PRODUCTION-STATE.md`](../docs/PRODUCTION-STATE.md)
+
 This project defines its Railway infrastructure in code.
 
 ```txt
