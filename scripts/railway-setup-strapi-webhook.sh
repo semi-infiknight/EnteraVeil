@@ -26,24 +26,30 @@ fi
 
 WEBHOOK_URL="${STOREFRONT_URL}/api/strapi-revalidate?secret=${SECRET}"
 
-curl -sf -X POST "${STRAPI_URL}/admin/webhooks" \
+PAYLOAD=$(WEBHOOK_URL="$WEBHOOK_URL" node -e '
+const payload = {
+  name: "storefront-revalidate",
+  url: process.env.WEBHOOK_URL,
+  headers: {},
+  events: [
+    "entry.create",
+    "entry.update",
+    "entry.delete",
+    "entry.publish",
+    "entry.unpublish",
+  ],
+};
+process.stdout.write(JSON.stringify(payload));
+')
+
+RESPONSE=$(curl -sf -X POST "${STRAPI_URL}/admin/webhooks" \
   -H "Authorization: Bearer ${JWT}" \
   -H 'Content-Type: application/json' \
-  -d "$(node -pe "
-    JSON.stringify({
-      name: 'storefront-revalidate',
-      url: process.env.WEBHOOK_URL,
-      headers: {},
-      events: [
-        'entry.create',
-        'entry.update',
-        'entry.delete',
-        'entry.publish',
-        'entry.unpublish',
-      ],
-      enabled: true,
-    })
-  ")" \
-  | node -pe 'const j=JSON.parse(fs.readFileSync(0,"utf8")); console.log("Webhook id:", j.data?.id||j.id||"created")'
+  -d "$PAYLOAD")
+
+echo "$RESPONSE" | node -pe '
+const j = JSON.parse(fs.readFileSync(0, "utf8"));
+console.log("Webhook id:", j.data?.id || j.id || "created");
+'
 
 echo "Registered: ${WEBHOOK_URL}"
