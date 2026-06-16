@@ -68,8 +68,9 @@ COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
 
 WORKDIR /app/apps/medusa
 
-# Medusa serves admin from public/admin; the Vite build writes to .medusa/client.
-RUN mkdir -p public && ln -sfn ../.medusa/client public/admin
+# Medusa serves admin from public/admin; the Vite production bundle lands in
+# .medusa/server/public/admin (.medusa/client is only the dev entry stub).
+RUN mkdir -p public && ln -sfn ../.medusa/server/public/admin public/admin
 
 # Writable HOME for corepack/pnpm + Medusa CLI configstore on Railway
 ENV HOME=/app
