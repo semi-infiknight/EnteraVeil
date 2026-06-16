@@ -72,4 +72,5 @@ RUN mkdir -p /app/.cache /app/.config && chown -R medusa:medusa /app/.cache /app
 USER medusa
 EXPOSE 9000
 
-CMD ["pnpm", "start"]
+# Migrate on boot — Railway pre-deploy from railway.toml is not wired until config path is set
+CMD ["sh", "-c", "pnpm medusa db:migrate && pnpm start"]
