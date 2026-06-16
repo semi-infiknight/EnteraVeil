@@ -42,6 +42,94 @@ async function ensurePublicReadPermissions(strapi: Core.Strapi) {
   }
 }
 
+const BLOG_POSTS = [
+  {
+    title: 'Drop one is live',
+    slug: 'drop-one-is-live',
+    author: 'EnteraVeil',
+    body: "Our first drop is here — limited run graphic tees inspired by late-night anime marathons. Once they're gone, they're gone.",
+    tags: ['drop', 'launch'],
+  },
+  {
+    title: 'Behind the print',
+    slug: 'behind-the-print',
+    author: 'EnteraVeil',
+    body: 'Every EnteraVeil piece starts as a frame-grab mood board, then gets cleaned up for screen print in Bangalore. No mass-market blanks.',
+    tags: ['process', 'bangalore'],
+  },
+  {
+    title: 'Shipping from Bangalore & Raipur',
+    slug: 'shipping-bangalore-raipur',
+    author: 'EnteraVeil',
+    body: 'We ship across India from Bangalore and Raipur. COD is available; Razorpay goes live once payments are wired.',
+    tags: ['shipping', 'india'],
+  },
+] as const;
+
+const LOOKBOOK_ENTRIES = [
+  {
+    title: 'Veil one',
+    slug: 'veil-one',
+    body: 'Night-market energy — oversized tee, cargos, neon reflections.',
+    linked_product_skus: [] as string[],
+  },
+  {
+    title: 'After hours',
+    slug: 'after-hours',
+    body: 'Post-credits roll styling. Layered hoodies, muted purples, city rain.',
+    linked_product_skus: [] as string[],
+  },
+  {
+    title: 'Signal lost',
+    slug: 'signal-lost',
+    body: 'Static-heavy graphics and distressed washes for the in-between episodes.',
+    linked_product_skus: [] as string[],
+  },
+] as const;
+
+const HOMEPAGE_SECTIONS = [
+  {
+    type: 'hero' as const,
+    title: 'From beyond the veil',
+    body: 'Anime streetwear, hand-printed in India. Limited drops — no restocks.',
+    cta_text: 'Shop the drop',
+    cta_url: '/shop',
+    sort_order: 0,
+  },
+  {
+    type: 'featured' as const,
+    title: 'Graphic tees',
+    body: 'Screen-printed in small batches. Built for repeat watches.',
+    cta_text: 'View shirts',
+    cta_url: '/collections/shirts',
+    sort_order: 1,
+  },
+  {
+    type: 'lookbook' as const,
+    title: 'The lookbook',
+    body: 'Editorial fits tied to each drop.',
+    cta_text: 'View lookbook',
+    cta_url: '/lookbook',
+    sort_order: 2,
+  },
+  {
+    type: 'promo' as const,
+    title: 'COD across India',
+    body: 'Ships from Bangalore & Raipur. Pay on delivery while we finish Razorpay.',
+    cta_text: 'Learn more',
+    cta_url: '/legal/shipping-policy',
+    sort_order: 3,
+  },
+  {
+    type: 'newsletter' as const,
+    title: 'Drop alerts',
+    body: 'One email a month. No spam — just release dates and lookbook previews.',
+    cta_text: 'Join the list',
+    cta_url: '/#newsletter',
+    sort_order: 4,
+  },
+] as const;
+
 async function seedPlaceholderContent(strapi: Core.Strapi) {
   // Only seed if a content type is empty — never overwrite editor edits.
   const aboutCount = await strapi.documents('api::about.about').count({});
@@ -49,7 +137,7 @@ async function seedPlaceholderContent(strapi: Core.Strapi) {
     await strapi.documents('api::about.about').create({
       data: {
         title: 'About EnteraVeil',
-        body: 'EnteraVeil is anime streetwear from beyond the veil. Limited drops, graphic tees, shipped from Bangalore across India.',
+        body: 'EnteraVeil is anime streetwear from beyond the veil — limited graphic drops, printed in India, shipped nationwide. We build pieces for the hours between episodes: oversized tees, heavy hoodies, and editorial lookbooks that tie each release together.',
       },
       status: 'published',
     });
@@ -58,51 +146,39 @@ async function seedPlaceholderContent(strapi: Core.Strapi) {
 
   const blogCount = await strapi.documents('api::blog-post.blog-post').count({});
   if (blogCount === 0) {
-    await strapi.documents('api::blog-post.blog-post').create({
-      data: {
-        title: 'Drop one is live',
-        slug: 'drop-one-is-live',
-        author: 'EnteraVeil',
-        body: "Our first drop is here. Limited run; once they're gone they're gone.",
-        tags: ['drop', 'launch'],
-      },
-      status: 'published',
-    });
-    strapi.log.info('Seeded: blog-post (sample)');
+    for (const post of BLOG_POSTS) {
+      await strapi.documents('api::blog-post.blog-post').create({
+        data: post,
+        status: 'published',
+      });
+    }
+    strapi.log.info(`Seeded: blog-post (${BLOG_POSTS.length} entries)`);
   }
 
   const lookbookCount = await strapi
     .documents('api::lookbook-entry.lookbook-entry')
     .count({});
   if (lookbookCount === 0) {
-    await strapi.documents('api::lookbook-entry.lookbook-entry').create({
-      data: {
-        title: 'Veil one',
-        slug: 'veil-one',
-        body: 'Editorial commentary on the first drop.',
-        linked_product_skus: [],
-      },
-      status: 'published',
-    });
-    strapi.log.info('Seeded: lookbook-entry (sample)');
+    for (const entry of LOOKBOOK_ENTRIES) {
+      await strapi.documents('api::lookbook-entry.lookbook-entry').create({
+        data: entry,
+        status: 'published',
+      });
+    }
+    strapi.log.info(`Seeded: lookbook-entry (${LOOKBOOK_ENTRIES.length} entries)`);
   }
 
   const homepageCount = await strapi
     .documents('api::homepage-section.homepage-section')
     .count({});
   if (homepageCount === 0) {
-    await strapi.documents('api::homepage-section.homepage-section').create({
-      data: {
-        type: 'hero',
-        title: 'From beyond the veil',
-        body: 'Anime streetwear, hand-printed in India.',
-        cta_text: 'Shop the drop',
-        cta_url: '/shop',
-        sort_order: 0,
-      },
-      status: 'published',
-    });
-    strapi.log.info('Seeded: homepage-section (hero)');
+    for (const section of HOMEPAGE_SECTIONS) {
+      await strapi.documents('api::homepage-section.homepage-section').create({
+        data: section,
+        status: 'published',
+      });
+    }
+    strapi.log.info(`Seeded: homepage-section (${HOMEPAGE_SECTIONS.length} sections)`);
   }
 
   const legalCount = await strapi

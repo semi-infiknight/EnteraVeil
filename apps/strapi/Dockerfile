@@ -54,8 +54,8 @@ COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/str
 
 WORKDIR /app/apps/strapi
 
-# Admin bundle lives in dist/build; strapi start resolves distDir to app root without tsconfig.
-RUN ln -sfn dist/build build
+# Without tsconfig, strapi start resolves distDir to app root — symlink compiled output.
+RUN ln -sfn dist/build build && ln -sfn dist/src src
 
 ENV HOME=/app
 RUN mkdir -p /app/.cache /app/.config && chown -R strapi:strapi /app/.cache /app/.config
