@@ -1,0 +1,17 @@
+# Next.js storefront — NEXT_PUBLIC_* vars must be set on the service before build.
+# Railway service setting: Config file path = apps/storefront/railway.toml
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/storefront/Dockerfile"
+watchPatterns = [
+  "apps/storefront/**",
+  "pnpm-lock.yaml",
+  "pnpm-workspace.yaml",
+  "package.json",
+]
+
+[deploy]
+healthcheckPath = "/in"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"

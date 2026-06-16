@@ -1,159 +1,231 @@
-# EnteraVeil — Production Deployment
+# EnteraVeil — Production Deployment (Railway)
 
-End-to-end runbook for taking EnteraVeil live on a single DigitalOcean droplet in Bangalore.
+End-to-end runbook for taking EnteraVeil live on [Railway](https://railway.com). All stack components run as separate Railway services in one project — no VPS, no Caddy, no Docker Compose on a droplet.
+
+**Live project:** [enteraveil on Railway](https://railway.com/project/a098d5f4-ebc5-41ed-a16e-3547c82d2b0b?environmentId=9c4375bb-bf48-4c61-86b1-b9a6dc28968d)
 
 ---
 
-## 1. Provision the droplet
+## Architecture on Railway
 
-DigitalOcean → Create Droplet:
+| Railway service | Role | Public URL (production) |
+|-----------------|------|-------------------------|
+| **storefront** | Next.js 14 storefront | `https://storefront-production-bb74.up.railway.app` |
+| **medusa** | Medusa 2 API + admin (`/app`) | `https://medusa-production-e8b6.up.railway.app` |
+| **strapi** | Strapi 5 CMS (`/admin`) | `https://strapi-production-2a4f.up.railway.app` |
+| **Postgres** | PostgreSQL 18 (Medusa + Strapi DBs) | private — `${{Postgres.DATABASE_URL}}` |
+| **Redis** | Redis 8 (Medusa cache/events) | private — `${{Redis.REDIS_URL}}` |
 
-- **Region:** Bangalore (BLR1)
-- **Image:** Ubuntu 24.04 LTS
-- **Plan:** Basic / Regular / **1 GB RAM / 1 vCPU / 25 GB SSD minimum**. If you're stocking 50+ SKUs with image-heavy Strapi content, jump to 2 GB.
-- **Auth:** Add your SSH public key. Disable password auth.
-- **Hostname:** `enteraveil-prod`
+Custom domains (when you own `enteraveil.com`):
 
-After it boots, SSH in as root and harden:
+| Host | Railway service |
+|------|-----------------|
+| `enteraveil.com` | storefront |
+| `api.enteraveil.com` | medusa |
+| `cms.enteraveil.com` | strapi |
 
-```bash
-ssh root@<VPS_IP>
+> Razorpay webhooks POST to the **medusa** service. Railway terminates TLS at the edge — no Cloudflare orange-cloud caveat. When you add a custom domain for `api.*`, point DNS directly at Railway (CNAME to the Railway target).
 
-# Create deploy user
-adduser deploy
-usermod -aG sudo deploy
-rsync --archive --chown=deploy:deploy ~/.ssh /home/deploy
+---
 
-# Firewall: only 22, 80, 443
-ufw allow OpenSSH
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw --force enable
+## 1. Prerequisites
 
-# Install Docker + compose plugin
-apt update && apt install -y docker.io docker-compose-plugin
-usermod -aG docker deploy
+- [Railway CLI](https://docs.railway.com/cli) installed and logged in (`railway login`)
+- This repo cloned locally
+- GitHub repo `semi-infiknight/EnteraVeil` connected to the Railway services (already done for production)
 
-# Repo location
-mkdir -p /opt/enteraveil-store
-chown -R deploy:deploy /opt/enteraveil-store
-```
-
-Then log out and back in as `deploy` for the rest.
-
-## 2. DNS
-
-In Cloudflare (or whatever DNS host) point three A records at the droplet IP:
-
-| Subdomain                | Target           | Proxy           |
-|--------------------------|------------------|-----------------|
-| `enteraveil.com`         | `<VPS_IP>`       | Orange (proxied)|
-| `cms.enteraveil.com`     | `<VPS_IP>`       | Orange (proxied)|
-| **`api.enteraveil.com`** | `<VPS_IP>`       | **Gray (DNS only)** |
-
-> **⚠ `api.<domain>` MUST be gray-cloud / DNS-only.**
-> Razorpay's webhook signing uses the raw body; Cloudflare's proxy can mutate body bytes (compression, header normalization) and break HMAC verification. Letting the API origin hand TLS directly to Razorpay's IPs is the safe path. Caddy on the droplet provisions the cert via Let's Encrypt.
-
-## 3. Initial clone + env
-
-On the droplet as `deploy`:
+Link the project from your laptop:
 
 ```bash
-cd /opt/enteraveil-store
-git clone https://github.com/<owner>/EnteraVeil .
-
-cp .env.prod.template .env.prod
-vim .env.prod   # fill EVERY blank below
+cd EnteraVeil
+railway link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4c61-86b1-b9a6dc28968d
 ```
 
-### Required values
+---
 
-| Key | Where to get it |
-|-----|------------------|
-| `BRAND_DOMAIN` | the apex domain you bought, e.g. `enteraveil.com` |
-| `POSTGRES_PASSWORD` | `openssl rand -hex 24` |
-| `JWT_SECRET`, `COOKIE_SECRET` | `openssl rand -hex 32` |
-| `RAZORPAY_ID` / `_SECRET` / `_WEBHOOK_SECRET` | Razorpay Dashboard → Settings → API Keys (Test or Live) |
-| `RESEND_API_KEY` | resend.com/api-keys (verified domain required for `RESEND_FROM_EMAIL`) |
-| `ADMIN_EMAIL` | your real inbox |
-| `DO_SPACE_*` | DigitalOcean Spaces (S3-compatible) bucket info |
-| `APP_KEYS` etc. | Strapi secrets, regenerate per `openssl rand -base64 16` |
-| `NEXT_PUBLIC_RAZORPAY_KEY_ID` | the same as `RAZORPAY_ID` |
-| `STRAPI_API_TOKEN` | minted in Strapi admin AFTER first boot (Step 5) |
-| `STRAPI_WEBHOOK_REVALIDATION_SECRET` | `openssl rand -hex 32` (also paste into Strapi webhook config) |
+## 2. What gets deployed
 
-## 4. First deploy
+Each app service builds from its **Dockerfile** (monorepo root context):
 
-From your local laptop:
+- `apps/medusa/Dockerfile` — port 9000, health `/health`
+- `apps/storefront/Dockerfile` — port 8000, health `/in`
+- `apps/strapi/Dockerfile` — port 1337, health `/admin`
+
+Config-as-code per service: `apps/<app>/railway.toml` (builder, watch paths, healthchecks, Medusa pre-deploy migrate).
+
+Infrastructure-as-code (optional): `.railway/railway.ts` — run `railway config plan` / `railway config apply` after installing `pnpm` deps (`railway` + `tsx` devDependencies).
+
+---
+
+## 3. First-time / fresh environment setup
+
+### 3a. Add data services (if starting blank)
 
 ```bash
-echo "VPS_HOST=<ip>"  >> PROJECT_CONFIG.env
-echo "VPS_USER=deploy" >> PROJECT_CONFIG.env
-./deploy.sh
+railway add --database postgres --json
+railway add --database redis --json
 ```
 
-`deploy.sh` SSHes in, pulls main, builds the three images, brings up the stack, and runs Medusa migrations. Caddy will provision Let's Encrypt certs on the first inbound HTTPS hit (give it ~30 s).
-
-## 5. Browser-only setup (the unavoidable one-time clicks)
-
-1. **Strapi admin** — open `https://cms.<domain>/admin`, create the admin user. Then Settings → API Tokens → Create new token: name `storefront-read`, type Read-only, full access, no expiry. Copy and paste it into `.env.prod` as `STRAPI_API_TOKEN`. Re-run `./deploy.sh` so the storefront container picks it up.
-2. **Razorpay webhook** — Razorpay Dashboard → Settings → Webhooks → Create new:
-   - URL: `https://api.<domain>/webhooks/razorpay`
-   - Secret: paste your `RAZORPAY_WEBHOOK_SECRET`
-   - Events: `payment.captured`, `payment.failed`, `refund.processed`
-3. **Medusa admin user** — `docker compose -f docker-compose.prod.yml exec medusa node_modules/.bin/medusa user --email <you> --password <strong>`
-4. **India region** — `docker compose -f docker-compose.prod.yml exec medusa pnpm tsx src/scripts/setup-india.ts`
-
-## 6. Smoke test from local
+### 3b. Add app services from GitHub
 
 ```bash
-source PROJECT_CONFIG.env
-curl -sI https://${BRAND_DOMAIN}            | head -1   # storefront
-curl -sI https://api.${BRAND_DOMAIN}/health | head -1   # medusa
-curl -sI https://cms.${BRAND_DOMAIN}/admin  | head -1   # strapi
+railway add --repo semi-infiknight/EnteraVeil --branch main --service medusa
+railway add --repo semi-infiknight/EnteraVeil --branch main --service storefront
+railway add --repo semi-infiknight/EnteraVeil --branch main --service strapi
 ```
 
-All three should be `200 OK` over TLS.
-
-## 7. Backups (cron)
+### 3c. Force Docker builds (not Railpack)
 
 ```bash
-ssh deploy@<ip>
-crontab -e
-# add:
-0 3 * * *  /opt/enteraveil-store/scripts/backup-postgres.sh >> /var/log/enteraveil-backup.log 2>&1
+railway variable set RAILWAY_DOCKERFILE_PATH=apps/medusa/Dockerfile --service medusa
+railway variable set RAILWAY_DOCKERFILE_PATH=apps/storefront/Dockerfile --service storefront
+railway variable set RAILWAY_DOCKERFILE_PATH=apps/strapi/Dockerfile --service strapi
 ```
 
-This dumps both `medusa-store` and `strapi` databases nightly to `/var/backups/enteraveil` with 7-day retention.
+Or run the bundled script (wires cross-service URLs too):
 
-## 8. Going from Razorpay TEST → LIVE
+```bash
+./scripts/railway-set-vars.sh
+```
 
-1. Complete Razorpay KYC.
-2. Generate LIVE keys in Razorpay dashboard.
-3. SSH in, edit `.env.prod`: replace `rzp_test_*` and the secret/webhook secret with the live equivalents.
-4. **Update Razorpay webhook URL to the live endpoint** — it's the same URL, but you need to register a *new* webhook in the LIVE-mode tab of the dashboard. Don't reuse the test webhook secret; generate a new one and paste it into both Razorpay and `.env.prod`.
-5. `./deploy.sh` to restart with new env.
+### 3d. Generate Railway domains
 
-## 9. Resend domain verification (before going live)
+```bash
+railway domain --service medusa
+railway domain --service storefront
+railway domain --service strapi
+```
 
-You can deploy with `RESEND_FROM_EMAIL=onboarding@resend.dev` for QA, but in test mode Resend only delivers to your own verified address. Before opening to customers:
+Update `MEDUSA_URL` / `STOREFRONT_URL` / `STRAPI_URL` in `scripts/railway-set-vars.sh` if domains change, then re-run the script.
 
-1. resend.com → Domains → Add `enteraveil.com`.
-2. Add the four DKIM TXT records + SPF MX/TXT records to Cloudflare DNS.
-3. Wait for Resend to flip the domain status to "Verified" (usually <10 min).
-4. Change `RESEND_FROM_EMAIL` in `.env.prod` to `orders@enteraveil.com`, redeploy.
+### 3e. Secrets
 
-## 10. Rolling forward / back
+Copy `.env.railway.template` and set values on each service. Minimum to boot:
 
-- Roll forward: just `./deploy.sh` after committing to main.
-- Roll back: `ssh deploy@<ip> 'cd /opt/enteraveil-store && git reset --hard phase-N-done && docker compose -f docker-compose.prod.yml up -d --build'`. Each completed phase has a tag.
+| Service | Keys |
+|---------|------|
+| medusa | `JWT_SECRET`, `COOKIE_SECRET`, `DATABASE_URL=${{Postgres.DATABASE_URL}}`, `REDIS_URL=${{Redis.REDIS_URL}}` |
+| strapi | `APP_KEYS` (4 comma-separated), `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, `DATABASE_*` → `${{Postgres.*}}` |
+| storefront | `NEXT_PUBLIC_MEDUSA_BACKEND_URL`, `NEXT_PUBLIC_STRAPI_URL`, `STRAPI_WEBHOOK_REVALIDATION_SECRET` |
 
-## 11. What can go wrong (quick reference)
+Razorpay + Resend are optional at first boot (COD works without Razorpay; emails skip without Resend).
 
-- **Caddy can't get cert** → DNS A records not propagated yet (give it 5 min) or the port 80/443 firewall rule is missing.
-- **Razorpay webhook 401** → wrong `RAZORPAY_WEBHOOK_SECRET` in `.env.prod`, OR `api.<domain>` is on orange-cloud Cloudflare proxy mode. Switch to gray.
-- **Medusa migration fails** → check `docker compose logs postgres` for connection errors; verify `DATABASE_URL` uses the in-container `postgres` hostname not `localhost`.
-- **Strapi crashes on first run** with "Knex: connection refused" → `strapi` database wasn't created. Confirm `scripts/postgres-init.sh` ran (`docker compose logs postgres | grep "creating database"`).
-- **OOM on the droplet** → upgrade to 2 GB. Strapi's `develop` mode is hungry; in production we run `start` which is lighter, but image processing spikes.
+Generate secrets:
+
+```bash
+openssl rand -hex 32   # JWT_SECRET, COOKIE_SECRET
+openssl rand -hex 24   # STRAPI_WEBHOOK_REVALIDATION_SECRET, RAZORPAY_WEBHOOK_SECRET
+openssl rand -base64 16  # each Strapi salt/key (repeat 4× for APP_KEYS)
+```
+
+### 3f. Create Strapi database on shared Postgres
+
+Medusa uses the default `railway` database. Strapi needs a `strapi` database:
+
+```bash
+# Uses DATABASE_PUBLIC_URL from the Postgres service
+DB_URL=$(railway variable list --service Postgres --json | jq -r .DATABASE_PUBLIC_URL)
+psql "$DB_URL" -f scripts/railway-init-db.sql
+```
+
+### 3g. Strapi uploads volume (recommended)
+
+In the Railway dashboard → **strapi** service → add a volume mounted at `/app/apps/strapi/public/uploads`. (Or declare it in `.railway/railway.ts` and `railway config apply`.)
+
+---
+
+## 4. Deploy
+
+Push to `main` (GitHub trigger) **or** redeploy from CLI:
+
+```bash
+./scripts/railway-deploy.sh
+# or per service:
+railway redeploy --service medusa --yes
+```
+
+Medusa runs `pnpm medusa db:migrate` as a pre-deploy step (see `apps/medusa/railway.toml`).
+
+Watch builds:
+
+```bash
+railway logs --service medusa
+railway service status --json
+```
+
+---
+
+## 5. Browser-only setup (one-time)
+
+Same as the old VPS runbook, but use Railway URLs:
+
+1. **Strapi admin** — `https://<strapi-domain>/admin` → create admin → API token (read-only) → set `STRAPI_API_TOKEN` on **storefront** → redeploy storefront.
+2. **Medusa admin** — `https://<medusa-domain>/app` → create user:
+   ```bash
+   railway ssh --service medusa
+   pnpm medusa user --email you@yourbox.com --password '<strong>'
+   ```
+   → Settings → Publishable API Keys → copy to `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` on **storefront** → redeploy storefront.
+3. **India region seed:**
+   ```bash
+   railway ssh --service medusa
+   pnpm medusa exec ./src/scripts/setup-india.ts
+   ```
+4. **Razorpay webhook** — URL: `https://<medusa-domain>/hooks/payment/razorpay_razorpay` (events: `payment.captured`, `payment.failed`, `order.paid`, `refund.created`).
+5. **Strapi revalidation webhook** — URL: `https://<storefront-domain>/api/strapi-revalidate?secret=<STRAPI_WEBHOOK_REVALIDATION_SECRET>`.
+
+---
+
+## 6. Smoke test
+
+```bash
+curl -sI https://storefront-production-bb74.up.railway.app/in | head -1
+curl -sI https://medusa-production-e8b6.up.railway.app/health | head -1
+curl -sI https://strapi-production-2a4f.up.railway.app/admin | head -1
+```
+
+---
+
+## 7. Custom domains
+
+```bash
+railway domain enteraveil.com --service storefront
+railway domain api.enteraveil.com --service medusa
+railway domain cms.enteraveil.com --service strapi
+```
+
+Add the CNAME records Railway prints to your DNS host. Re-run `./scripts/railway-set-vars.sh` with the production hostnames so CORS / `NEXT_PUBLIC_*` URLs match.
+
+---
+
+## 8. Rolling forward
+
+```bash
+git push origin main          # triggers GitHub → Railway rebuild
+./scripts/railway-deploy.sh   # or manual redeploy if only env changed
+```
+
+Copy edits in Strapi/Medusa admin still propagate via the revalidation webhook — no redeploy needed for CMS copy.
+
+---
+
+## 9. What can go wrong
+
+| Symptom | Fix |
+|---------|-----|
+| Build fails with "No start command" (Railpack) | Set `RAILWAY_DOCKERFILE_PATH` on the service |
+| Storefront shows wrong API host | `NEXT_PUBLIC_*` are **build-time** — change vars, then **redeploy** storefront |
+| Strapi "database does not exist" | Run `scripts/railway-init-db.sql` against Postgres |
+| Medusa migration fails | `railway logs --service medusa` — confirm `DATABASE_URL=${{Postgres.DATABASE_URL}}` |
+| Razorpay webhook 401 | Wrong `RAZORPAY_WEBHOOK_SECRET` on medusa |
+| OOM / slow cold starts | Scale service memory in Railway dashboard (Strapi admin is the hungry one) |
 
 See `docs/troubleshooting.md` for more.
+
+---
+
+## 10. Cost note
+
+Railway Hobby/Pro usage billing replaces the $6–12/mo DigitalOcean droplet. Postgres + Redis + 3 Node services typically lands around **$15–25/mo** on light traffic — trade-off is zero ops (no swap tuning, no Caddy, no SSH hardening).
+
+The old VPS guides are archived in `docs/DEPLOY-CHEAPEST.md` (DigitalOcean path) for reference only.

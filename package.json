@@ -14,5 +14,9 @@
       "@medusajs/types": "2.12.5",
       "@medusajs/ui": "4.1.15-preview-20260528130220"
     }
+  },
+  "devDependencies": {
+    "railway": "^3.3.1",
+    "tsx": "^4.22.4"
   }
 }

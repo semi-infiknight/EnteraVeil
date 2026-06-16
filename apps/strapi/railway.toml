@@ -1,0 +1,17 @@
+# Strapi CMS — uploads persisted via Railway volume (see .railway/railway.ts).
+# Railway service setting: Config file path = apps/strapi/railway.toml
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/strapi/Dockerfile"
+watchPatterns = [
+  "apps/strapi/**",
+  "pnpm-lock.yaml",
+  "pnpm-workspace.yaml",
+  "package.json",
+]
+
+[deploy]
+healthcheckPath = "/admin"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"

@@ -1,0 +1,18 @@
+# Medusa API + admin — built from monorepo root context.
+# Railway service setting: Config file path = apps/medusa/railway.toml
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/medusa/Dockerfile"
+watchPatterns = [
+  "apps/medusa/**",
+  "pnpm-lock.yaml",
+  "pnpm-workspace.yaml",
+  "package.json",
+]
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+preDeployCommand = ["pnpm", "medusa", "db:migrate"]

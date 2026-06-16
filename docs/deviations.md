@@ -2,6 +2,12 @@
 
 Every non-trivial decision deviating from PLAN.md is recorded here with a one-line reason.
 
+## Deployment — Railway (2026-06-16)
+
+- **Production target moved from DigitalOcean droplet + Docker Compose + Caddy to Railway.** All five components (Postgres, Redis, medusa, storefront, strapi) run as separate Railway services in project `enteraveil`; TLS and routing handled by Railway edge. Reason: user requested full stack on Railway project `a098d5f4-ebc5-41ed-a16e-3547c82d2b0b`. `docs/DEPLOY.md` rewritten; `docs/DEPLOY-CHEAPEST.md` kept as archived VPS reference.
+- **Per-service `railway.toml` + `RAILWAY_DOCKERFILE_PATH` env** instead of monorepo Railpack auto-detect (which failed: no root start script). Dockerfiles unchanged; monorepo root remains build context.
+- **Strapi second DB** created via `scripts/railway-init-db.sql` on shared Postgres (`strapi` database); Medusa uses default `railway` DB. Matches docker-compose two-database layout without `postgres-init.sh` (Railway managed Postgres).
+
 ## Phase 0 — Skeleton
 
 - **Existing repo is `rigby-sh/solace-medusa-starter`, not empty.** The C:\Labs\EnteraVeil directory was already populated as the Solace storefront repo (no `medusa/` subfolder; that lives in a separate repo `rigby-sh/solace-medusa-starter-api`). Reason: plan's `cp -r reference/solace/medusa` / `storefront` paths do not exist in the source repo. Adaptation: kept existing git history; moved existing storefront files into `apps/storefront/`; will clone `solace-medusa-starter-api` into `apps/medusa/` in Phase 1.
