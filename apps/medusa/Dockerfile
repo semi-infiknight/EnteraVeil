@@ -29,6 +29,9 @@ RUN pnpm install --frozen-lockfile --filter ./apps/medusa...
 
 # Bring in the medusa source and build
 COPY apps/medusa apps/medusa
+# Admin bundle must be built even when runtime disables /app — medusa build
+# skips the Vite frontend when admin.disable is true in medusa-config.
+ENV ENABLE_MEDUSA_ADMIN=true
 RUN pnpm --filter ./apps/medusa build
 
 # ----- runner -----
@@ -65,9 +68,12 @@ COPY --from=builder --chown=medusa:medusa /repo/apps/medusa/src apps/medusa/src
 
 WORKDIR /app/apps/medusa
 
+# Medusa serves admin from public/admin; the Vite build writes to .medusa/client.
+RUN mkdir -p public && ln -sfn ../.medusa/client public/admin
+
 # Writable HOME for corepack/pnpm + Medusa CLI configstore on Railway
 ENV HOME=/app
-RUN mkdir -p /app/.cache /app/.config && chown -R medusa:medusa /app/.cache /app/.config
+RUN mkdir -p /app/.cache /app/.config && chown -R medusa:medusa /app/.cache /app/.config public
 
 USER medusa
 EXPOSE 9000
