@@ -55,6 +55,9 @@ COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/str
 
 WORKDIR /app/apps/strapi
 
+# Admin panel is built to dist/build; without tsconfig Strapi resolves distDir to app root.
+RUN ln -sfn dist/build build
+
 ENV HOME=/app
 RUN mkdir -p /app/.cache /app/.config && chown -R strapi:strapi /app/.cache /app/.config
 
