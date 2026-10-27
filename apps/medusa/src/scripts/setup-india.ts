@@ -170,9 +170,17 @@ export default async function setupIndia({ container }: ExecArgs) {
   }
 
   // --- Shipping profile (idempotent) --------------------------------------
-  const profileQuery = await fulfillmentModule.listShippingProfiles({
-    name: 'Default',
-  })
+  // Products are linked to Medusa's built-in "Default Shipping Profile" at
+  // install time. Look up the oldest `type: default` profile so shipping
+  // options attach to the same profile the products actually use — creating a
+  // second "Default" profile makes checkout fail with
+  // "cart items require shipping profiles that are not satisfied...".
+  const profileQuery = (
+    await fulfillmentModule.listShippingProfiles({ type: 'default' } as any)
+  ).sort(
+    (a: any, b: any) =>
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  )
   let shippingProfile = profileQuery[0]
   if (!shippingProfile) {
     const { result } = await createShippingProfilesWorkflow(container).run({
@@ -286,7 +294,7 @@ export default async function setupIndia({ container }: ExecArgs) {
       shipping_profile_id: shippingProfile.id,
       type: {
         label: 'Free',
-        description: `Free over ₹${(FREE_THRESHOLD / 100).toFixed(0)}`,
+        description: `Free over ₹${FREE_THRESHOLD}`,
         code: 'free-shipping',
       },
       prices: [{ currency_code: 'inr', amount: 0 }],
@@ -340,9 +348,24 @@ export default async function setupIndia({ container }: ExecArgs) {
         .update({ value: '"true"' })
       // Ensure every product is linked to the default shipping profile.
       const profile: any = (
-        await pgConn('shipping_profile').where('type', 'default').limit(1)
+        await pgConn('shipping_profile')
+          .where('type', 'default')
+          .orderBy('created_at', 'asc')
+          .limit(1)
       )[0]
       if (profile?.id) {
+        // Every shipping option must live in the same profile products use,
+        // otherwise checkout fails with "cart items require shipping profiles
+        // that are not satisfied by the current shipping methods".
+        const moved = await pgConn('shipping_option')
+          .whereNot('shipping_profile_id', profile.id)
+          .update({ shipping_profile_id: profile.id })
+        if (moved > 0) {
+          logger.info(
+            `Moved ${moved} shipping option(s) to default shipping profile ${profile.id}`
+          )
+        }
+
         const products: any[] = await pgConn('product')
           .select('id')
           .whereNull('deleted_at')
