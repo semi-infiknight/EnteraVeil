@@ -206,6 +206,32 @@ async function seedPlaceholderContent(strapi: Core.Strapi) {
   }
 }
 
+async function ensureAdminUser(strapi: Core.Strapi) {
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
+
+  if (!email || !password) {
+    strapi.log.info('ADMIN_EMAIL / ADMIN_PASSWORD not set; skipping admin bootstrap');
+    return;
+  }
+
+  const existing: any = await strapi.admin.services.user.findOneByEmail(email);
+  if (existing) {
+    strapi.log.info(`Admin user ${email} already exists`);
+    return;
+  }
+
+  const superAdminRole: any = await strapi.admin.services.role.getSuperAdmin();
+  await strapi.admin.services.user.create({
+    email,
+    firstname: 'EnteraVeil',
+    lastname: 'Admin',
+    password,
+    roles: [superAdminRole.id],
+  });
+  strapi.log.info(`Created admin user ${email}`);
+}
+
 export default {
   register() {},
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
@@ -214,6 +240,12 @@ export default {
       await seedPlaceholderContent(strapi);
     } catch (err: any) {
       strapi.log.error(`Bootstrap failed: ${err.message ?? err}`);
+    }
+
+    try {
+      await ensureAdminUser(strapi);
+    } catch (err: any) {
+      strapi.log.error(`Admin bootstrap failed: ${err.message ?? err}`);
     }
   },
 };

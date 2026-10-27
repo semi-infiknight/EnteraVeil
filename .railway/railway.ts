@@ -122,6 +122,8 @@ export default defineRailway((_ctx, _project) => {
       ADMIN_JWT_SECRET: preserve(),
       TRANSFER_TOKEN_SALT: preserve(),
       ENCRYPTION_KEY: preserve(),
+      ADMIN_EMAIL: preserve(),
+      ADMIN_PASSWORD: preserve(),
       STOREFRONT_REVALIDATION_URL:
         "https://${{storefront.RAILWAY_PUBLIC_DOMAIN}}/api/strapi-revalidate",
     },
