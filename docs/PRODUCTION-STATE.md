@@ -1,6 +1,6 @@
 # EnteraVeil — Production state (Railway)
 
-**Last updated:** 2026-06-17  
+**Last updated:** 2026-10-28  
 **Keep this file current** whenever deploy topology, URLs, seeds, or integrations change.
 
 Canonical deploy runbook: [`docs/DEPLOY.md`](./DEPLOY.md). Decision log: [`docs/deviations.md`](./deviations.md).
@@ -34,12 +34,12 @@ npx @railway/cli link -p a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48 -e 43492585-64fe-4
 |---------|-------|--------|--------|
 | **storefront** | `apps/storefront/Dockerfile` | — | `/in` |
 | **medusa** | `apps/medusa/Dockerfile` | — | `/health` |
-| **strapi** | `apps/strapi/Dockerfile` | `strapi-volume` → `/app/apps/strapi/public/uploads` | `/admin` |
+| **strapi** | `apps/strapi/Dockerfile` | `strapi-uploads` → `/app/apps/strapi/public/uploads` | `/admin` |
 | **Postgres** | Railway template | `postgres-volume` | private |
 | **Redis** | Railway template | `redis-volume` | private |
 
 - Medusa DB: default `railway` database on shared Postgres.
-- Strapi DB: `strapi` database (created via `scripts/railway-init-db.sql`).
+- Strapi DB: `strapi` database, auto-created on boot by `apps/strapi/scripts/ensure-db.cjs` (no SSH required).
 - GitHub `semi-infiknight/EnteraVeil` `main` triggers Railway rebuilds; storefront may need `npx @railway/cli up --service storefront` if GitHub deploy lags.
 
 ---
@@ -55,12 +55,23 @@ npx @railway/cli link -p a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48 -e 43492585-64fe-4
 
 ### Medusa
 - [x] Migrations on deploy (`apps/medusa/railway.toml` pre-deploy)
+- [x] First-boot bootstrap (`src/scripts/bootstrap-prod.ts`): default store, sales channel, demo seed when catalog empty, India region, INR prices, shop filters, publishable key
 - [x] Idempotent catalog seed (`seed-catalog-if-empty.ts`) — 4 demo products
 - [x] INR prices + shop filters seeded (`seed-inr-prices.ts`, `seed-shop-filters.ts`)
+- [x] Payment providers: COD (`pp_system_default`) only — Razorpay registers automatically when keys are set
+- [x] Shipping options attached to the products' *Default Shipping Profile* (checkout fix — see `setup-india.ts`)
 - [x] Admin UI enabled (`ENABLE_MEDUSA_ADMIN=true`) with Dockerfile fix:
   - Build always runs Vite admin bundle (`ENABLE_MEDUSA_ADMIN=true` in builder stage)
   - `public/admin` → `.medusa/server/public/admin` (not `.medusa/client` dev stub)
-- [x] Admin user created via SSH (credentials live in password manager — **never commit**)
+- [x] Admin user created on boot from `ADMIN_EMAIL` / `ADMIN_PASSWORD` (values live in Railway only — **never commit**)
+- [x] Redis wired via `projectConfig.redisUrl` (`REDIS_URL`)
+- [x] Publishable key set as `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` on storefront (build-time; redeploy after rotation)
+
+### Verified end-to-end (2026-10-28)
+- [x] COD checkout: cart → shipping → `pp_system_default` → order `total=1149 INR` (test order canceled afterwards)
+- [x] Storefront renders Medusa catalog + Strapi homepage sections on `/in`
+- [x] Strapi admin login works; webhook `storefront-revalidate` registered
+- [x] Strapi public API returns seeded content (`/api/homepage-sections` = 200)
 
 ### Storefront ↔ Strapi
 - [x] Homepage hero/promo from `homepage-sections`
@@ -97,12 +108,11 @@ Phases 0–7 built the stack. **Phase 8** (go live) is **in progress on Railway*
 1. Custom domains (`enteraveil.com`, `api.*`, `cms.*`) + `railway-set-vars.sh`
 2. Resend domain verified + `railway-set-resend.sh`
 3. Razorpay LIVE keys + webhook (last)
-4. Confirm `setup-india.ts` on prod
-5. Real catalog in Medusa (replace demo SKUs)
-6. Strapi content/images in admin
+4. Real catalog in Medusa (replace demo SKUs)
+5. Strapi content/images in admin
 
 ### Phase 9 acceptance (from `PLAN.md` 🛑)
-1. **COD test order** — cart → checkout → Medusa order (+ emails when Resend live)
+1. ~~**COD test order**~~ — verified 2026-10-28 (order completed, canceled after test)
 2. **Strapi edit** — change About in Strapi → storefront updates within ~60s
 3. **`docs/admin-guide.md` review** — readable by non-dev operator
 4. **Live Razorpay ₹1 purchase** — payment + webhook + both emails (after keys)
@@ -123,34 +133,33 @@ Then: `git tag phase-9-done` and **Done when** all nine phase tags exist + real 
 | **Custom domains** | `enteraveil.com`, `api.*`, `cms.*` — DNS + `railway domain`; then re-run `railway-set-vars.sh` |
 | **Resend email** | `RESEND_API_KEY` + verified domain → `./scripts/railway-set-resend.sh` |
 | **Razorpay** | Keys + webhook → `./scripts/railway-set-secrets.sh` (intentionally last) |
-| **`setup-india.ts`** | Confirm India region / BLR+RPR shipping ran on prod (may need SSH) |
 | **Real product catalog** | Replace 4 demo SKUs in Medusa admin |
 | **Strapi hero images** | Upload in Strapi admin (seed is text-only) |
 | **FAQ page** | Still uses legacy Solace `getFAQ()` in `lib/data/fetch.ts` |
 | **Home lookbook strip** | Hardcoded Unsplash; `/lookbook` uses Strapi |
 | **Footer dead links** | Careers / Support / Contact → `#` (Strapi has `/legal/contact`) |
-| **Medusa Redis at runtime** | Logs may show `redisUrl not found` — verify `REDIS_URL=${{Redis.REDIS_URL}}` |
-| **Phase 9 acceptance** | COD order, Strapi revalidation, live Razorpay ₹1, admin-guide review |
+| **Phase 9 acceptance** | Strapi revalidation check, live Razorpay ₹1, admin-guide review |
 
 ---
 
 ## Admin access (no secrets in git)
 
-Create and rotate credentials via Railway SSH. **Do not commit passwords.**
+Credentials are set as Railway variables and created automatically on boot:
+
+| App | Variable | Where |
+|-----|----------|-------|
+| Medusa | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | medusa service → `/app` |
+| Strapi | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | strapi service → `/admin` |
+
+Neither password is in git. Retrieve or rotate them in the Railway dashboard (service → Variables), then redeploy that service — both bootstraps are idempotent and will create the user if missing / re-activate it.
 
 ```bash
-# Medusa — https://medusa-production-6fe4.up.railway.app/app
-npx @railway/cli ssh --service medusa
-pnpm medusa user --email you@yourbox.com --password '<strong>'
-
-# Strapi — https://strapi-production-5248.up.railway.app/admin
-npx @railway/cli ssh --service strapi
-pnpm strapi admin:create-user \
-  --email=you@yourbox.com --password=<strong> \
-  --firstname=Entera --lastname=Veil
+# Rotate Medusa admin password (Railway dashboard is easiest)
+# then redeploy medusa; existing users are left untouched, so delete the
+# old user in /app → Settings → Users if you rotate the address.
 ```
 
-Storefront needs `STRAPI_API_TOKEN` (read-only, from Strapi admin) and `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` (from Medusa admin) — both are **build-time** on storefront; redeploy after changing.
+Storefront needs `STRAPI_API_TOKEN` (read-only, optional — public read is enabled) and `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` (from Medusa admin → Settings → Publishable API Keys) — both are **build-time** on storefront; redeploy after changing.
 
 Template for all Railway env vars: `.env.railway.template` (copy to `.env.railway.local`, gitignored).
 
