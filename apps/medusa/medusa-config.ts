@@ -123,6 +123,15 @@ if (process.env.MEDUSA_FF_INDEX_ENGINE === 'true') {
   };
 }
 
+// Production event bus: BullMQ over Redis. Falls back to the in-memory bus when
+// REDIS_URL is unset (single-process dev), which Medusa warns about at boot.
+if (process.env.REDIS_URL) {
+  (modules as Record<string, any>)[Modules.EVENT_BUS] = {
+    resolve: '@medusajs/event-bus-redis',
+    options: { redisUrl: process.env.REDIS_URL },
+  };
+}
+
 module.exports = defineConfig({
   plugins: ['medusa-plugin-razorpay-v2'],
   admin: {
