@@ -145,6 +145,10 @@ module.exports = defineConfig({
   },
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    // Redis backs the event bus + workflow engine. Without it Medusa logs
+    // "redisUrl not found. A fake redis instance will be used." and event
+    // subscribers only work in-process.
+    redisUrl: process.env.REDIS_URL,
     http: {
       storeCors: process.env.STORE_CORS,
       adminCors: process.env.ADMIN_CORS,

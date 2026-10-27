@@ -101,7 +101,7 @@ const HOMEPAGE_SECTIONS = [
     title: 'Graphic tees',
     body: 'Screen-printed in small batches. Built for repeat watches.',
     cta_text: 'View shirts',
-    cta_url: '/collections/shirts',
+    cta_url: '/shop',
     sort_order: 1,
   },
   {
