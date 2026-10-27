@@ -217,7 +217,12 @@ async function ensureAdminUser(strapi: Core.Strapi) {
 
   const existing: any = await strapi.admin.services.user.findOneByEmail(email);
   if (existing) {
-    strapi.log.info(`Admin user ${email} already exists`);
+    if (existing.isActive !== true) {
+      await strapi.admin.services.user.updateById(existing.id, { isActive: true });
+      strapi.log.info(`Activated admin user ${email}`);
+    } else {
+      strapi.log.info(`Admin user ${email} already exists`);
+    }
     return;
   }
 
@@ -227,6 +232,7 @@ async function ensureAdminUser(strapi: Core.Strapi) {
     firstname: 'EnteraVeil',
     lastname: 'Admin',
     password,
+    isActive: true,
     roles: [superAdminRole.id],
   });
   strapi.log.info(`Created admin user ${email}`);
