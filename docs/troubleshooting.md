@@ -12,7 +12,7 @@ Deploy runbook: [`docs/DEPLOY.md`](./DEPLOY.md). Store ops: [`docs/admin-guide.m
 ```bash
 cd EnteraVeil
 npx @railway/cli login
-npx @railway/cli link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4c61-86b1-b9a6dc28968d
+npx @railway/cli link -p a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48 -e 43492585-64fe-42ae-a3d9-13192f866b05
 
 npx @railway/cli logs --service medusa
 npx @railway/cli service status --service storefront

@@ -5,9 +5,9 @@ set -euo pipefail
 
 export PATH="$(npm prefix -g)/bin:${PATH:-}"
 
-MEDUSA_URL="${MEDUSA_URL:-https://medusa-production-e8b6.up.railway.app}"
-STOREFRONT_URL="${STOREFRONT_URL:-https://storefront-production-bb74.up.railway.app}"
-STRAPI_URL="${STRAPI_URL:-https://strapi-production-2a4f.up.railway.app}"
+MEDUSA_URL="${MEDUSA_URL:-https://medusa-production-6fe4.up.railway.app}"
+STOREFRONT_URL="${STOREFRONT_URL:-https://storefront-production-6736.up.railway.app}"
+STRAPI_URL="${STRAPI_URL:-https://strapi-production-5248.up.railway.app}"
 
 echo "→ Medusa variables"
 railway variable set --service medusa --skip-deploys \

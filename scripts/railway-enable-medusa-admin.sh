@@ -9,5 +9,5 @@ npx @railway/cli variable delete --service medusa DISABLE_MEDUSA_ADMIN 2>/dev/nu
 echo "→ Redeploying medusa"
 npx @railway/cli redeploy --service medusa --yes
 
-echo "→ Admin: https://medusa-production-e8b6.up.railway.app/app"
+echo "→ Admin: https://medusa-production-6fe4.up.railway.app/app"
 echo "  If /health stays 502, scale memory in Railway dashboard then redeploy."

@@ -51,6 +51,7 @@ COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/dist apps/strapi/dis
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/dist/config apps/strapi/config
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/public apps/strapi/public
 COPY --from=builder --chown=strapi:strapi /repo/apps/strapi/favicon.png apps/strapi/
+COPY --chown=strapi:strapi apps/strapi/scripts ./scripts
 
 WORKDIR /app/apps/strapi
 
@@ -63,4 +64,4 @@ RUN mkdir -p /app/.cache /app/.config && chown -R strapi:strapi /app/.cache /app
 USER strapi
 EXPOSE 1337
 
-CMD ["sh", "-c", "pnpm exec strapi start"]
+CMD ["sh", "-c", "node ./scripts/ensure-db.cjs && pnpm exec strapi start"]

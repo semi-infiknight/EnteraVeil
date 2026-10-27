@@ -6,9 +6,9 @@ Anime streetwear — Medusa 2 + Next.js storefront + Strapi 5. India market (Ban
 
 | App | URL |
 |-----|-----|
-| Storefront | https://storefront-production-bb74.up.railway.app/in |
-| Medusa API + admin | https://medusa-production-e8b6.up.railway.app (`/app` = dashboard) |
-| Strapi CMS | https://strapi-production-2a4f.up.railway.app/admin |
+| Storefront | https://storefront-production-6736.up.railway.app/in |
+| Medusa API + admin | https://medusa-production-6fe4.up.railway.app (`/app` = dashboard) |
+| Strapi CMS | https://strapi-production-5248.up.railway.app/admin |
 
 **Docs (keep updated):**
 

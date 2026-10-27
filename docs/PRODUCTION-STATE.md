@@ -11,17 +11,17 @@ Canonical deploy runbook: [`docs/DEPLOY.md`](./DEPLOY.md). Decision log: [`docs/
 
 | Surface | URL | Notes |
 |---------|-----|-------|
-| **Storefront** | https://storefront-production-bb74.up.railway.app/in | Country redirect from `/` → `/in` |
-| **Medusa API** | https://medusa-production-e8b6.up.railway.app | Root `/` → 404 (expected). Health: `/health` |
-| **Medusa admin** | https://medusa-production-e8b6.up.railway.app/app | Dashboard UI |
-| **Strapi CMS** | https://strapi-production-2a4f.up.railway.app/admin | Content admin |
+| **Storefront** | https://storefront-production-6736.up.railway.app/in | Country redirect from `/` → `/in` |
+| **Medusa API** | https://medusa-production-6fe4.up.railway.app | Root `/` → 404 (expected). Health: `/health` |
+| **Medusa admin** | https://medusa-production-6fe4.up.railway.app/app | Dashboard UI |
+| **Strapi CMS** | https://strapi-production-5248.up.railway.app/admin | Content admin |
 
-**Railway project:** [enteraveil](https://railway.com/project/a098d5f4-ebc5-41ed-a16e-3547c82d2b0b?environmentId=9c4375bb-bf48-4c61-86b1-b9a6dc28968d)
+**Railway project:** [enteraveil](https://railway.com/project/a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48?environmentId=43492585-64fe-42ae-a3d9-13192f866b05)
 
 ```bash
 cd EnteraVeil
 npx @railway/cli login
-npx @railway/cli link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4c61-86b1-b9a6dc28968d
+npx @railway/cli link -p a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48 -e 43492585-64fe-42ae-a3d9-13192f866b05
 ```
 
 > Use `node node_modules/@railway/cli/bin/railway.js` if `npx @railway/cli` fails (run `node node_modules/@railway/cli/npm-install/postinstall.js` once to fetch the native binary). The root `railway` npm package is the IaC SDK, not the CLI.
@@ -139,11 +139,11 @@ Then: `git tag phase-9-done` and **Done when** all nine phase tags exist + real 
 Create and rotate credentials via Railway SSH. **Do not commit passwords.**
 
 ```bash
-# Medusa — https://medusa-production-e8b6.up.railway.app/app
+# Medusa — https://medusa-production-6fe4.up.railway.app/app
 npx @railway/cli ssh --service medusa
 pnpm medusa user --email you@yourbox.com --password '<strong>'
 
-# Strapi — https://strapi-production-2a4f.up.railway.app/admin
+# Strapi — https://strapi-production-5248.up.railway.app/admin
 npx @railway/cli ssh --service strapi
 pnpm strapi admin:create-user \
   --email=you@yourbox.com --password=<strong> \
@@ -173,9 +173,9 @@ Shoppers use the **storefront** URL, not the Medusa host.
 ## Quick smoke test
 
 ```bash
-curl -sI https://storefront-production-bb74.up.railway.app/in | head -1
-curl -sI https://medusa-production-e8b6.up.railway.app/health | head -1
-curl -sI https://strapi-production-2a4f.up.railway.app/admin | head -1
-curl -sI https://storefront-production-bb74.up.railway.app/in/privacy-policy | grep -i location
+curl -sI https://storefront-production-6736.up.railway.app/in | head -1
+curl -sI https://medusa-production-6fe4.up.railway.app/health | head -1
+curl -sI https://strapi-production-5248.up.railway.app/admin | head -1
+curl -sI https://storefront-production-6736.up.railway.app/in/privacy-policy | grep -i location
 # expect redirect to /in/legal/privacy-policy
 ```

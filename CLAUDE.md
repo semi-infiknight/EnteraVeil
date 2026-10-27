@@ -41,4 +41,4 @@ Tokens from PROJECT_CONFIG.env: BRAND_BG / BRAND_FG / BRAND_ACCENT / BRAND_ACCEN
 | Env | Storefront | Medusa | Strapi |
 |-----|------------|--------|--------|
 | Local | localhost:8000 | localhost:9000/app | localhost:1337/admin |
-| Railway | storefront-production-bb74.up.railway.app | medusa-production-e8b6.up.railway.app | strapi-production-2a4f.up.railway.app |
+| Railway | storefront-production-6736.up.railway.app | medusa-production-6fe4.up.railway.app | strapi-production-5248.up.railway.app |

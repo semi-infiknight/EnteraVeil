@@ -8,8 +8,8 @@
 #   STRAPI_WEBHOOK_REVALIDATION_SECRET  must match storefront env
 set -euo pipefail
 
-STRAPI_URL="${STRAPI_URL:-https://strapi-production-2a4f.up.railway.app}"
-STOREFRONT_URL="${STOREFRONT_URL:-https://storefront-production-bb74.up.railway.app}"
+STRAPI_URL="${STRAPI_URL:-https://strapi-production-5248.up.railway.app}"
+STOREFRONT_URL="${STOREFRONT_URL:-https://storefront-production-6736.up.railway.app}"
 SECRET="${STRAPI_WEBHOOK_REVALIDATION_SECRET:?Set STRAPI_WEBHOOK_REVALIDATION_SECRET}"
 EMAIL="${STRAPI_ADMIN_EMAIL:?Set STRAPI_ADMIN_EMAIL}"
 PASSWORD="${STRAPI_ADMIN_PASSWORD:?Set STRAPI_ADMIN_PASSWORD}"

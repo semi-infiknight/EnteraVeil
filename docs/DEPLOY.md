@@ -2,7 +2,7 @@
 
 End-to-end runbook for taking EnteraVeil live on [Railway](https://railway.com). All stack components run as separate Railway services in one project — no VPS, no Caddy, no Docker Compose on a droplet.
 
-**Live project:** [enteraveil on Railway](https://railway.com/project/a098d5f4-ebc5-41ed-a16e-3547c82d2b0b?environmentId=9c4375bb-bf48-4c61-86b1-b9a6dc28968d)
+**Live project:** [enteraveil on Railway](https://railway.com/project/a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48?environmentId=43492585-64fe-42ae-a3d9-13192f866b05)
 
 **Current snapshot (URLs, done/pending, smoke tests):** [`docs/PRODUCTION-STATE.md`](./PRODUCTION-STATE.md) — update this file whenever production changes.
 
@@ -12,9 +12,9 @@ End-to-end runbook for taking EnteraVeil live on [Railway](https://railway.com).
 
 | Railway service | Role | Public URL (production) |
 |-----------------|------|-------------------------|
-| **storefront** | Next.js 14 storefront | `https://storefront-production-bb74.up.railway.app` |
-| **medusa** | Medusa 2 API + admin (`/app`) | `https://medusa-production-e8b6.up.railway.app` |
-| **strapi** | Strapi 5 CMS (`/admin`) | `https://strapi-production-2a4f.up.railway.app` |
+| **storefront** | Next.js 14 storefront | `https://storefront-production-6736.up.railway.app` |
+| **medusa** | Medusa 2 API + admin (`/app`) | `https://medusa-production-6fe4.up.railway.app` |
+| **strapi** | Strapi 5 CMS (`/admin`) | `https://strapi-production-5248.up.railway.app` |
 | **Postgres** | PostgreSQL 18 (Medusa + Strapi DBs) | private — `${{Postgres.DATABASE_URL}}` |
 | **Redis** | Redis 8 (Medusa cache/events) | private — `${{Redis.REDIS_URL}}` |
 
@@ -40,7 +40,7 @@ Link the project from your laptop:
 
 ```bash
 cd EnteraVeil
-railway link -p a098d5f4-ebc5-41ed-a16e-3547c82d2b0b -e 9c4375bb-bf48-4c61-86b1-b9a6dc28968d
+railway link -p a08ad31d-1a7d-44dd-a3d3-aeb6b5b64c48 -e 43492585-64fe-42ae-a3d9-13192f866b05
 ```
 
 ---
@@ -197,9 +197,9 @@ Use Railway URLs (see [`PRODUCTION-STATE.md`](./PRODUCTION-STATE.md) for current
 ## 6. Smoke test
 
 ```bash
-curl -sI https://storefront-production-bb74.up.railway.app/in | head -1
-curl -sI https://medusa-production-e8b6.up.railway.app/health | head -1
-curl -sI https://strapi-production-2a4f.up.railway.app/admin | head -1
+curl -sI https://storefront-production-6736.up.railway.app/in | head -1
+curl -sI https://medusa-production-6fe4.up.railway.app/health | head -1
+curl -sI https://strapi-production-5248.up.railway.app/admin | head -1
 ```
 
 ---

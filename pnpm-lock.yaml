@@ -7,7 +7,7 @@ settings:
 overrides:
   '@medusajs/utils': 2.12.5
   '@medusajs/types': 2.12.5
-  '@medusajs/ui': 4.1.15-preview-20260528130220
+  '@medusajs/ui': 4.1.15
 
 importers:
 
@@ -39,7 +39,7 @@ importers:
         version: 2.12.5(@emotion/is-prop-valid@1.4.0)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(typescript@5.9.3)
       '@medusajs/draft-order':
         specifier: 2.12.5
-        version: 2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@medusajs/framework':
         specifier: 2.12.5
         version: 2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0))
@@ -48,7 +48,7 @@ importers:
         version: 2.15.3(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
       '@medusajs/medusa':
         specifier: 2.12.5
-        version: 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
+        version: 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
       '@medusajs/utils':
         specifier: 2.12.5
         version: 2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0)(express@5.2.1)
@@ -57,7 +57,7 @@ importers:
         version: 1.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       medusa-plugin-razorpay-v2:
         specifier: ^0.1.4
-        version: 0.1.4(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@mikro-orm/cli@6.4.3(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/core@6.4.16)(@mikro-orm/knex@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/migrations@6.4.3(@mikro-orm/core@6.4.16)(@types/node@20.19.41)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/postgresql@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0))(awilix@8.0.1)(pg@8.21.0)
+        version: 0.1.4(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@mikro-orm/cli@6.4.3(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/core@6.4.16)(@mikro-orm/knex@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/migrations@6.4.3(@mikro-orm/core@6.4.16)(@types/node@20.19.41)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/postgresql@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0))(awilix@8.0.1)(pg@8.21.0)
       razorpay:
         specifier: ^2.9.6
         version: 2.9.6
@@ -147,8 +147,8 @@ importers:
         specifier: 2.12.5
         version: 2.12.5(ioredis@5.11.0)(vite@5.4.21(@types/node@25.9.1)(terser@5.48.0))
       '@medusajs/ui':
-        specifier: 4.1.15-preview-20260528130220
-        version: 4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+        specifier: 4.1.15
+        version: 4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@next/mdx':
         specifier: ^16.1.1
         version: 16.2.6(@mdx-js/loader@3.0.1(webpack@5.107.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(postcss@8.5.15)))(@mdx-js/react@3.0.1(@types/react@18.3.29)(react@18.3.1))
@@ -2427,7 +2427,7 @@ packages:
       '@medusajs/framework': 2.12.5
       '@medusajs/icons': 2.12.5
       '@medusajs/test-utils': 2.12.5
-      '@medusajs/ui': 4.1.15-preview-20260528130220
+      '@medusajs/ui': 4.1.15
       react: ^18.3.1
       react-dom: ^18.3.1
       react-router-dom: 6.20.1
@@ -2516,8 +2516,8 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  '@medusajs/icons@2.15.5-preview-20260528130220':
-    resolution: {integrity: sha512-ihJQ1p/bGGlSrtVnAXoqoQbTK3q8V0GWY1OsFgYmFimG52LY93xK6wdSpu+sf+QDn1KMbWoMKiCFOO1d43oeKw==}
+  '@medusajs/icons@2.15.5':
+    resolution: {integrity: sha512-cFPNZ26BeXt4joE3nQbMnlmszlWrJitNgOSwEZ7cK+1B483CjhcLtXYzo60OvtYsHB6flBQ9My7JkCtUAFYnEQ==}
     peerDependencies:
       react: ^18.3.1 || ^19.0.0
 
@@ -2723,8 +2723,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0'
 
-  '@medusajs/ui@4.1.15-preview-20260528130220':
-    resolution: {integrity: sha512-uNViiHE0HR4TEozeGZ90fSWr/D35uJtFaSZxGTjIBmF2r/LfqsVv1uxfUWSnsFHlxDaa95Soe9KIan0gNR1wPQ==}
+  '@medusajs/ui@4.1.15':
+    resolution: {integrity: sha512-8m+J54uMjA934BBWXqb7lKlg+Ja1cudcAbdXJp4GQgd0TSru+hEvkhAlH5baKeADB6tqo2H5BkBIwIFcJMxxnA==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -10009,7 +10009,7 @@ packages:
       '@medusajs/icons': 2.12.3
       '@medusajs/medusa': 2.12.3
       '@medusajs/test-utils': 2.12.3
-      '@medusajs/ui': 4.1.15-preview-20260528130220
+      '@medusajs/ui': 4.1.15
       '@mikro-orm/cli': 6.4.3
       '@mikro-orm/core': 6.4.3
       '@mikro-orm/knex': 6.4.3
@@ -15614,7 +15614,7 @@ snapshots:
       '@medusajs/admin-shared': 2.12.5
       '@medusajs/icons': 2.12.5(react@18.3.1)
       '@medusajs/js-sdk': 2.12.5
-      '@medusajs/ui': 4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+      '@medusajs/ui': 4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@radix-ui/react-dialog': 1.1.4(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-dismissable-layer': 1.1.4(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query': 5.64.2(react@18.3.1)
@@ -15677,7 +15677,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@medusajs/draft-order@2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@medusajs/draft-order@2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@ariakit/react': 0.4.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@babel/runtime': 7.29.7
@@ -15696,7 +15696,7 @@ snapshots:
       '@medusajs/admin-sdk': 2.12.5
       '@medusajs/cli': 2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0)
       '@medusajs/test-utils': 2.12.5(@medusajs/core-flows@2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0))))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)
-      '@medusajs/ui': 4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+      '@medusajs/ui': 4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -15787,7 +15787,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  '@medusajs/icons@2.15.5-preview-20260528130220(react@18.3.1)':
+  '@medusajs/icons@2.15.5(react@18.3.1)':
     dependencies:
       react: 18.3.1
 
@@ -15827,7 +15827,7 @@ snapshots:
     dependencies:
       '@medusajs/framework': 2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0))
 
-  '@medusajs/medusa@2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)':
+  '@medusajs/medusa@2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)':
     dependencies:
       '@inquirer/checkbox': 2.5.0
       '@inquirer/input': 2.3.0
@@ -15848,7 +15848,7 @@ snapshots:
       '@medusajs/core-flows': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
       '@medusajs/currency': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
       '@medusajs/customer': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
-      '@medusajs/draft-order': 2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      '@medusajs/draft-order': 2.12.5(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@medusajs/event-bus-local': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
       '@medusajs/event-bus-redis': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
       '@medusajs/file': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
@@ -16095,7 +16095,7 @@ snapshots:
       ulid: 2.4.0
     optionalDependencies:
       '@medusajs/core-flows': 2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))
-      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
+      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -16124,12 +16124,12 @@ snapshots:
       tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@25.9.1)(typescript@5.9.3))
       tailwindcss-animate: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@25.9.1)(typescript@5.9.3)))
 
-  '@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)':
+  '@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
-      '@medusajs/icons': 2.15.5-preview-20260528130220(react@18.3.1)
+      '@medusajs/icons': 2.15.5(react@18.3.1)
       '@radix-ui/react-dialog': 1.1.4(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-dismissable-layer': 1.1.4(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-table': 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -25677,14 +25677,14 @@ snapshots:
     dependencies:
       awilix: 8.0.1
 
-  medusa-plugin-razorpay-v2@0.1.4(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@mikro-orm/cli@6.4.3(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/core@6.4.16)(@mikro-orm/knex@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/migrations@6.4.3(@mikro-orm/core@6.4.16)(@types/node@20.19.41)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/postgresql@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0))(awilix@8.0.1)(pg@8.21.0):
+  medusa-plugin-razorpay-v2@0.1.4(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@mikro-orm/cli@6.4.3(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/core@6.4.16)(@mikro-orm/knex@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/migrations@6.4.3(@mikro-orm/core@6.4.16)(@types/node@20.19.41)(better-sqlite3@12.8.0)(pg@8.21.0))(@mikro-orm/postgresql@6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0))(awilix@8.0.1)(pg@8.21.0):
     dependencies:
       '@medusajs/admin-sdk': 2.12.5
       '@medusajs/cli': 2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0)
       '@medusajs/framework': 2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0))
-      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
+      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
       '@medusajs/test-utils': 2.12.5(@medusajs/core-flows@2.12.5(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0))))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/medusa@2.12.5)
-      '@medusajs/ui': 4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+      '@medusajs/ui': 4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@mikro-orm/cli': 6.4.3(better-sqlite3@12.8.0)(pg@8.21.0)
       '@mikro-orm/core': 6.4.16
       '@mikro-orm/knex': 6.4.3(@mikro-orm/core@6.4.16)(better-sqlite3@12.8.0)(pg@8.21.0)
@@ -25706,7 +25706,7 @@ snapshots:
       medusa-core-utils: 1.2.3
       randomatic: 3.1.1
     optionalDependencies:
-      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15-preview-20260528130220(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
+      '@medusajs/medusa': 2.12.5(@emotion/is-prop-valid@1.4.0)(@medusajs/admin-sdk@2.12.5)(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@medusajs/framework@2.12.5(@medusajs/cli@2.12.5(@types/node@20.19.41)(better-sqlite3@12.8.0))(@types/node@20.19.41)(better-sqlite3@12.8.0)(ioredis@5.11.0)(vite@5.4.21(@types/node@20.19.41)(terser@5.48.0)))(@medusajs/test-utils@2.12.5)(@medusajs/ui@4.1.15(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(@types/react-dom@18.3.7(@types/react@18.3.29))(@types/react@18.3.29)(awilix@8.0.1)(posthog-node@5.35.5(rxjs@7.8.2))(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.20.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(terser@5.48.0)(ts-node@10.9.2(@swc/core@1.15.40(@swc/helpers@0.5.23))(@types/node@20.19.41)(typescript@5.9.3))(typescript@5.9.3)(yalc@1.0.0-pre.53)
       express: 5.2.1
       get-port: 5.1.1
       pg-god: 1.0.12

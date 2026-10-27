@@ -14,7 +14,10 @@ export default defineRailway((_ctx, _project) => {
 
   const Postgres = postgres("Postgres");
   const Redis = redis("Redis");
-  const strapiUploads = volume("strapi-uploads");
+  const strapiUploads = volume("strapi-uploads", {
+    region: "sfo",
+    sizeMB: 50000,
+  });
 
   const medusa = service("medusa", {
     source: repo,
@@ -31,9 +34,10 @@ export default defineRailway((_ctx, _project) => {
     },
     healthcheck: "/health",
     healthcheckTimeout: 300,
-    preDeploy: ["pnpm", "medusa", "db:migrate"],
+    preDeploy: "pnpm medusa db:migrate",
     env: {
       NODE_ENV: "production",
+      ENABLE_MEDUSA_ADMIN: "true",
       DATABASE_URL: Postgres.env.DATABASE_URL,
       REDIS_URL: Redis.env.REDIS_URL,
       JWT_SECRET: preserve(),
