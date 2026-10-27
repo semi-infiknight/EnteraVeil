@@ -53,6 +53,7 @@ export default defineRailway((_ctx, _project) => {
       RESEND_API_KEY: preserve(),
       RESEND_FROM_EMAIL: preserve(),
       ADMIN_EMAIL: preserve(),
+      ADMIN_PASSWORD: preserve(),
       NODE_OPTIONS: "--max-old-space-size=512",
     },
   });

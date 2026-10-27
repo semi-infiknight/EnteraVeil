@@ -80,4 +80,4 @@ USER medusa
 EXPOSE 9000
 
 # Migrate on boot — Railway pre-deploy from railway.toml is not wired until config path is set
-CMD ["sh", "-c", "pnpm medusa db:migrate && pnpm start"]
+CMD ["sh", "-c", "pnpm medusa db:migrate && (pnpm medusa exec ./src/scripts/bootstrap-prod.ts || echo '[bootstrap] seed step failed, starting server anyway') && pnpm start"]
